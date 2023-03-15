@@ -94,7 +94,38 @@ router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
  * POST route template
  */
 router.post("/", (req, res) => {
-  // POST route code here
+  console.log("in Post Route", req.body);
+  const queryText = `INSERT INTO order_details (address, city, state, zip, phone, total, payment_type, is_payed, is_delivered)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`
+
+  pool
+  .query(queryText, [
+    req.body.address,
+    req.body.city,
+    req.body.state,
+    req.body.zip,
+    req.body.phone,
+    req.body.total,
+    req.body.payment_type,
+    req.body.is_payed,
+    req.body.is_delivered
+  ])
+  .then((result) => {
+    res.send(result.rows[0]);
+  })
+  .catch((err) => {
+    console.error("Error in post stories", err);
+    res.sendStatus(500);
+  });
+
 });
+
+
+// router.post("/", (req, res) => {
+//   console.log("in Post Route", req.body);
+
+//   const queryText = `INSERT INTO "event`
+
+// });
 
 module.exports = router;
