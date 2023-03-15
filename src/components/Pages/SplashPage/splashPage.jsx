@@ -1,6 +1,13 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import "./SplashPage.css"
+// This is is the for the landing page, get started button will take you to the login page.
 function SplashPage() {
+    const history= useHistory();
+
+    function getStartedButton(){
+        history.push("/login")
+    }
   return (
     <>
     <body className="splash">
@@ -14,7 +21,9 @@ function SplashPage() {
         information, pay online, and track orders. Plus, contribute to the
         community effort by adding important dates. Support students and the
         community with ease!
+
       </p>
+      <button onClick={getStartedButton} >Get Started</button>
     </body>
  
     </>
