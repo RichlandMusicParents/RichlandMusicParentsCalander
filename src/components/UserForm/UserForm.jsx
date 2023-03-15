@@ -14,7 +14,9 @@ import {
   FormControl,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
 function UserForm() {
   const order = useSelector((store) => store.order);
@@ -75,7 +77,9 @@ function UserForm() {
             <CardContent>
               <TextField label="Event for" />
             </CardContent>
-
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker />
+            </LocalizationProvider>
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
