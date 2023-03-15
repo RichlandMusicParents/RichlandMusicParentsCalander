@@ -1,4 +1,4 @@
-/* DB Name = RichlandMusicParents */
+/* DB Name = `RichlandMusicParents` */
 
 
 CREATE TABLE "user" (
