@@ -1,3 +1,6 @@
+/* DB Name = RichlandMusicParents */
+
+
 CREATE TABLE "user" (
 	"id" serial PRIMARY KEY,
 	"username" varchar(255) NOT NULL UNIQUE,
