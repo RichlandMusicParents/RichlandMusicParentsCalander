@@ -22,6 +22,7 @@ import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import SplashPage from './Pages/SplashPage/splashPage';
 
 import './App.css';
+import UserForm from './UserForm/UserForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -118,6 +119,10 @@ function App() {
             path="/splashPage"
           >
             <SplashPage />
+          </Route>
+
+          <Route path="/userform">
+            <UserForm/>
           </Route>
 
 
