@@ -51,7 +51,6 @@ FROM
 WHERE
 	"user_id" = $1;
     `;
-  console.log(req.params.id);
   if (req.user.is_admin === true) {
     pool
       .query(text, [req.params.id])
