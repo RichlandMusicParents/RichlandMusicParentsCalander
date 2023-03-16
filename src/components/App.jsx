@@ -1,36 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   HashRouter as Router,
   Redirect,
   Route,
   Switch,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-import Nav from './Shared/Nav/Nav';
-import Footer from './Shared/Footer/Footer';
+import Nav from "./Shared/Nav/Nav";
+import Footer from "./Shared/Footer/Footer";
 
-import ProtectedRoute from './Shared/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 
-import AboutPage from './Pages/AboutPage/AboutPage';
-import UserPage from './Pages/UserPage/UserPage';
-import InfoPage from './Pages/InfoPage/InfoPage';
-import LandingPage from './Pages/LandingPage/LandingPage';
-import LoginPage from './Pages/LoginPage/LoginPage';
-import RegisterPage from './Pages/RegisterPage/RegisterPage';
-import SplashPage from './Pages/SplashPage/splashPage';
+import AboutPage from "./Pages/AboutPage/AboutPage";
+import UserPage from "./Pages/UserPage/UserPage";
+import InfoPage from "./Pages/InfoPage/InfoPage";
+import LandingPage from "./Pages/LandingPage/LandingPage";
+import LoginPage from "./Pages/LoginPage/LoginPage";
+import RegisterPage from "./Pages/RegisterPage/RegisterPage";
+import SplashPage from "./Pages/SplashPage/splashPage";
 
-import './App.css';
-import UserForm from './UserForm/UserForm';
+import "./App.css";
+import UserForm from "./UserForm/UserForm";
+import Admin from "./Pages/Admin/Admin";
 
 function App() {
   const dispatch = useDispatch();
 
-  const user = useSelector(store => store.user);
+  const user = useSelector((store) => store.user);
+  console.log(user);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_USER' });
+    dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
 
   return (
@@ -70,61 +72,60 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <Route
-            exact
-            path="/login"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path="/login">
+            {user.id ? (
+              // If the user is already logged in,
               // redirect to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the login page
               <LoginPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path="/registration">
+            {user.id ? (
+              // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the registration page
               <RegisterPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path="/home">
+            {user.id ? (
+              // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the Landing page
               <LandingPage />
-            }
+            )}
           </Route>
 
           {/* Landing Page */}
-          <Route
-           
-            exact
-            path="/splashPage"
-          >
+          <Route exact path="/splashPage">
             <SplashPage />
           </Route>
 
           <Route path="/userform">
-            <UserForm/>
+            <UserForm />
           </Route>
-
+          <Route exact path="/admin">
+            {user.is_admin ? (
+              <Admin />
+            ) : (
+              <Route>
+                <h1>403</h1>
+                <h2>
+                  You do not have access to this page. Please sign in as an
+                  admin to view.
+                </h2>
+              </Route>
+            )}
+          </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>

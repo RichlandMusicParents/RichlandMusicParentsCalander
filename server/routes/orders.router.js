@@ -47,6 +47,22 @@ router.get("/all-orders", rejectUnauthenticated, (req, res) => {
   }
 });
 
+router.post("/add-order-items", rejectUnauthenticated, (req, res) => {
+  const queryText = `INSERT INTO "order_items" ("quantity", "product_id", "order_id")
+	VALUES ($1, $2, $3);`;
+
+  const { quantity, product_id, order_id } = req.body;
+
+  pool
+    .query(queryText, [quantity, product_id, order_id])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in posting order", err);
+      res.sendStatus(500);
+    });
+});
 // Get route to get all orders by specific user
 
 router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
@@ -95,37 +111,59 @@ router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
  */
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
-  const queryText = `INSERT INTO order_details (address, city, state, zip, phone, total, payment_type, is_payed, is_delivered)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`
+  const queryText = `INSERT INTO order_details ("total", "address", "city", "state", "zip", "phone", "payment_type", "user_id")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+
+  const { total, address, city, state, zip, phone, payment_type, user_id } =
+    req.body;
 
   pool
-  .query(queryText, [
-    req.body.address,
-    req.body.city,
-    req.body.state,
-    req.body.zip,
-    req.body.phone,
-    req.body.total,
-    req.body.payment_type,
-    req.body.is_payed,
-    req.body.is_delivered
-  ])
-  .then((result) => {
-    res.send(result.rows[0]);
-  })
-  .catch((err) => {
-    console.error("Error in post stories", err);
-    res.sendStatus(500);
-  });
-
+    .query(queryText, [
+      total,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      payment_type,
+      user_id,
+    ])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in posting order", err);
+      res.sendStatus(500);
+    });
 });
 
+router.put("/edit-order", (req, res) => {
+  console.log("in Post Route", req.body);
+  const queryText = `UPDATE order_details 
+  SET "total" = $1, "address" = $2, "city" = $3, "state" = $4, "zip" = $5, "phone" = $6, "payment_type" = $7, "user_id" = $8;
+`;
 
-// router.post("/", (req, res) => {
-//   console.log("in Post Route", req.body);
+  const { total, address, city, state, zip, phone, payment_type, user_id } =
+    req.body;
 
-//   const queryText = `INSERT INTO "event`
-
-// });
+  pool
+    .query(queryText, [
+      total,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      payment_type,
+      user_id,
+    ])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in editing orders", err);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;
