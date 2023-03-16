@@ -90,13 +90,30 @@ router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
   }
 });
 
+
+
+
+router.get("/", (req, res) => {
+  const queryText = `SELECT * FROM order_details`;
+
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.error("Error in GET all order details", err);
+      res.sendStatus(500);
+    });
+});
+
 /**
  * POST route template
  */
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
-  const queryText = `INSERT INTO order_details (address, city, state, zip, phone, total, payment_type, is_payed, is_delivered)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`
+  const queryText = `INSERT INTO order_details (address, city, state, zip, phone, total, payment_type)
+  VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`
 
   pool
   .query(queryText, [
@@ -107,25 +124,16 @@ router.post("/", (req, res) => {
     req.body.phone,
     req.body.total,
     req.body.payment_type,
-    req.body.is_payed,
-    req.body.is_delivered
+   
   ])
   .then((result) => {
     res.send(result.rows[0]);
   })
   .catch((err) => {
-    console.error("Error in post stories", err);
+    console.error("Error in post order", err);
     res.sendStatus(500);
   });
 
 });
-
-
-// router.post("/", (req, res) => {
-//   console.log("in Post Route", req.body);
-
-//   const queryText = `INSERT INTO "event`
-
-// });
 
 module.exports = router;

@@ -22,23 +22,47 @@ function UserForm() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const order = useSelector((store) => store.order);
+  const orders = useSelector((store) => store.order);
+  console.log("in order", orders);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [phonenumber, setPhoneNumber] = useState("");
+  const [zip, setZip] = useState("");
+  const [phone, setPhone] = useState("");
   const [eventFor, setEventFor] = useState("");
   const [total, setTotal] = useState("")
-  const [paymentOption, setPaymentOption] = useState(null);
+  const [payment, setPayment] = useState(null);
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [delivery, setDelivery] = useState('Delivery')
 
+  useEffect(() => {
+    dispatch({ type: "FETCH_ORDER"});
+
+  }, []);
+
   const handleSubmit = () => {
-    history.push("/admin")
+    dispatch({
+        type:"ADD_ORDER",
+        payload: {
+            address,
+            city,
+            state,
+            zip,
+            phone,
+            payment, 
+            total
+        },
+    });
+setAddress(""),
+setCity(""),
+setState(""),
+setZip(""),
+setPhone(""),
+setPayment(null),
+setTotal("")
   };
 
 
@@ -69,23 +93,69 @@ function UserForm() {
             </CardContent>
 
             <CardContent>
-              <TextField label="Address" />
+              <TextField 
+              label="Address"
+              type="text"
+              name="address"
+              value={address}
+              required
+              onChange={(event) => setAddress(event.target.value)}
+              sx={{ marginBottom: "10px", width: "50%" }}
+               />
             </CardContent>
 
             <CardContent>
-              <TextField label="City" />
+              <TextField 
+              label="City"
+              type="text"
+              name="city"
+              value={city}
+              required
+              onChange={(event) => setCity(event.target.value)}
+              sx={{ marginBottom: "10px", width: "50%" }}
+               />
             </CardContent>
             <CardContent>
-              <TextField label="State" />
+              <TextField
+            label="State"
+            type="text"
+            name="state"
+            value={state}
+            required
+            onChange={(event) => setState(event.target.value)}
+            sx={{ marginBottom: "10px", width: "50%" }}
+              
+              />
             </CardContent>
             <CardContent>
-              <TextField label="ZipCode" />
+              <TextField 
+              label="Zip Code" 
+               type="text"
+               name="zip"
+               value={zip}
+               required
+               onChange={(event) => setZip(event.target.value)}
+               sx={{ marginBottom: "10px", width: "50%" }}/>
             </CardContent>
             <CardContent>
-              <TextField label="Phone Number" />
+              <TextField 
+              label="Phone Number" 
+              type="text"
+              name="phone"
+              value={phone}
+              required
+              onChange={(event) => setPhone(event.target.value)}
+              sx={{ marginBottom: "10px", width: "50%" }}/>
             </CardContent>
             <CardContent>
-              <TextField label="Event for" />
+              <TextField 
+              label="Event for" 
+              type="text"
+              name="Event for"
+              value={eventFor}
+              required
+              onChange={(event) => setEventFor(event.target.value)}
+              sx={{ marginBottom: "10px", width: "50%" }}/>
             </CardContent>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker />
@@ -112,8 +182,27 @@ function UserForm() {
 
             <Button onClick={handleSubmit}> Check Out </Button>
 
-            <h4>Total: </h4>
+            
             <Button> Add Event </Button>
+
+            <br />
+            <br/>
+           
+                {orders.map((order) => ( 
+                <div key={order.id}>
+                    <p>
+                        {order.address}
+                        {order.city}
+                        {order.state}
+                        {order.zip}
+                        {order.phone}
+                        {order.payment}
+                        <h4>Total:{order.total}</h4>
+                    
+                    </p>
+                    </div>
+                ))}
+        
           </Card>
         </Grid>
       </Grid>
