@@ -20,6 +20,7 @@ import LandingPage from './Pages/LandingPage/LandingPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import SplashPage from './Pages/SplashPage/splashPage';
+import Invoice from './Pages/CustomerInvoice/invoice';
 
 import './App.css';
 import UserForm from './UserForm/UserForm';
@@ -39,7 +40,7 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/splashPage" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -112,7 +113,7 @@ function App() {
             }
           </Route>
 
-          {/* Landing Page */}
+          {/* This is the page User sees upon visiting LocalHost 3000 Page */}
           <Route
            
             exact
@@ -124,6 +125,13 @@ function App() {
           <Route path="/userform">
             <UserForm/>
           </Route>
+          <Route
+           
+           exact
+           path="/customerInvoice"
+         >
+           <Invoice/>
+         </Route>
 
 
           {/* If none of the other routes matched, we will show a 404. */}
