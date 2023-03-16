@@ -49,9 +49,12 @@ function UserForm() {
   }, []);
 
   const handleSubmit = () => {
+
     dispatch({
         type:"ADD_ORDER",
         payload: {
+            firstName,
+            lastName,
             address,
             city,
             state,
@@ -61,6 +64,9 @@ function UserForm() {
             total
         },
     });
+history.push("/registration")
+setFirstName(""),
+setLastName(""),
 setAddress(""),
 setCity(""),
 setState(""),
@@ -90,11 +96,25 @@ setTotal("")
             <h2>Listing Form</h2>
 
             <CardContent>
-              <TextField label="First Name" />
+              <TextField label="First Name"
+               type="text"
+               name="firstname"
+               value={firstName}
+               required
+               onChange={(event) => setFirstName(event.target.value)}
+               sx={{ marginBottom: "10px", width: "50%" }} />
             </CardContent>
 
             <CardContent>
-              <TextField label="Last Name" />
+              <TextField 
+              label="Last Name" 
+              type="text"
+              name="lastname"
+              value={lastName}
+              required
+              onChange={(event) => setLastName(event.target.value)}
+              sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
 
             <CardContent>
