@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import {
   Grid,
@@ -14,9 +14,14 @@ import {
   FormControl,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
 function UserForm() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const order = useSelector((store) => store.order);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -26,9 +31,16 @@ function UserForm() {
   const [zipcode, setZipcode] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
   const [eventFor, setEventFor] = useState("");
+  const [total, setTotal] = useState("")
   const [paymentOption, setPaymentOption] = useState(null);
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
+  const [delivery, setDelivery] = useState('Delivery')
+
+  const handleSubmit = () => {
+    history.push("/admin")
+  };
+
 
   return (
     <div
@@ -75,7 +87,9 @@ function UserForm() {
             <CardContent>
               <TextField label="Event for" />
             </CardContent>
-
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker />
+            </LocalizationProvider>
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
@@ -96,7 +110,7 @@ function UserForm() {
               </Select>
             </FormControl>
 
-            <Button> Check Out </Button>
+            <Button onClick={handleSubmit}> Check Out </Button>
 
             <h4>Total: </h4>
             <Button> Add Event </Button>

@@ -35,7 +35,7 @@ router.get("/all-events", rejectUnauthenticated, (req, res) => {
 
 // GET route for an admin to see all events from a specific user
 
-router.get("/user-events/:id", rejectUnauthenticated, (req, res) => {
+router.get("/specific-user-events/:id", rejectUnauthenticated, (req, res) => {
   if (!req.user.is_admin) {
     return res.sendStatus(401);
   }
@@ -128,5 +128,71 @@ WHERE
     res.sendStatus(403);
   }
 });
+
+
+router.post("/", (req, res) => {
+  console.log("in Post Route", req.body);
+  const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
+
+  const queryText = `INSERT INTO "event" ("event_type", "event_date", "event_name", "user_id", "calendar_id")
+	VALUES ($1, $2, $3, $4, $5)
+  RETURNING *;`
+
+  pool
+  .query(queryText, [
+    event_type,
+        event_date,
+        event_name,
+        user_id,
+        calendar_id
+  ])
+  .then((result) => {
+    res.send(result.rows[0]);
+  })
+  .catch((err) => {
+    console.error("Error in post stories", err);
+    res.sendStatus(500);
+  });
+
+});
+
+
+
+
+router.post("/user-add-events", (req, res) => {
+  const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
+
+  const text = `
+  INSERT INTO "event" ("event_type", "event_date", "event_name", "user_id", "calendar_id")
+	VALUES ($1, $2, $3, $4, $5)
+  RETURNING "id";
+    `;
+  if (req.isAuthenticated()) {
+    pool
+      .query(text, [event_type, event_date, event_name, user_id, calendar_id])
+      .then((results) => res.send(results.rows))
+      .catch((error) => {
+        console.log("Error making SELECT for items:", error);
+        res.sendStatus(500);
+      });
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+router.get("/user-events/:id", (req, res) => {
+  console.log(req.user.id);
+  const text = `
+  SELECT * FROM "event" WHERE "user_id" = $1;
+  `;
+  pool
+    .query(text, [req.params.id])
+    .then((results) => res.send(results.rows))
+    .catch((error) => {
+      console.log("Error making SELECT events for user:", error);
+      res.sendStatus(500);
+    });
+});
+
 
 module.exports = router;
