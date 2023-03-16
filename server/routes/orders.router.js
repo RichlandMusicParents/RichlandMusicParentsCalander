@@ -127,12 +127,12 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
 
-  const queryText = `INSERT INTO order_details ("first_name", "last_name", "total", "address", "city", "state", "zip", "phone", "payment_type", "user_id")
+  const queryText = `INSERT INTO order_details ("firstname", "lastname", "total", "address", "city", "state", "zip", "phone", "payment_type", "user_id")
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`;
 
   const {
-    first_name,
-    last_name,
+    firstname,
+    lastname,
     total,
     address,
     city,
@@ -145,8 +145,8 @@ router.post("/", (req, res) => {
 
   pool
     .query(queryText, [
-      first_name,
-      last_name,
+      firstname,
+      lastname,
       total,
       address,
       city,
