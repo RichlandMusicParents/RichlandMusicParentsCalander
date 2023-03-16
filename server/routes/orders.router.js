@@ -13,26 +13,25 @@ router.get("/all-orders", rejectUnauthenticated, (req, res) => {
   }
 
   const text = `
-    SELECT
-      "user".first_name,
-      "user".last_name,
-      "order_details"."address",
-      "order_details"."city",
-      "order_details"."state",
-      "order_details"."zip",
-      "order_details"."is_payed",
-      "order_details"."payment_type",
-      "order_details"."is_delivered",
-      "order_details"."phone",
-      "order_details"."total",
-      json_agg(("order_items")) AS order_items
-  FROM
-      "order_details"
-      JOIN "user" ON "user".id = "user_id"
-      JOIN "order_items" ON "order_id" = "order_details".id
-  GROUP BY
-      "order_details"."id",
-      "user".id;
+  SELECT
+	"order_details"."id",
+	"order_details"."first_name",
+	"order_details"."last_name",
+	"order_details"."address",
+	"order_details"."address",
+	"order_details"."phone",
+	"order_details"."total",
+	"order_details"."is_payed",
+	"order_details"."payment_type",
+	"order_details"."is_delivered",
+	json_agg(("order_items")) AS order_items
+FROM
+	"order_details"
+	JOIN "user" ON "user".id = "user_id"
+	JOIN "order_items" ON "order_id" = "order_details".id
+GROUP BY
+	"order_details"."id",
+	"user".id;
       `;
   if (req.user.is_admin === true) {
     pool
@@ -47,6 +46,22 @@ router.get("/all-orders", rejectUnauthenticated, (req, res) => {
   }
 });
 
+router.post("/add-order-items", rejectUnauthenticated, (req, res) => {
+  const queryText = `INSERT INTO "order_items" ("quantity", "product_id", "order_id")
+	VALUES ($1, $2, $3);`;
+
+  const { quantity, product_id, order_id } = req.body;
+
+  pool
+    .query(queryText, [quantity, product_id, order_id])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in posting order", err);
+      res.sendStatus(500);
+    });
+});
 // Get route to get all orders by specific user
 
 router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
@@ -55,27 +70,26 @@ router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
   }
 
   const text = `
-      SELECT
-        "user".first_name,
-        "user".last_name,
-        "order_details"."address",
-        "order_details"."city",
-        "order_details"."state",
-        "order_details"."zip",
-        "order_details"."is_payed",
-        "order_details"."payment_type",
-        "order_details"."is_delivered",
-        "order_details"."phone",
-        "order_details"."total",
-        json_agg(("order_items")) AS order_items
-    FROM
-        "order_details"
-        JOIN "user" ON "user".id = "user_id"
-        JOIN "order_items" ON "order_id" = "order_details".id
-    WHERE "user"."id" = $1
-    GROUP BY
-        "order_details"."id",
-        "user".id;
+  SELECT
+	"order_details"."id",
+	"order_details"."first_name",
+	"order_details"."last_name",
+	"order_details"."address",
+	"order_details"."address",
+	"order_details"."phone",
+	"order_details"."total",
+	"order_details"."is_payed",
+	"order_details"."payment_type",
+	"order_details"."is_delivered",
+	json_agg(("order_items")) AS order_items
+FROM
+	"order_details"
+	JOIN "user" ON "user".id = "user_id"
+	JOIN "order_items" ON "order_id" = "order_details".id
+	WHERE "user"."id" = $1
+GROUP BY
+	"order_details"."id",
+	"user".id;
         `;
   if (req.user.is_admin === true) {
     pool
@@ -112,28 +126,85 @@ router.get("/", (req, res) => {
  */
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
-  const queryText = `INSERT INTO order_details (address, city, state, zip, phone, total, payment_type)
-  VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`
+
+  const queryText = `INSERT INTO order_details ("first_name", "last_name", "total", "address", "city", "state", "zip", "phone", "payment_type", "user_id")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`;
+
+  const {
+    first_name,
+    last_name,
+    total,
+    address,
+    city,
+    state,
+    zip,
+    phone,
+    payment_type,
+    user_id,
+  } = req.body;
 
   pool
-  .query(queryText, [
-    req.body.address,
-    req.body.city,
-    req.body.state,
-    req.body.zip,
-    req.body.phone,
-    req.body.total,
-    req.body.payment_type,
-   
-  ])
-  .then((result) => {
-    res.send(result.rows[0]);
-  })
-  .catch((err) => {
-    console.error("Error in post order", err);
-    res.sendStatus(500);
-  });
+    .query(queryText, [
+      first_name,
+      last_name,
+      total,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      payment_type,
+      user_id,
+    ])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in posting order", err);
+      res.sendStatus(500);
+    });
+});
 
+
+router.put("/edit-order", (req, res) => {
+  console.log("in Post Route", req.body);
+  const queryText = `UPDATE order_details 
+  SET "total" = $1, "address" = $2, "city" = $3, "state" = $4, "zip" = $5, "phone" = $6, "payment_type" = $7, "user_id" = $8, "first_name" = $9, "last_name" = $10;
+`;
+
+  const {
+    total,
+    address,
+    city,
+    state,
+    zip,
+    phone,
+    payment_type,
+    user_id,
+    first_name,
+    last_name,
+  } = req.body;
+
+  pool
+    .query(queryText, [
+      total,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      payment_type,
+      user_id,
+      first_name,
+      last_name,
+    ])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in editing orders", err);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
