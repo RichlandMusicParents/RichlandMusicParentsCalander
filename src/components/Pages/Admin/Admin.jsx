@@ -19,17 +19,24 @@ export default function Admin() {
       <h1>Hello, {user.first_name}</h1>
       <div className="events">
         <h2>All Created Events</h2>
-        <div className="events-container">
-          {events.map((item) => {
-            return (
-              <ul className="event-item" key={item.id}>
-                <li>{item.event_type}</li>
-                <li>{format(new Date(item.event_date), "MM/dd/yy")}</li>
-                <li>{item.event_name}</li>
-              </ul>
-            );
-          })}
-        </div>
+        <table className="events-table">
+          <thead>
+            <tr>
+              <th>Event Type</th>
+              <th>Event Date</th>
+              <th>Event Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {events.map((item) => (
+              <tr>
+                <td>{item.event_type}</td>
+                <td>{format(new Date(item.event_date), "MM/dd/yy")}</td>
+                <td>{item.event_name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       <div className="orders">
         <h2>All Created Orders</h2>
@@ -37,41 +44,18 @@ export default function Admin() {
           {orders.map((item) => {
             return (
               <ul className="order-item" key={item.id}>
-                <li>
-                  <span>First Name</span>
-                  {item.first_name}
-                </li>
-                <li>
-                  <span>Last Name</span>
-                  {item.last_name}
-                </li>
-                <li>
-                  <span>Street Address</span>
-                  {item.address}
-                </li>
-                <li>
-                  <span>City</span>
-                  {item.city}
-                </li>
-
-                {item.is_delivered ? (
-                  <li>
-                    <span>Delivered?</span>Yes
-                  </li>
-                ) : (
-                  <li>
-                    <span>Delivered?</span>No
-                  </li>
-                )}
-                {item.is_payed ? (
-                  <li>
-                    <span>Payed?</span>Yes
-                  </li>
-                ) : (
-                  <li>
-                    <span>Payed?</span>No
-                  </li>
-                )}
+                <div className="order-category">
+                  <li>First Name</li>
+                  <li>{item.first_name}</li>
+                </div>
+                <div className="order-category"></div>
+                <li>{item.last_name}</li>
+                <div className="order-category"></div>
+                <li>{item.address}</li>
+                <div className="order-category"></div>
+                <li>{item.city}</li>
+                {item.is_delivered ? <li>Yes</li> : <li>No</li>}
+                {item.is_payed ? <li>Yes</li> : <li>No</li>}
               </ul>
             );
           })}
