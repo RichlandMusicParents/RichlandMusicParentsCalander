@@ -182,7 +182,7 @@ setTotal("")
 
             <Button onClick={handleSubmit}> Check Out </Button>
 
-            
+          
             <Button> Add Event </Button>
 
             <br />
