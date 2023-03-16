@@ -24,8 +24,7 @@ function UserForm() {
 
   const orders = useSelector((store) => store.order);
   console.log("in order", orders);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -33,7 +32,13 @@ function UserForm() {
   const [phone, setPhone] = useState("");
   const [eventFor, setEventFor] = useState("");
   const [total, setTotal] = useState("")
-  const [payment, setPayment] = useState(null);
+  const [payment, setPayment] = useState({
+    method: null,
+    details: null,
+  });
+  
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [delivery, setDelivery] = useState('Delivery')
@@ -61,7 +66,7 @@ setCity(""),
 setState(""),
 setZip(""),
 setPhone(""),
-setPayment(null),
+setPayment({ method: null, details: null }),
 setTotal("")
   };
 
@@ -163,7 +168,13 @@ setTotal("")
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
-              <Select labelId="payment-select" label="Event Options">
+              <Select labelId="payment-select" 
+              label="Event Options"
+              value={payment.method}
+              onChange={(event) =>
+                setPayment({ ...payment, method: event.target.value })
+              }
+              >
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
                 <MenuItem value={"Check"}> Check </MenuItem>
