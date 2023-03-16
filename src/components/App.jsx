@@ -13,13 +13,15 @@ import Footer from "./Shared/Footer/Footer";
 
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 
-import AboutPage from "./Pages/AboutPage/AboutPage";
-import UserPage from "./Pages/UserPage/UserPage";
-import InfoPage from "./Pages/InfoPage/InfoPage";
-import LandingPage from "./Pages/LandingPage/LandingPage";
-import LoginPage from "./Pages/LoginPage/LoginPage";
-import RegisterPage from "./Pages/RegisterPage/RegisterPage";
-import SplashPage from "./Pages/SplashPage/splashPage";
+import AboutPage from './Pages/AboutPage/AboutPage';
+import UserPage from './Pages/UserPage/UserPage';
+import InfoPage from './Pages/InfoPage/InfoPage';
+import LandingPage from './Pages/LandingPage/LandingPage';
+import LoginPage from './Pages/LoginPage/LoginPage';
+import RegisterPage from './Pages/RegisterPage/RegisterPage';
+import SplashPage from './Pages/SplashPage/splashPage';
+import Invoice from './Pages/CustomerInvoice/invoice';
+
 
 import "./App.css";
 import UserForm from "./UserForm/UserForm";
@@ -41,7 +43,7 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/splashPage" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -105,8 +107,13 @@ function App() {
             )}
           </Route>
 
-          {/* Landing Page */}
-          <Route exact path="/splashPage">
+
+          {/* This is the page User sees upon visiting LocalHost 3000 Page */}
+          <Route
+           
+            exact
+            path="/splashPage"
+          >
             <SplashPage />
           </Route>
 
@@ -126,6 +133,16 @@ function App() {
               </Route>
             )}
           </Route>
+
+          <Route
+           
+           exact
+           path="/customerInvoice"
+         >
+           <Invoice/>
+         </Route>
+
+
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>

@@ -104,11 +104,29 @@ GROUP BY
   }
 });
 
+
+
+
+router.get("/", (req, res) => {
+  const queryText = `SELECT * FROM order_details`;
+
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.error("Error in GET all order details", err);
+      res.sendStatus(500);
+    });
+});
+
 /**
  * POST route template
  */
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
+
   const queryText = `INSERT INTO order_details ("first_name", "last_name", "total", "address", "city", "state", "zip", "phone", "payment_type", "user_id")
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`;
 
@@ -146,6 +164,7 @@ router.post("/", (req, res) => {
       res.sendStatus(500);
     });
 });
+
 
 router.put("/edit-order", (req, res) => {
   console.log("in Post Route", req.body);
