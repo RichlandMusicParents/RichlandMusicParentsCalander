@@ -129,35 +129,30 @@ WHERE
   }
 });
 
-
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
   const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
 
   const queryText = `INSERT INTO "event" ("event_type", "event_date", "event_name", "user_id", "calendar_id")
 	VALUES ($1, $2, $3, $4, $5)
-  RETURNING *;`
+  RETURNING *;`;
 
   pool
-  .query(queryText, [
-    event_type,
-        event_date,
-        event_name,
-        user_id,
-        calendar_id
-  ])
-  .then((result) => {
-    res.send(result.rows[0]);
-  })
-  .catch((err) => {
-    console.error("Error in post stories", err);
-    res.sendStatus(500);
-  });
-
+    .query(queryText, [
+      event_type,
+      event_date,
+      event_name,
+      user_id,
+      calendar_id,
+    ])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in post stories", err);
+      res.sendStatus(500);
+    });
 });
-
-
-
 
 router.post("/user-add-events", (req, res) => {
   const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
@@ -193,6 +188,5 @@ router.get("/user-events/:id", (req, res) => {
       res.sendStatus(500);
     });
 });
-
 
 module.exports = router;
