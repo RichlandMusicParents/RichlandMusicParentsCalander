@@ -48,16 +48,16 @@ function UserForm() {
 
   }, []);
 
-  const eventHandleSubmit = () => {
-    dispatch({
-        type:`USER_ADD_EVENT`,
-        payload: {
-            eventOption,
-            date,
-            eventFor
+  // const eventHandleSubmit = () => {
+  //   dispatch({
+  //       type:`USER_ADD_EVENT`,
+  //       payload: {
+  //           eventOption,
+  //           date,
+  //           eventFor
 
-        },
-    });
+  //       },
+  //   });
 
   const handleSubmit = () => {
 
@@ -225,7 +225,7 @@ setTotal("")
             <Button onClick={handleSubmit}> Check Out </Button>
 
           
-            <Button onClick={eventHandleSubmit} > Add Event </Button>
+            <Button > Add Event </Button>
 
             <br />
             <br/>
@@ -250,6 +250,6 @@ setTotal("")
       </Grid>
     </div>
   );
-}}
+}
 
 export default UserForm;
