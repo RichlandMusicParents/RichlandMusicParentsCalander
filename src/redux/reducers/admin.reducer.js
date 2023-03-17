@@ -4,7 +4,7 @@ import { combineReducers } from "redux";
 // on the login screen if there's an error
 const allEvents = (state = [], action) => {
   switch (action.type) {
-    case "SET_ALL_EVENTS":
+    case "ADMIN_SET_ALL_EVENTS":
       return action.payload;
     default:
       return state;
@@ -13,7 +13,7 @@ const allEvents = (state = [], action) => {
 
 const allOrders = (state = [], action) => {
   switch (action.type) {
-    case "SET_ALL_ORDERS":
+    case "ADMIN_SET_ALL_ORDERS":
       return action.payload;
     default:
       return state;
@@ -22,7 +22,7 @@ const allOrders = (state = [], action) => {
 
 const specificEvents = (state = [], action) => {
   switch (action.type) {
-    case "SET_SPECIFIC_EVENTS":
+    case "ADMIN_SET_SPECIFIC_EVENTS":
       return action.payload;
     default:
       return state;
