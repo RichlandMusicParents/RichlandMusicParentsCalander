@@ -21,7 +21,8 @@ router.get("/all-events", rejectUnauthenticated, (req, res) => {
 		(SELECT 
 	"user".last_name FROM "user" WHERE "user".id = "event".user_id )
 FROM
-	"event";
+	"event"
+ORDER BY "id" ASC;
     `;
 
   if (req.user.is_admin === true) {

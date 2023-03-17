@@ -142,7 +142,6 @@ router.post("/", (req, res) => {
 
   pool
     .query(queryText, [
-
       first_name,
       last_name,
       total,
@@ -164,39 +163,60 @@ router.post("/", (req, res) => {
     });
 });
 
-router.put("/edit-order", (req, res) => {
+router.put("/edit-order/:id", (req, res) => {
   console.log("in Post Route", req.body);
-  const queryText = `UPDATE orders 
-  SET "total" = $1, "address" = $2, "city" = $3, "state" = $4, "zip" = $5, "phone" = $6, "payment_type" = $7, "user_id" = $8, "first_name" = $9, "last_name" = $10, "email" = $11;
+  const queryText = `UPDATE
+	orders
+SET
+	first_name = $1,
+	last_name = $2,
+	address = $3,
+	city = $4,
+	state = $5,
+	zip = $6,
+	phone = $7,
+	email = $8,
+	total = $9,
+	payment_type = $10,
+	is_payed = $11,
+	is_delivered = $12,
+	user_id = $13
+WHERE
+	id = $14;
 `;
 
   const {
-    total,
+    first_name,
+    last_name,
     address,
     city,
     state,
     zip,
     phone,
-    payment_type,
-    user_id,
-    first_name,
-    last_name,
     email,
+    total,
+    payment_type,
+    is_payed,
+    is_delivered,
+    user_id,
   } = req.body;
 
   pool
     .query(queryText, [
-      total,
+      first_name,
+      last_name,
       address,
       city,
       state,
       zip,
       phone,
-      payment_type,
-      user_id,
-      first_name,
-      last_name,
       email,
+      total,
+      payment_type,
+      is_payed,
+      is_delivered,
+      user_id,
+      req.params.id,
     ])
     .then((result) => {
       res.send(result.rows[0]);
