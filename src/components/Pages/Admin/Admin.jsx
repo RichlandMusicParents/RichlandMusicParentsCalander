@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
-import "./Admin.css";
+import "../Admin/Admin.css";
 
 export default function Admin() {
   const events = useSelector((store) => store.adminReducer.allEvents);
@@ -34,7 +34,7 @@ export default function Admin() {
           </thead>
           <tbody>
             {events.map((item) => (
-              <tr>
+              <tr key={item.id}>
                 <td>{item.event_type}</td>
                 <td>{format(new Date(item.event_date), "MM/dd/yy")}</td>
                 <td>{item.event_name}</td>
@@ -52,37 +52,34 @@ export default function Admin() {
         </header>
         <div className="orders">
           {orders.map((order) => (
-            <>
-              <div className="order-card">
-                <h2>Order Number: {order.id}</h2>
-                <div className="order-card-header">
+            <div key={order.id} className="order-card">
+              <h2>Order Number: {order.id}</h2>
+              <div className="order-card-header">
+                <p>
+                  {order.first_name} {order.last_name}
+                </p>
+                <div className="address">
+                  <p>{order.address}</p>
                   <p>
-                    {order.first_name} {order.last_name}
+                    {order.city} {order.state}
                   </p>
-                  <div className="address">
-                    <p>{order.address}</p>
-                    <p>
-                      {order.city} {order.state}
-                    </p>
-                    <p>{order.zip}</p>
-                    <p>{order.phone}</p>
-                  </div>
+                  <p>{order.zip}</p>
+                  <p>{order.phone}</p>
                 </div>
-                <p>Payment type: {order.payment_type}</p>
-                <p>
-                  Payed For?{" "}
-                  {order.is_payed ? <span>Yes</span> : <span>No</span>}
-                </p>
-                <p>
-                  Delivered?{" "}
-                  {order.is_delivered ? <span>Yes</span> : <span>No</span>}
-                </p>
-                <p>Calendars: {order.order_items[0].quantity}</p>
-                <p>Extra Events: {order.order_items[1].quantity}</p>
-                <p>Events: {order.order_events.length}</p>
-                <p>Total ${order.total}</p>
               </div>
-            </>
+              <p>Payment type: {order.payment_type}</p>
+              <p>
+                Payed For? {order.is_payed ? <span>Yes</span> : <span>No</span>}
+              </p>
+              <p>
+                Delivered?{" "}
+                {order.is_delivered ? <span>Yes</span> : <span>No</span>}
+              </p>
+              <p>Calendars: {order.order_items[0].quantity}</p>
+              <p>Extra Events: {order.order_items[1].quantity}</p>
+              <p>Events: {order.order_events.length}</p>
+              <p>Total ${order.total}</p>
+            </div>
           ))}
         </div>
       </div>

@@ -35,8 +35,8 @@ function UserForm() {
   const [payment, setPayment] = useState({ method: "" });
   const [numCalendars, setNumCalendars] = useState(1);
   
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState([]);
