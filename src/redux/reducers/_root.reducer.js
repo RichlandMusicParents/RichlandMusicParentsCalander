@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import errors from "./errors.reducer";
 import user from "./user.reducer";
 import adminReducer from "./admin.reducer";
+import eventReducer from "./event.reducer";
 
 
 
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   adminReducer,
   user,
   order, // will have an id and username if someone is logged in
+  eventReducer,
 
 });
 
