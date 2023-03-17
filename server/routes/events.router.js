@@ -180,7 +180,7 @@ router.post("/user-add-events", (req, res) => {
 });
 
 router.get("/user-events/:id", (req, res) => {
-  console.log(req.user.id);
+  console.log(req.user_id);
   const text = `
   SELECT * FROM "event" WHERE "user_id" = $1;
   `;
