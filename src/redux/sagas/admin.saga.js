@@ -8,7 +8,7 @@ function* adminGetAllEvents() {
 
     // passes the username and password from the payload to the server
     const response = yield axios.get("/api/events/all-events");
-    yield put({ type: "SET_ALL_EVENTS", payload: response.data });
+    yield put({ type: "ADMIN_SET_ALL_EVENTS", payload: response.data });
   } catch (err) {
     console.log("Error in getting all events", err);
   }
@@ -20,7 +20,7 @@ function* adminGetSpecificEvents(action) {
     const response = yield axios.get(
       `/api/events/specific-user-events${action.payload}`
     );
-    yield put({ type: "SET_SPECIFIC_EVENTS", payload: response.data });
+    yield put({ type: "ADMIN_SET_SPECIFIC_EVENTS", payload: response.data });
   } catch (err) {
     console.log("Error with getting specific user events", err);
   }
@@ -66,7 +66,7 @@ function* adminGetAllOrders() {
   try {
     // passes the username and password from the payload to the server
     const response = yield axios.get(`/api/orders/all-orders`);
-    yield put({ type: "SET_ALL_ORDERS", payload: response.data });
+    yield put({ type: "ADMIN_SET_ALL_ORDERS", payload: response.data });
   } catch (err) {
     console.log("Error with getting specific user events", err);
   }
@@ -77,7 +77,7 @@ function* adminSagas() {
   yield takeLatest("GET_SPECIFIC_EVENTS", adminGetSpecificEvents);
   yield takeLatest("ADMIN_ADD_EVENTS", adminAddEvent);
   yield takeLatest("ADMIN_EDIT_EVENTS", adminEditEvent);
-  yield takeLatest("GET_ALL_ORDERS", adminGetAllOrders);
+  yield takeLatest("ADMIN_GET_ALL_ORDERS", adminGetAllOrders);
 }
 
 export default adminSagas;

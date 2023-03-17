@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
+import "./Admin.css";
 
 export default function Admin() {
   const events = useSelector((store) => store.adminReducer.allEvents);
@@ -9,22 +10,26 @@ export default function Admin() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: "GET_ALL_EVENTS" });
-    dispatch({ type: "GET_ALL_ORDERS" });
+    dispatch({ type: "ADMIN_GET_ALL_ORDERS" });
   }, [dispatch]);
   console.log(events);
   console.log(orders);
   console.log(user);
+
   return (
     <>
       <h1>Hello, {user.first_name}</h1>
       <div className="events">
-        <h2>All Created Events</h2>
+        <header className="events-header">
+          <h2>All Created Events</h2>
+        </header>
         <table className="events-table">
           <thead>
             <tr>
               <th>Event Type</th>
               <th>Event Date</th>
               <th>Event Name</th>
+              <th>Created By</th>
             </tr>
           </thead>
           <tbody>
@@ -33,32 +38,52 @@ export default function Admin() {
                 <td>{item.event_type}</td>
                 <td>{format(new Date(item.event_date), "MM/dd/yy")}</td>
                 <td>{item.event_name}</td>
+                <td>
+                  {item.first_name} {item.last_name}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div className="orders">
-        <h2>All Created Orders</h2>
-        <div className="orders-container">
-          {orders.map((item) => {
-            return (
-              <ul className="order-item" key={item.id}>
-                <div className="order-category">
-                  <li>First Name</li>
-                  <li>{item.first_name}</li>
+      <div className="section">
+        <header className="orders-header">
+          <h2>All Created Orders</h2>
+        </header>
+        <div className="orders">
+          {orders.map((order) => (
+            <>
+              <div className="order-card">
+                <h2>Order Number: {order.id}</h2>
+                <div className="order-card-header">
+                  <p>
+                    {order.first_name} {order.last_name}
+                  </p>
+                  <div className="address">
+                    <p>{order.address}</p>
+                    <p>
+                      {order.city} {order.state}
+                    </p>
+                    <p>{order.zip}</p>
+                    <p>{order.phone}</p>
+                  </div>
                 </div>
-                <div className="order-category"></div>
-                <li>{item.last_name}</li>
-                <div className="order-category"></div>
-                <li>{item.address}</li>
-                <div className="order-category"></div>
-                <li>{item.city}</li>
-                {item.is_delivered ? <li>Yes</li> : <li>No</li>}
-                {item.is_payed ? <li>Yes</li> : <li>No</li>}
-              </ul>
-            );
-          })}
+                <p>Payment type: {order.payment_type}</p>
+                <p>
+                  Payed For?{" "}
+                  {order.is_payed ? <span>Yes</span> : <span>No</span>}
+                </p>
+                <p>
+                  Delivered?{" "}
+                  {order.is_delivered ? <span>Yes</span> : <span>No</span>}
+                </p>
+                <p>Calendars: {order.order_items[0].quantity}</p>
+                <p>Extra Events: {order.order_items[1].quantity}</p>
+                <p>Events: {order.order_events.length}</p>
+                <p>Total ${order.total}</p>
+              </div>
+            </>
+          ))}
         </div>
       </div>
     </>
