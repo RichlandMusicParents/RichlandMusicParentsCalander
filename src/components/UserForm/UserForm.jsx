@@ -47,6 +47,17 @@ function UserForm() {
 
   }, []);
 
+  // const eventHandleSubmit = () => {
+  //   dispatch({
+  //       type:`USER_ADD_EVENT`,
+  //       payload: {
+  //           eventOption,
+  //           date,
+  //           eventFor
+
+  //       },
+  //   });
+
   const handleSubmit = () => {
     let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
 
@@ -76,10 +87,10 @@ setPayment({ method: null, details: null }),
 setTotal("")
   };
 
-    const handleAddEvent = () => {
-    setNumEvents(numEvents + 1);
-    setTotal(total + (numEvents > 4 ? 0.5 : 0));
-  }
+  //   const handleAddEvent = () => {
+  //   setNumEvents(numEvents + 1);
+  //   setTotal(total + (numEvents > 4 ? 0.5 : 0));
+  // }
 
   return (
     <div

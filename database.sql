@@ -208,9 +208,14 @@ WHERE
 
 CREATE TABLE "orders" (
 	"id" serial PRIMARY KEY,
+<<<<<<< HEAD
 	"firstname" varchar(255) NOT NULL,
 	"lastname" varchar(255) NOT NULL,
 	"total" decimal NOT NULL,
+=======
+	"first_name" varchar(255) NOT NULL,
+	"last_name" varchar(255) NOT NULL,
+>>>>>>> origin
 	"address" varchar(255) NOT NULL,
 	"city" varchar NOT NULL,
 	"state" varchar NOT NULL,
