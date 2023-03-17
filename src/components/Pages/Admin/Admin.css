@@ -1,0 +1,26 @@
+table {
+  border: 1px solid black;
+}
+
+.order-card {
+  width: 25rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.address {
+  text-align: center;
+}
+.orders {
+  display: flex;
+}
+
+.order-card h2 {
+  text-align: center;
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

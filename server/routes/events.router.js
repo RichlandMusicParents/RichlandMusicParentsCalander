@@ -14,9 +14,13 @@ router.get("/all-events", rejectUnauthenticated, (req, res) => {
   }
 
   const text = `
-    SELECT
-	*
-    FROM
+  SELECT
+	*,
+	(SELECT 
+	"user".first_name FROM "user" WHERE "user".id = "event".user_id ),
+		(SELECT 
+	"user".last_name FROM "user" WHERE "user".id = "event".user_id )
+FROM
 	"event";
     `;
 
@@ -75,7 +79,7 @@ router.post("/admin-add-event/", rejectUnauthenticated, (req, res) => {
   const text = `
   INSERT INTO "event" ("event_type", "event_date", "event_name", "user_id", "calendar_id")
 	VALUES ($1, $2, $3, $4, $5)
-  RETURNING "id";
+  RETURNING *;
     `;
   if (req.user.is_admin === true) {
     pool
