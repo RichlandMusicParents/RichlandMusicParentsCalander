@@ -94,6 +94,8 @@ INSERT INTO "calendar" ("calendar_year")
 
 CREATE TABLE "order_details" (
 	"id" serial PRIMARY KEY,
+	"firstname" varchar(255) NOT NULL,
+	"lastname" varchar(255) NOT NULL,
 	"total" decimal NOT NULL,
 	"address" varchar(255) NOT NULL,
 	"city" varchar NOT NULL,

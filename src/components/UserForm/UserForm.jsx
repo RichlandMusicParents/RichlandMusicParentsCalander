@@ -31,17 +31,16 @@ function UserForm() {
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
   const [eventFor, setEventFor] = useState("");
-  const [total, setTotal] = useState("")
-  const [payment, setPayment] = useState({
-    method: null,
-    details: null,
-  });
+  const [total, setTotal] = useState(15);
+  const [payment, setPayment] = useState({ method: "" });
+  const [numCalendars, setNumCalendars] = useState(1);
   
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
-  const [delivery, setDelivery] = useState('Delivery')
+  const [events, setEvents] = useState([]);
+  const [numEvents, setNumEvents] = useState(0);
 
   useEffect(() => {
     dispatch({ type: "FETCH_ORDER"});
@@ -49,6 +48,7 @@ function UserForm() {
   }, []);
 
   const handleSubmit = () => {
+    let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
 
     dispatch({
         type:"ADD_ORDER",
@@ -76,6 +76,10 @@ setPayment({ method: null, details: null }),
 setTotal("")
   };
 
+    const handleAddEvent = () => {
+    setNumEvents(numEvents + 1);
+    setTotal(total + (numEvents > 4 ? 0.5 : 0));
+  }
 
   return (
     <div
