@@ -129,6 +129,7 @@ router.post("/", (req, res) => {
   const {
     first_name,
     last_name,
+    total,
     address,
     city,
     state,
@@ -141,8 +142,10 @@ router.post("/", (req, res) => {
 
   pool
     .query(queryText, [
+
       first_name,
       last_name,
+      total,
       address,
       city,
       state,
