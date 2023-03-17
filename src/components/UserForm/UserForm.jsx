@@ -21,9 +21,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 function UserForm() {
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order);
   console.log("in order", orders);
+
+  console.log(user);
 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -34,7 +36,7 @@ function UserForm() {
   const [total, setTotal] = useState(15);
   const [payment, setPayment] = useState({ method: "" });
   const [numCalendars, setNumCalendars] = useState(1);
-  
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [eventOption, setEventOption] = useState(null);
@@ -42,9 +44,9 @@ function UserForm() {
   const [events, setEvents] = useState([]);
   const [numEvents, setNumEvents] = useState(0);
 
+  console.log(firstName);
   useEffect(() => {
-    dispatch({ type: "FETCH_ORDER"});
-
+    dispatch({ type: "FETCH_ORDER" });
   }, []);
 
   // const eventHandleSubmit = () => {
@@ -62,35 +64,35 @@ function UserForm() {
     let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
 
     dispatch({
-        type:"ADD_ORDER",
-        payload: {
-            firstName,
-            lastName,
-            address,
-            city,
-            state,
-            zip,
-            phone,
-            payment, 
-            total
-        },
+      type: "ADD_ORDER",
+      payload: {
+        firstName,
+        lastName,
+        address,
+        city,
+        state,
+        zip,
+        phone,
+        payment,
+        total,
+      },
     });
-history.push("/registration")
-setFirstName(""),
-setLastName(""),
-setAddress(""),
-setCity(""),
-setState(""),
-setZip(""),
-setPhone(""),
-setPayment({ method: null, details: null }),
-setTotal("")
+    history.push("/registration");
+    setFirstName(""),
+      setLastName(""),
+      setAddress(""),
+      setCity(""),
+      setState(""),
+      setZip(""),
+      setPhone(""),
+      setPayment({ method: null, details: null }),
+      setTotal("");
   };
 
-    const handleAddEvent = () => {
+  const handleAddEvent = () => {
     setNumEvents(numEvents + 1);
     setTotal(total + (numEvents > 4 ? 0.5 : 0));
-  }
+  };
 
   return (
     <div
@@ -98,104 +100,111 @@ setTotal("")
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
-      }}>
+      }}
+    >
       <Grid
         container
         spacing={3}
         justifyContent="center"
-        sx={{ marginTop: "40px", marginBottom: "-10px" }}>
+        sx={{ marginTop: "40px", marginBottom: "-10px" }}
+      >
         <Grid item xs={12} md={13}>
           <Card
-            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}>
+            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}
+          >
             <h1>Richland Music Parents</h1>
             <h2>Listing Form</h2>
 
             <CardContent>
-              <TextField label="First Name"
-               type="text"
-               name="firstname"
-               value={firstName}
-               required
-               onChange={(event) => setFirstName(event.target.value)}
-               sx={{ marginBottom: "10px", width: "50%" }} />
-            </CardContent>
-
-            <CardContent>
-              <TextField 
-              label="Last Name" 
-              type="text"
-              name="lastname"
-              value={lastName}
-              required
-              onChange={(event) => setLastName(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}
+              <TextField
+                label="First Name"
+                type="text"
+                name="firstname"
+                value={firstName}
+                required
+                onChange={(event) => setFirstName(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
               />
             </CardContent>
 
             <CardContent>
-              <TextField 
-              label="Address"
-              type="text"
-              name="address"
-              value={address}
-              required
-              onChange={(event) => setAddress(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}
-               />
+              <TextField
+                label="Last Name"
+                type="text"
+                name="lastname"
+                value={lastName}
+                required
+                onChange={(event) => setLastName(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
 
             <CardContent>
-              <TextField 
-              label="City"
-              type="text"
-              name="city"
-              value={city}
-              required
-              onChange={(event) => setCity(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}
-               />
+              <TextField
+                label="Address"
+                type="text"
+                name="address"
+                value={address}
+                required
+                onChange={(event) => setAddress(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
+            </CardContent>
+
+            <CardContent>
+              <TextField
+                label="City"
+                type="text"
+                name="city"
+                value={city}
+                required
+                onChange={(event) => setCity(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
             <CardContent>
               <TextField
-            label="State"
-            type="text"
-            name="state"
-            value={state}
-            required
-            onChange={(event) => setState(event.target.value)}
-            sx={{ marginBottom: "10px", width: "50%" }}
-              
+                label="State"
+                type="text"
+                name="state"
+                value={state}
+                required
+                onChange={(event) => setState(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
               />
             </CardContent>
             <CardContent>
-              <TextField 
-              label="Zip Code" 
-               type="text"
-               name="zip"
-               value={zip}
-               required
-               onChange={(event) => setZip(event.target.value)}
-               sx={{ marginBottom: "10px", width: "50%" }}/>
+              <TextField
+                label="Zip Code"
+                type="text"
+                name="zip"
+                value={zip}
+                required
+                onChange={(event) => setZip(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
             <CardContent>
-              <TextField 
-              label="Phone Number" 
-              type="text"
-              name="phone"
-              value={phone}
-              required
-              onChange={(event) => setPhone(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}/>
+              <TextField
+                label="Phone Number"
+                type="text"
+                name="phone"
+                value={phone}
+                required
+                onChange={(event) => setPhone(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
             <CardContent>
-              <TextField 
-              label="Event for" 
-              type="text"
-              name="Event for"
-              value={eventFor}
-              required
-              onChange={(event) => setEventFor(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}/>
+              <TextField
+                label="Event for"
+                type="text"
+                name="Event for"
+                value={eventFor}
+                required
+                onChange={(event) => setEventFor(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker />
@@ -203,12 +212,13 @@ setTotal("")
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
-              <Select labelId="payment-select" 
-              label="Event Options"
-              value={payment.method}
-              onChange={(event) =>
-                setPayment({ ...payment, method: event.target.value })
-              }
+              <Select
+                labelId="payment-select"
+                label="Event Options"
+                value={payment.method}
+                onChange={(event) =>
+                  setPayment({ ...payment, method: event.target.value })
+                }
               >
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
@@ -228,27 +238,24 @@ setTotal("")
 
             <Button onClick={handleSubmit}> Check Out </Button>
 
-          
-            <Button > Add Event </Button>
+            <Button> Add Event </Button>
 
             <br />
-            <br/>
-           
-                {orders.map((order) => ( 
-                <div key={order.id}>
-                    <p>
-                        {order.address}
-                        {order.city}
-                        {order.state}
-                        {order.zip}
-                        {order.phone}
-                        {order.payment}
-                        <h4>Total:{order.total}</h4>
-                    
-                    </p>
-                    </div>
-                ))}
-        
+            <br />
+
+            {orders.map((order) => (
+              <div key={order.id}>
+                <p>
+                  {order.address}
+                  {order.city}
+                  {order.state}
+                  {order.zip}
+                  {order.phone}
+                  {order.payment}
+                  <h4>Total:{order.total}</h4>
+                </p>
+              </div>
+            ))}
           </Card>
         </Grid>
       </Grid>

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import "../Admin/Admin.css";
+import AdminEvents from "./AdminEvents";
 
 export default function Admin() {
   const events = useSelector((store) => store.adminReducer.allEvents);
@@ -19,33 +20,7 @@ export default function Admin() {
   return (
     <>
       <h1>Hello, {user.first_name}</h1>
-      <div className="events">
-        <header className="events-header">
-          <h2>All Created Events</h2>
-        </header>
-        <table className="events-table">
-          <thead>
-            <tr>
-              <th>Event Type</th>
-              <th>Event Date</th>
-              <th>Event Name</th>
-              <th>Created By</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((item) => (
-              <tr key={item.id}>
-                <td>{item.event_type}</td>
-                <td>{format(new Date(item.event_date), "MM/dd/yy")}</td>
-                <td>{item.event_name}</td>
-                <td>
-                  {item.first_name} {item.last_name}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <AdminEvents />
       <div className="section">
         <header className="orders-header">
           <h2>All Created Orders</h2>
