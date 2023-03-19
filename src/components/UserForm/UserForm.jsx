@@ -40,6 +40,12 @@ function UserForm() {
 // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
+<<<<<<< HEAD
+=======
+  
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+>>>>>>> origin
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState([]);
