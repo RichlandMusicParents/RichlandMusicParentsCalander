@@ -24,27 +24,30 @@ function UserForm() {
 
   const orders = useSelector((store) => store.order);
   console.log("in order", orders);
-
+// order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
-  const [eventFor, setEventFor] = useState("");
   const [total, setTotal] = useState(15);
   const [payment, setPayment] = useState({ method: "" });
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [isDelivered, setIsDelivered] = useState(false);
+  const [isPayed, setIsPayed] = useState(false);
+// event form
+  const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
-  
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState([]);
   const [numEvents, setNumEvents] = useState(0);
 
-  useEffect(() => {
-    dispatch({ type: "FETCH_ORDER"});
 
+  useEffect(() => {
+    dispatch({ type: "FETCH_ORDER" });
   }, []);
 
   // const eventHandleSubmit = () => {
@@ -62,36 +65,38 @@ function UserForm() {
   //           date,
   //           eventFor
 
-        },
-    });
+  //     },
+  // });
 
   const handleSubmit = () => {
-    let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
-
     dispatch({
-        type:"ADD_ORDER",
-        payload: {
-            firstName,
-            lastName,
-            address,
-            city,
-            state,
-            zip,
-            phone,
-            payment, 
-            total
-        },
+      type: "ADD_ORDER",
+      payload: {
+        first_name,
+        last_name,
+        email,
+        address,
+        city,
+        state,
+        zip,
+        phone,
+        payment,
+        total,
+        isDelivered,
+        isPayed
+      },
     });
-history.push("/registration")
-setFirstName(""),
-setLastName(""),
-setAddress(""),
-setCity(""),
-setState(""),
-setZip(""),
-setPhone(""),
-setPayment({ method: null, details: null }),
-setTotal("")
+    history.push("/registration");
+    setFirstName(""),
+      setLastName(""),
+      setEmail(""),
+      setAddress(""),
+      setCity(""),
+      setState(""),
+      setZip(""),
+      setPhone(""),
+      setPayment({ method: null }),
+      setTotal("");
   };
 
   //   const handleAddEvent = () => {
@@ -118,91 +123,106 @@ setTotal("")
             <h2>Listing Form</h2>
 
             <CardContent>
-              <TextField label="First Name"
-               type="text"
-               name="firstname"
-               value={firstName}
-               required
-               onChange={(event) => setFirstName(event.target.value)}
-               sx={{ marginBottom: "10px", width: "50%" }} />
-            </CardContent>
-
-            <CardContent>
-              <TextField 
-              label="Last Name" 
-              type="text"
-              name="lastname"
-              value={lastName}
-              required
-              onChange={(event) => setLastName(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}
+              <TextField
+                label="First Name"
+                type="text"
+                name="firstname"
+                value={first_name}
+                required
+                onChange={(event) => setFirstName(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
               />
             </CardContent>
 
             <CardContent>
-              <TextField 
-              label="Address"
-              type="text"
-              name="address"
-              value={address}
-              required
-              onChange={(event) => setAddress(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}
-               />
-            </CardContent>
-
-            <CardContent>
-              <TextField 
-              label="City"
-              type="text"
-              name="city"
-              value={city}
-              required
-              onChange={(event) => setCity(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}
-               />
+              <TextField
+                label="Last Name"
+                type="text"
+                name="lastname"
+                value={last_name}
+                required
+                onChange={(event) => setLastName(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
             <CardContent>
               <TextField
-            label="State"
-            type="text"
-            name="state"
-            value={state}
-            required
-            onChange={(event) => setState(event.target.value)}
-            sx={{ marginBottom: "10px", width: "50%" }}
-              
+                label="Email"
+                type="text"
+                name="email"
+                value={email}
+                required
+                onChange={(event) => setEmail(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
+            </CardContent>
+
+            <CardContent>
+              <TextField
+                label="Address"
+                type="text"
+                name="address"
+                value={address}
+                required
+                onChange={(event) => setAddress(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
+            </CardContent>
+
+            <CardContent>
+              <TextField
+                label="City"
+                type="text"
+                name="city"
+                value={city}
+                required
+                onChange={(event) => setCity(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
               />
             </CardContent>
             <CardContent>
-              <TextField 
-              label="Zip Code" 
-               type="text"
-               name="zip"
-               value={zip}
-               required
-               onChange={(event) => setZip(event.target.value)}
-               sx={{ marginBottom: "10px", width: "50%" }}/>
+              <TextField
+                label="State"
+                type="text"
+                name="state"
+                value={state}
+                required
+                onChange={(event) => setState(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
             <CardContent>
-              <TextField 
-              label="Phone Number" 
-              type="text"
-              name="phone"
-              value={phone}
-              required
-              onChange={(event) => setPhone(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}/>
+              <TextField
+                label="Zip Code"
+                type="text"
+                name="zip"
+                value={zip}
+                required
+                onChange={(event) => setZip(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
             <CardContent>
-              <TextField 
-              label="Event for" 
-              type="text"
-              name="Event for"
-              value={eventFor}
-              required
-              onChange={(event) => setEventFor(event.target.value)}
-              sx={{ marginBottom: "10px", width: "50%" }}/>
+              <TextField
+                label="Phone Number"
+                type="text"
+                name="phone"
+                value={phone}
+                required
+                onChange={(event) => setPhone(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
+            </CardContent>
+            <CardContent>
+              <TextField
+                label="Event for"
+                type="text"
+                name="Event for"
+                value={eventFor}
+                required
+                onChange={(event) => setEventFor(event.target.value)}
+                sx={{ marginBottom: "10px", width: "50%" }}
+              />
             </CardContent>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker />
@@ -210,13 +230,13 @@ setTotal("")
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
-              <Select labelId="payment-select" 
-              label="Event Options"
-              value={payment.method}
-              onChange={(event) =>
-                setPayment({ ...payment, method: event.target.value })
-              }
-              >
+              <Select
+                labelId="payment-select"
+                label="Event Options"
+                value={payment.method}
+                onChange={(event) =>
+                  setPayment({ ...payment, method: event.target.value })
+                }>
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
                 <MenuItem value={"Check"}> Check </MenuItem>
@@ -232,30 +252,62 @@ setTotal("")
                 <MenuItem value={"In Memory Of"}> In Memory Of </MenuItem>
               </Select>
             </FormControl>
-
+            <Button> Add Event </Button>
             <Button onClick={handleSubmit}> Check Out </Button>
 
-          
-            <Button onClick={eventHandleSubmit} > Add Event </Button>
+            <h6>Delivered?</h6>
+            
+            <label for="no">No</label>
+            <input
+              type="radio"
+              name="isDelivered"
+              value="no"
+              checked={true}
+              onChange={() => {}}
+            />
+            <label for="yes">Yes</label>
+            <input
+              type="radio"
+              name="isDelivered"
+              value="yes"
+              checked={isDelivered}
+              onChange={() => {}}
+            />
 
+           <div>
+           <h6>Paid?</h6>
+            <label for="no">No</label>
+            <input
+              type="radio"
+              name="isPayed"
+              value="no"
+              checked={true}
+              onChange={() => {}}
+            />
+            <label for="yes">Yes</label>
+            <input
+              type="radio"
+              name="isPaid"
+              value="yes"
+              checked={isPayed}
+              onChange={() => {}}
+            />
+           </div>
             <br />
-            <br/>
-           
-                {orders.map((order) => ( 
-                <div key={order.id}>
-                    <p>
-                        {order.address}
-                        {order.city}
-                        {order.state}
-                        {order.zip}
-                        {order.phone}
-                        {order.payment}
-                        <h4>Total:{order.total}</h4>
-                    
-                    </p>
-                    </div>
-                ))}
-        
+
+            {orders.map((order) => (
+              <div key={order.id}>
+                <p>
+                  {order.address}
+                  {order.city}
+                  {order.state}
+                  {order.zip}
+                  {order.phone}
+                  {order.payment}
+                  <h4>Total:{order.total}</h4>
+                </p>
+              </div>
+            ))}
           </Card>
         </Grid>
       </Grid>
