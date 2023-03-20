@@ -100,23 +100,6 @@ WHERE "orders"."user_id" = $1;
   }
 });
 
-// router.get("/", (req, res) => {
-//   const queryText = `SELECT * FROM order_details`;
-
-//   pool
-//     .query(queryText)
-//     .then((result) => {
-//       res.send(result.rows);
-//     })
-//     .catch((err) => {
-//       console.error("Error in GET all order details", err);
-//       res.sendStatus(500);
-//     });
-// });
-
-/**
- * POST route template
- */
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
   const userId = req.user.id;
@@ -156,7 +139,7 @@ router.post("/", (req, res) => {
       total,
       is_payed,
       is_delivered,
-      userId
+      userId,
     ])
     .then((result) => {
       res.send(result.rows[0]);

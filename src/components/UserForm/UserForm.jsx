@@ -59,6 +59,7 @@ function UserForm() {
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
+  console.log(date);
 
   console.log(firstName);
   useEffect(() => {
