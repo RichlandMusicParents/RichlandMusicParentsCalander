@@ -35,7 +35,8 @@ function UserForm() {
   const calendars = useSelector((store) => store.calendar);
   //console.log("in calendar", calendars);
   // order details form
-
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -44,8 +45,8 @@ function UserForm() {
   const [total, setTotal] = useState(0);
   const [payment, setPayment] = useState("");
   const [email, setEmail] = useState("");
-  const [isDelivered, setIsDelivered] = useState(false);
-  const [isPayed, setIsPayed] = useState(false);
+  // const [isDelivered, setIsDelivered] = useState(false);
+  // const [isPayed, setIsPayed] = useState(false);
   // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
@@ -83,10 +84,8 @@ function UserForm() {
     dispatch({
       type: "ADD_ORDER",
       payload: {
-
         first_name,
         last_name,
-
         email,
         address,
         city,
@@ -147,7 +146,7 @@ function UserForm() {
                 label="First Name"
                 type="text"
                 name="firstname"
-                value={firstName}
+                value={first_name}
                 required
                 onChange={(event) => setFirstName(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
@@ -159,7 +158,7 @@ function UserForm() {
                 label="Last Name"
                 type="text"
                 name="lastname"
-                value={lastName}
+                value={last_name}
                 required
                 onChange={(event) => setLastName(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
