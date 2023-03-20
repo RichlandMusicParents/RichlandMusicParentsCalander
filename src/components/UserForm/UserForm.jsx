@@ -43,8 +43,6 @@ function UserForm() {
   const [phone, setPhone] = useState("");
   const [total, setTotal] = useState(0);
   const [payment, setPayment] = useState("");
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [isDelivered, setIsDelivered] = useState(false);
   const [isPayed, setIsPayed] = useState(false);
@@ -53,42 +51,42 @@ function UserForm() {
   const [numCalendars, setNumCalendars] = useState(1);
 
 
-
   const [selectCalendarId, setSelectedCalendarID] = useState(null);
 
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
+  console.log(date);
 
   
   useEffect(() => {
-
     dispatch({ type: "FETCH_ORDER" });
 
     dispatch({ type: "FETCH_CALENDAR" });
-
   }, []);
 
   // Dispatch for the events
- 
+
   const eventHandleSubmit = () => {
     dispatch({
       type: "ADD_EVENTS",
       payload: {
         event_type: eventOption,
-       event_date: date.$d,
-       event_name: eventFor
+        event_date: date.$d,
+        event_name: eventFor,
       },
-    })};
-
+    });
+  };
 
   const handleSubmit = () => {
     dispatch({
       type: "ADD_ORDER",
       payload: {
+
         first_name,
         last_name,
+
         email,
         address,
         city,
@@ -111,7 +109,6 @@ function UserForm() {
     setPhone("");
     setPayment("");
     setTotal("");
-
   };
 
   const handleAddEvent = () => {
@@ -119,12 +116,10 @@ function UserForm() {
     setTotal(total + (numEvents > 4 ? 0.5 : 0));
   };
 
-
   const handleAddCalendar = () => {
     setNumCalendars(numCalendars + 1);
     setTotal(total + 15);
   };
-
 
   return (
     <div
@@ -152,8 +147,7 @@ function UserForm() {
                 label="First Name"
                 type="text"
                 name="firstname"
-
-                value={first_name}
+                value={firstName}
                 required
                 onChange={(event) => setFirstName(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
@@ -165,8 +159,7 @@ function UserForm() {
                 label="Last Name"
                 type="text"
                 name="lastname"
-
-                value={last_name}
+                value={lastName}
                 required
                 onChange={(event) => setLastName(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
@@ -181,7 +174,6 @@ function UserForm() {
                 required
                 onChange={(event) => setEmail(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
-
               />
             </CardContent>
 
@@ -222,9 +214,7 @@ function UserForm() {
             <CardContent>
               <TextField
                 label="Zip Code"
-
                 type="number"
-
                 name="zip"
                 value={zip}
                 required
@@ -264,7 +254,8 @@ function UserForm() {
                 labelId="payment-select"
                 label="Payment Options"
                 value={payment}
-                onChange={(event) => setPayment(event.target.value)}>
+                onChange={(event) => setPayment(event.target.value)}
+              >
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
                 <MenuItem value={"Check"}> Check </MenuItem>
@@ -280,7 +271,8 @@ function UserForm() {
                 name="selectedCaledarId"
                 onChange={(event) => setSelectedCalendarID(event.target.value)}
                 id="calendar"
-                value={selectCalendarId}>
+                value={selectCalendarId}
+              >
                 {calendars.map((calendar) => (
                   <MenuItem value={calendar.id} key={calendar.id}>
                     {calendar.calendar_name}
@@ -312,19 +304,17 @@ function UserForm() {
                 labelId="event-select"
                 label="Event Options"
                 value={events}
-                onChange={(event) => setEvents(event.target.value)}>
+                onChange={(event) => setEvents(event.target.value)}
+              >
                 <MenuItem value={"Birthday"}> Birthday </MenuItem>
                 <MenuItem value={"Aniversary"}> Anniversary </MenuItem>
                 <MenuItem value={"In Memory Of"}> In Memory Of </MenuItem>
               </Select>
             </FormControl>
-            <Button onClick={eventHandleSubmit} > Add Event </Button>
+            <Button onClick={eventHandleSubmit}> Add Event </Button>
             <Button onClick={handleSubmit}> Check Out </Button>
 
             <h4>Total: {total}</h4>
-
-
-
 
           </Card>
         </Grid>
