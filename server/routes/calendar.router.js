@@ -80,4 +80,31 @@ DELETE FROM "calendar"
     res.sendStatus(403);
   }
 });
+
+
+router.get('/', (req, res) => {
+  const queryText = 'SELECT * FROM "calendar"';
+  pool.query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log('Error getting calendar', error);
+      res.sendStatus(500);
+    });
+});
+
+router.post("/", (req, res) => {
+  const queryText = `INSERT INTO calendar (calendar_name)
+  VALUES ($1) RETURNING * `;
+  pool.query(queryText, [req.body.calendar_name])
+  .then((result) => {
+    res.send(result.rows[0])
+  })
+  .catch((error) => {
+    console.log('Error adding calendar', error);
+    res.sendStatus(500);
+  });
+});
+
 module.exports = router;

@@ -6,7 +6,7 @@ function SplashPage() {
   const history = useHistory();
 
   function getStartedButton() {
-    history.push("/userform");
+    history.push("/login");
   }
   return (
     <>
