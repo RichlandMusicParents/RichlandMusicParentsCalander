@@ -33,7 +33,9 @@ function UserForm() {
 
   //console.log("in order", orders);
   const calendars = useSelector((store) => store.calendar);
-  //console.log("in calendar", calendars);
+
+ 
+     
   // order details form
 
   const [address, setAddress] = useState("");
@@ -50,8 +52,8 @@ function UserForm() {
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
 
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const [selectCalendarId, setSelectedCalendarID] = useState(null);
 
@@ -59,29 +61,46 @@ function UserForm() {
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
-  console.log(date);
 
-  console.log(firstName);
+ 
+
+ 
   useEffect(() => {
     dispatch({ type: "FETCH_ORDER" });
 
     dispatch({ type: "FETCH_CALENDAR" });
+
   }, []);
 
+  // Mapping over calendar store to grab the id to be passed to eventHandleSubmit
+  {calendars.map((calendar) => (
+    <section key={calendar.id}>
+      
+        
+        
+    
+       </section>))}
+
   // Dispatch for the events
+  
 
   const eventHandleSubmit = () => {
+
+    
     dispatch({
+      
       type: "ADD_EVENTS",
       payload: {
         event_type: eventOption,
         event_date: date.$d,
         event_name: eventFor,
+        calendar_id: calendar.id
       },
     });
   };
 
   const handleSubmit = () => {
+    
     dispatch({
       type: "ADD_ORDER",
       payload: {
@@ -123,6 +142,7 @@ function UserForm() {
 
   return (
     <div
+    
       style={{
         display: "flex",
         justifyContent: "center",
@@ -139,6 +159,7 @@ function UserForm() {
           <Card
             sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}
           >
+            
             <h1>Richland Music Parents</h1>
             <h2>Listing Form</h2>
             <UserPage />
