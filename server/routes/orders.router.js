@@ -100,30 +100,31 @@ WHERE "orders"."user_id" = $1;
   }
 });
 
-router.get("/", (req, res) => {
-  const queryText = `SELECT * FROM order_details`;
+// router.get("/", (req, res) => {
+//   const queryText = `SELECT * FROM order_details`;
 
-  pool
-    .query(queryText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((err) => {
-      console.error("Error in GET all order details", err);
-      res.sendStatus(500);
-    });
-});
+//   pool
+//     .query(queryText)
+//     .then((result) => {
+//       res.send(result.rows);
+//     })
+//     .catch((err) => {
+//       console.error("Error in GET all order details", err);
+//       res.sendStatus(500);
+//     });
+// });
 
 /**
  * POST route template
  */
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
+  const userId = req.user.id;
 
   const queryText = `INSERT INTO orders (
-   first_name, last_name, address, city, state, zip, phone, payment_type, user_id, email
+   first_name, last_name, address, city, state, zip, phone, payment_type, email, total,  is_payed, is_delivered, user_id
 ) VALUES (
-    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
+    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
 );`;
 
   const {
@@ -136,23 +137,26 @@ router.post("/", (req, res) => {
     zip,
     phone,
     payment_type,
-    user_id,
     email,
+    is_payed,
+    is_delivered,
   } = req.body;
 
   pool
     .query(queryText, [
       first_name,
       last_name,
-      total,
       address,
       city,
       state,
       zip,
       phone,
       payment_type,
-      user_id,
       email,
+      total,
+      is_payed,
+      is_delivered,
+      userId
     ])
     .then((result) => {
       res.send(result.rows[0]);
