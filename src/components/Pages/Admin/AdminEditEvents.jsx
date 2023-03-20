@@ -18,7 +18,6 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
-import { height } from "@mui/system";
 
 export default function AdminEvents() {
   const events = useSelector((store) => store.adminReducer.allEvents);
@@ -245,13 +244,13 @@ export default function AdminEvents() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={5}
+          rowsPerPageOptions={[5]}
           component="div"
           count={events.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
     </>
