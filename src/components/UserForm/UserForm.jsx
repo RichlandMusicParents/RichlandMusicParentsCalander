@@ -59,23 +59,18 @@ function UserForm() {
     dispatch({ type: "FETCH_CALENDAR" });
   }, []);
 
-  // const eventHandleSubmit = () => {
-  //   dispatch({
-  //       type:`USER_ADD_EVENT`,
-  //       payload: {
-  //           eventOption,
-  //           date,
-  //           eventFor
-  // const eventHandleSubmit = () => {
-  //   dispatch({
-  //       type:`USER_ADD_EVENT`,
-  //       payload: {
-  //           eventOption,
-  //           date,
-  //           eventFor
+  // Dispatch for the events
+ 
+  const eventHandleSubmit = () => {
+    dispatch({
+      type: "ADD_EVENTS",
+      payload: {
+        event_type: eventOption,
+       event_date: date.$d,
+       event_name: eventFor
+      },
+    })};
 
-  //     },
-  // });
 
   const handleSubmit = () => {
     dispatch({
@@ -96,7 +91,7 @@ function UserForm() {
         calendar_id: selectCalendarId,
       },
     });
-    history.push("/invoiceCustomer");
+    history.push("/customerInvoice");
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -240,7 +235,7 @@ function UserForm() {
               />
             </CardContent>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker />
+              <DatePicker value={date} onChange={(date) => setDate(date)} />
             </LocalizationProvider>
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
@@ -303,7 +298,7 @@ function UserForm() {
                 <MenuItem value={"In Memory Of"}> In Memory Of </MenuItem>
               </Select>
             </FormControl>
-            <Button> Add Event </Button>
+            <Button onClick={eventHandleSubmit} > Add Event </Button>
             <Button onClick={handleSubmit}> Check Out </Button>
 
             <h4>Total: {total}</h4>

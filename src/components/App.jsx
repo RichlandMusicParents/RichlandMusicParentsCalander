@@ -21,6 +21,7 @@ import LoginPage from './Pages/LoginPage/LoginPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import SplashPage from './Pages/SplashPage/splashPage';
 import Invoice from './Pages/CustomerInvoice/invoice';
+//import EventForm from "./UserForm/EventForm";
 
 
 import "./App.css";
@@ -78,7 +79,7 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/userform" />
             ) : (
               // Otherwise, show the login page
               <LoginPage />
@@ -89,7 +90,7 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/userform" />
             ) : (
               // Otherwise, show the registration page
               <RegisterPage />
@@ -120,6 +121,11 @@ function App() {
           <Route path="/userform">
             <UserForm />
           </Route>
+
+          {/* <Route path="/event">
+            <EventForm />
+          </Route> */}
+
           <Route exact path="/admin">
             {user.is_admin ? (
               <Admin />
