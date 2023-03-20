@@ -53,7 +53,7 @@ function UserForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const [selectCalendarId, setSelectedCalendarID] = useState(null);
+  const [selectCalendarId, setSelectedCalendarID] = useState(0);
 
   const [eventOption, setEventOption] = useState("0");
   const [date, setDate] = useState("");
