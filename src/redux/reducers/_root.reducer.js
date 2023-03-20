@@ -4,6 +4,8 @@ import errors from "./errors.reducer";
 import user from "./user.reducer";
 import adminReducer from "./admin.reducer";
 import eventReducer from "./event.reducer";
+import product from "./product.reducer";
+import calendar from "./calendar.reducer";
 
 
 
@@ -24,6 +26,8 @@ const rootReducer = combineReducers({
   user,
   order, // will have an id and username if someone is logged in
   eventReducer,
+  product,
+  calendar,
 
 });
 
