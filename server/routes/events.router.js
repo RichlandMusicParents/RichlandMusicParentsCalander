@@ -96,10 +96,6 @@ router.post("/admin-add-event/", rejectUnauthenticated, (req, res) => {
 });
 
 router.put("/admin-edit-event/:id", rejectUnauthenticated, (req, res) => {
-  if (!req.user.is_admin) {
-    return res.sendStatus(401);
-  }
-
   const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
 
   const text = `
@@ -114,7 +110,7 @@ SET
 WHERE 
   "id" = $6;
     `;
-  if (req.user.is_admin === true) {
+  if (req.isAuthenticated()) {
     pool
       .query(text, [
         event_type,
