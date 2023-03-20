@@ -8,14 +8,17 @@ export default function Admin() {
   const events = useSelector((store) => store.adminReducer.allEvents);
   const orders = useSelector((store) => store.adminReducer.allOrders);
   const user = useSelector((store) => store.user);
+  // const orderItems = [];
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: "GET_ALL_EVENTS" });
     dispatch({ type: "ADMIN_GET_ALL_ORDERS" });
   }, [dispatch]);
   console.log(events);
-  console.log(orders);
+  console.log("orders:", orders);
   console.log(user);
+
+  // console.log(orders.order_items);
 
   return (
     <>
@@ -51,8 +54,8 @@ export default function Admin() {
                 Delivered?{" "}
                 {order.is_delivered ? <span>Yes</span> : <span>No</span>}
               </p>
-              <p>Calendars: {order.order_items[0].quantity}</p>
-              <p>Extra Events: {order.order_items[1].quantity}</p>
+              {/* <p>Calendars: {order.order_items[0].quantity}</p>s */}
+              {/* <p>Extra Events: {order.order_items}</p> */}
               <p>Events: {order.order_events.length}</p>
               <p>Total ${order.total}</p>
             </div>

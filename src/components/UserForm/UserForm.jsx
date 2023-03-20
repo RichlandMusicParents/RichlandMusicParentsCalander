@@ -72,11 +72,13 @@ function UserForm() {
 
   const eventHandleSubmit = () => {
     dispatch({
-      type: "ADD_EVENTS",
+      type: "ADMIN_ADD_EVENTS",
       payload: {
         event_type: eventOption,
-        event_date: date.$d,
+        event_date: date,
         event_name: eventFor,
+        user_id: user.id,
+        calendar_id: selectCalendarId,
       },
     });
   };
@@ -93,9 +95,8 @@ function UserForm() {
         state,
         zip,
         phone,
-        payment,
+        payment_type: payment,
         total,
-        calendar_id: selectCalendarId,
       },
     });
     history.push("/customerInvoice");
@@ -244,9 +245,17 @@ function UserForm() {
                 sx={{ marginBottom: "10px", width: "50%" }}
               />
             </CardContent>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker value={date} onChange={(date) => setDate(date)} />
-            </LocalizationProvider>
+            </LocalizationProvider> */}
+            <TextField
+              sx={{
+                width: 150,
+              }}
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
@@ -325,4 +334,3 @@ function UserForm() {
 }
 
 export default UserForm;
-
