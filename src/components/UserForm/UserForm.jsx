@@ -5,7 +5,6 @@ import {
   Grid,
   Card,
   CardContent,
-  CardActions,
   TextField,
   Button,
   Select,
@@ -13,16 +12,10 @@ import {
   MenuItem,
   FormControl,
   Input,
-  Radio,
 } from "@mui/material";
-import FormLabel from "@mui/material/FormLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 
 import { useHistory } from "react-router-dom";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+
 import UserPage from "../Pages/UserPage/UserPage";
 
 function UserForm() {
@@ -31,12 +24,7 @@ function UserForm() {
   const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order);
 
-  //console.log("in order", orders);
   const calendars = useSelector((store) => store.calendar);
-
- 
-     
-  // order details form
 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -46,28 +34,15 @@ function UserForm() {
   const [total, setTotal] = useState(0);
   const [payment, setPayment] = useState("");
   const [email, setEmail] = useState("");
-  const [isDelivered, setIsDelivered] = useState(false);
-  const [isPayed, setIsPayed] = useState(false);
-  // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
   const [selectCalendarId, setSelectedCalendarID] = useState(0);
-
   const [eventOption, setEventOption] = useState("0");
   const [date, setDate] = useState("");
-  const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
-
- 
-
- 
   useEffect(() => {
-    dispatch({ type: "FETCH_ORDER" });
-
     dispatch({ type: "FETCH_CALENDAR" });
 
   }, []);
@@ -267,9 +242,6 @@ function UserForm() {
                 sx={{ marginBottom: "10px", width: "50%" }}
               />
             </CardContent>
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker value={date} onChange={(date) => setDate(date)} />
-            </LocalizationProvider> */}
             <TextField
               sx={{
                 width: 150,
