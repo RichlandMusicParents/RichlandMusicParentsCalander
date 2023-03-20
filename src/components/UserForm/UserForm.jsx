@@ -12,6 +12,7 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
+  Input
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -31,7 +32,7 @@ function UserForm() {
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
-  const [total, setTotal] = useState(15);
+  const [total, setTotal] = useState(0);
   const [payment, setPayment] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -100,10 +101,15 @@ function UserForm() {
       setTotal("");
   };
 
-  //   const handleAddEvent = () => {
-  //   setNumEvents(numEvents + 1);
-  //   setTotal(total + (numEvents > 4 ? 0.5 : 0));
-  // }
+    const handleAddEvent = () => {
+    setNumEvents(numEvents + 1);
+    setTotal(total + (numEvents > 4 ? 0.5 : 0));
+  }
+
+  const handleAddCalendar = () => {
+setNumCalendars(numCalendars + 1);
+setTotal(total + 15)
+  }
 
   return (
     <div
@@ -242,6 +248,16 @@ function UserForm() {
                 <MenuItem value={"Check"}> Check </MenuItem>
               </Select>
             </FormControl>
+            <FormControl sx={{m: 1, width:300}}>
+            <InputLabel htmlFor="numCalendars">Number of Calendars</InputLabel>
+            <Input
+             id="numCalendars"
+             type="number"
+             value={numCalendars}
+             onChange={(event) => setNumCalendars(Number(event.target.value))}
+              />
+              <Button onClick={handleAddCalendar}> Add Calendar</Button>
+              </FormControl>
 
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Event Options</InputLabel>
@@ -253,7 +269,10 @@ function UserForm() {
               </Select>
             </FormControl>
             <Button> Add Event </Button>
+        
             <Button onClick={handleSubmit}> Check Out </Button>
+
+            <h4>Total: {total}</h4>
 
             <h6>Delivered?</h6>
             
@@ -295,21 +314,7 @@ function UserForm() {
            </div>
             <br />
 
-            {orders.map((order) => (
-              <div key={order.id}>
-                <p>
-                  {order.address}
-                  {order.city}
-                  {order.state}
-                  {order.zip}
-                  {order.phone}
-                  {order.payment}
-                  <h4>Total:{order.total}</h4>
-                </p>
-    
-              </div>
-              
-            ))}
+            
           </Card>
         </Grid>
       </Grid>
