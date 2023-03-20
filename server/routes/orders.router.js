@@ -119,9 +119,10 @@ WHERE "orders"."user_id" = $1;
  */
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
+  const userId = req.user.id;
 
   const queryText = `INSERT INTO orders (
-   first_name, last_name, address, city, state, zip, phone, payment_type, user_id, email, total,  is_payed, is_delivered
+   first_name, last_name, address, city, state, zip, phone, payment_type, email, total,  is_payed, is_delivered, user_id
 ) VALUES (
     $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
 );`;
@@ -136,7 +137,6 @@ router.post("/", (req, res) => {
     zip,
     phone,
     payment_type,
-    user_id,
     email,
     is_payed,
     is_delivered,
@@ -152,11 +152,11 @@ router.post("/", (req, res) => {
       zip,
       phone,
       payment_type,
-      user_id,
       email,
       total,
       is_payed,
-      is_delivered
+      is_delivered,
+      userId
     ])
     .then((result) => {
       res.send(result.rows[0]);
