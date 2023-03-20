@@ -59,8 +59,9 @@ function UserForm() {
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
+  console.log(date);
 
-  
+  console.log(firstName);
   useEffect(() => {
     dispatch({ type: "FETCH_ORDER" });
 
@@ -85,15 +86,15 @@ function UserForm() {
       type: "ADD_ORDER",
       payload: {
         email,
-         address,
+        first_name: firstName,
+        last_name: lastName,
+        address,
         city,
         state,
         zip,
         phone,
         payment,
         total,
-        isDelivered,
-        isPayed,
         calendar_id: selectCalendarId,
       },
     });
@@ -146,7 +147,7 @@ function UserForm() {
                 label="First Name"
                 type="text"
                 name="firstname"
-                value={first_name}
+                value={firstName}
                 required
                 onChange={(event) => setFirstName(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
@@ -158,7 +159,7 @@ function UserForm() {
                 label="Last Name"
                 type="text"
                 name="lastname"
-                value={last_name}
+                value={lastName}
                 required
                 onChange={(event) => setLastName(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
@@ -315,54 +316,7 @@ function UserForm() {
 
             <h4>Total: {total}</h4>
 
-            <FormControl>
-              <FormLabel for="isPayed">Paid?</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-              >
-                <FormControlLabel
-                  value="No"
-                  control={<Radio />}
-                  label="No"
-                  checked={true}
-                  onChange={() => {}}
-                />
-                <FormControlLabel
-                  value="Yes"
-                  control={<Radio />}
-                  label="Yes"
-                  checked={isPayed}
-                  onChange={() => {}}
-                />
-              </RadioGroup>
-            </FormControl>
-            <div>
-              <FormControl>
-                <FormLabel for="isDelivered">Delivered?</FormLabel>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="No"
-                    control={<Radio />}
-                    label="No"
-                    checked={true}
-                    onChange={() => {}}
-                  />
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                    checked={isDelivered}
-                    onChange={() => {}}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div>
+            <div></div>
           </Card>
         </Grid>
       </Grid>
@@ -371,3 +325,4 @@ function UserForm() {
 }
 
 export default UserForm;
+
