@@ -16,7 +16,7 @@ function* addProduct(action) {
     yield axios.post('/api/products', action.payload);
     yield put({ 
         type: 'FETCH_PRODUCTS',
-     });
+     }); 
   } catch (error) {
     console.log('Error adding product', error);
   }

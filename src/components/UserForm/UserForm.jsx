@@ -25,7 +25,9 @@ function UserForm() {
   const dispatch = useDispatch();
 
   const orders = useSelector((store) => store.order);
-  console.log("in order", orders);
+  //console.log("in order", orders);
+  const calendars = useSelector((store) => store.calendar)
+  //console.log("in calendar", calendars);
 // order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -42,6 +44,7 @@ function UserForm() {
 // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
+  const [selectCalendarId, setSelectedCalendarID] = useState(null);
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState([]);
@@ -49,7 +52,7 @@ function UserForm() {
 
 
   useEffect(() => {
-    dispatch({ type: "FETCH_ORDER" });
+    dispatch({type: "FETCH_CALENDAR" });
   }, []);
 
   // const eventHandleSubmit = () => {
@@ -85,7 +88,8 @@ function UserForm() {
         payment,
         total,
         isDelivered,
-        isPayed
+        isPayed, 
+        calendar_id: selectCalendarId,
       },
     });
     history.push("/invoiceCustomer");
@@ -248,6 +252,25 @@ setTotal(total + 15)
                 <MenuItem value={"Check"}> Check </MenuItem>
               </Select>
             </FormControl>
+            <FormControl sx={{m: 1, width:300}}> 
+            <InputLabel htmlFor="selectCalendarId"> Calendar Year </InputLabel>
+            <Select
+            className="calendar-dropdown"
+            name="selectedCaledarId"
+            onChange={(event) => setSelectedCalendarID(event.target.value)}
+            id="calendar"
+            value={selectCalendarId}>
+          
+              {calendars.map ((calendar) => (
+                <MenuItem value={calendar.id} key={calendar.id}> 
+                {calendar.calendar_name}
+                </MenuItem>
+              ))}
+
+            </Select>
+      
+            </FormControl>
+
             <FormControl sx={{m: 1, width:300}}>
             <InputLabel htmlFor="numCalendars">Number of Calendars</InputLabel>
             <Input
@@ -256,6 +279,7 @@ setTotal(total + 15)
              value={numCalendars}
              onChange={(event) => setNumCalendars(Number(event.target.value))}
               />
+              
               <Button onClick={handleAddCalendar}> Add Calendar</Button>
               </FormControl>
 
