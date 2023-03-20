@@ -4,8 +4,6 @@ import loginSaga from "./login.saga";
 import registrationSaga from "./registration.saga";
 import userSaga from "./user.saga";
 import adminSagas from "./admin.saga";
-
-
 import orderSaga from './order.saga';
 import productSaga from "./product.saga";
 import calendarSaga from "./calendar.saga";
