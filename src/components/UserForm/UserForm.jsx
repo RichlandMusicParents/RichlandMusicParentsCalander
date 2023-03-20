@@ -12,7 +12,13 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
+  Input,
+  Radio,
 } from "@mui/material";
+import FormLabel from "@mui/material/FormLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+
 import { useHistory } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -24,32 +30,33 @@ function UserForm() {
   const dispatch = useDispatch();
 
   const orders = useSelector((store) => store.order);
-  console.log("in order", orders);
-  
-// order details form
+  //console.log("in order", orders);
+  const calendars = useSelector((store) => store.calendar);
+  //console.log("in calendar", calendars);
+  // order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
-  const [total, setTotal] = useState(15);
+  const [total, setTotal] = useState(0);
   const [payment, setPayment] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [isDelivered, setIsDelivered] = useState(false);
   const [isPayed, setIsPayed] = useState(false);
-// event form
+  // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
+  const [selectCalendarId, setSelectedCalendarID] = useState(null);
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
 
-
   useEffect(() => {
-    dispatch({ type: "FETCH_ORDER" });
+    dispatch({ type: "FETCH_CALENDAR" });
   }, []);
 
   // Dispatch for the events
@@ -80,26 +87,32 @@ function UserForm() {
         payment,
         total,
         isDelivered,
-        isPayed
+        isPayed,
+        calendar_id: selectCalendarId,
       },
     });
     history.push("/customerInvoice");
     setFirstName("");
-      setLastName("");
-      setEmail("");
-      setAddress("");
-      setCity("");
-      setState("");
-      setZip("");
-      setPhone("");
-      setPayment("");
-      setTotal("");
+    setLastName("");
+    setEmail("");
+    setAddress("");
+    setCity("");
+    setState("");
+    setZip("");
+    setPhone("");
+    setPayment("");
+    setTotal("");
   };
 
-  //   const handleAddEvent = () => {
-  //   setNumEvents(numEvents + 1);
-  //   setTotal(total + (numEvents > 4 ? 0.5 : 0));
-  // }
+  const handleAddEvent = () => {
+    setNumEvents(numEvents + 1);
+    setTotal(total + (numEvents > 4 ? 0.5 : 0));
+  };
+
+  const handleAddCalendar = () => {
+    setNumCalendars(numCalendars + 1);
+    setTotal(total + 15);
+  };
 
   return (
     <div
@@ -118,7 +131,7 @@ function UserForm() {
             sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}>
             <h1>Richland Music Parents</h1>
             <h2>Listing Form</h2>
-<UserPage/>
+            <UserPage />
             <CardContent>
               <TextField
                 label="First Name"
@@ -228,22 +241,58 @@ function UserForm() {
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
               <Select
-                 labelId="payment-select"
-                 label="Payment Options"
-                 value={payment}
-                 onChange={(event) => setPayment(event.target.value)}>
-                
+                labelId="payment-select"
+                label="Payment Options"
+                value={payment}
+                onChange={(event) => setPayment(event.target.value)}>
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
                 <MenuItem value={"Check"}> Check </MenuItem>
               </Select>
             </FormControl>
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel htmlFor="selectCalendarId">
+                {" "}
+                Calendar Year{" "}
+              </InputLabel>
+              <Select
+                className="calendar-dropdown"
+                name="selectedCaledarId"
+                onChange={(event) => setSelectedCalendarID(event.target.value)}
+                id="calendar"
+                value={selectCalendarId}>
+                {calendars.map((calendar) => (
+                  <MenuItem value={calendar.id} key={calendar.id}>
+                    {calendar.calendar_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel htmlFor="numCalendars">
+                Number of Calendars
+              </InputLabel>
+              <Input
+                id="numCalendars"
+                type="number"
+                value={numCalendars}
+                onChange={(event) =>
+                  setNumCalendars(Number(event.target.value))
+                }
+              />
+
+              <Button onClick={handleAddCalendar}> Add Calendar</Button>
+            </FormControl>
 
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Event Options</InputLabel>
 
-              <Select labelId="payment-select" label="Event Options"
-              value={eventOption}  onChange={(event) => setEventOption(event.target.value)}>
+              <Select
+                labelId="event-select"
+                label="Event Options"
+                value={events}
+                onChange={(event) => setEvents(event.target.value)}>
                 <MenuItem value={"Birthday"}> Birthday </MenuItem>
                 <MenuItem value={"Aniversary"}> Anniversary </MenuItem>
                 <MenuItem value={"In Memory Of"}> In Memory Of </MenuItem>
@@ -252,61 +301,59 @@ function UserForm() {
             <Button onClick={eventHandleSubmit} > Add Event </Button>
             <Button onClick={handleSubmit}> Check Out </Button>
 
-            <h6>Delivered?</h6>
-            
-            <label for="no">No</label>
-            <input
-              type="radio"
-              name="isDelivered"
-              value="no"
-              checked={true}
-              onChange={() => {}}
-            />
-            <label for="yes">Yes</label>
-            <input
-              type="radio"
-              name="isDelivered"
-              value="yes"
-              checked={isDelivered}
-              onChange={() => {}}
-            />
+            <h4>Total: {total}</h4>
 
-           <div>
-           <h6>Paid?</h6>
-            <label for="no">No</label>
-            <input
-              type="radio"
-              name="isPayed"
-              value="no"
-              checked={true}
-              onChange={() => {}}
-            />
-            <label for="yes">Yes</label>
-            <input
-              type="radio"
-              name="isPaid"
-              value="yes"
-              checked={isPayed}
-              onChange={() => {}}
-            />
-           </div>
-            <br />
+            <FormControl>
+                <FormLabel for="isPayed">Paid?</FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group">
+                  <FormControlLabel
+                    value="No"
+                    control={<Radio />}
+                    label="No"
+                    checked={true}
+                    onChange={() => {}}
+                  />
+                  <FormControlLabel
+                    value="Yes"
+                    control={<Radio />}
+                    label="Yes"
+                    checked={isPayed}
+                    onChange={() => {}}
+                  />
+                </RadioGroup>
+              </FormControl>
+            <div>
+         
 
-            {orders.map((order) => (
-              <div key={order.id}>
-                <p>
-                  {order.address}
-                  {order.city}
-                  {order.state}
-                  {order.zip}
-                  {order.phone}
-                  {order.payment}
-                  <h4>Total:{order.total}</h4>
-                </p>
-    
-              </div>
-              
-            ))}
+
+              <FormControl>
+              <FormLabel for="isDelivered">Delivered?</FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="female"
+                name="radio-buttons-group">
+                <FormControlLabel
+                  value="No"
+                  control={<Radio />}
+                  label="No"
+                  checked={true}
+                  onChange={() => {}}
+                />
+                <FormControlLabel
+                  value="Yes"
+                  control={<Radio />}
+                  label="Yes"
+                  checked={isDelivered}
+                  onChange={() => {}}
+                />
+              </RadioGroup>
+            </FormControl>
+            </div>
+
+
           </Card>
         </Grid>
       </Grid>
