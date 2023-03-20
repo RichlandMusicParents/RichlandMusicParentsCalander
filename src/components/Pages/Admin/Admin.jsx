@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { format } from "date-fns";
 import "../Admin/Admin.css";
-import AdminEvents from "./AdminEvents";
+import AdminAddEvents from "./AdminAddEvents";
+import AdminEvents from "./AdminEditEvents";
 
 export default function Admin() {
   const events = useSelector((store) => store.adminReducer.allEvents);
@@ -21,6 +21,7 @@ export default function Admin() {
     <>
       <h1>Hello, {user.first_name}</h1>
       <AdminEvents />
+      <AdminAddEvents />
       <div className="section">
         <header className="orders-header">
           <h2>All Created Orders</h2>

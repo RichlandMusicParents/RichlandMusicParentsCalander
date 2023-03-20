@@ -14,11 +14,20 @@ function* adminGetAllEvents() {
   }
 }
 
+function* getAllUsers() {
+  try {
+    const response = yield axios.get("/api/user/all-users");
+    yield put({ type: "ADMIN_SET_ALL_USERS", payload: response.data });
+  } catch (err) {
+    console.log("Error in admin GET all users", err);
+  }
+}
+
 function* adminGetSpecificEvents(action) {
   try {
     // passes the username and password from the payload to the server
     const response = yield axios.get(
-      `/api/events/specific-user-events${action.payload}`
+      `/api/events/specific-user-events/${action.payload}`
     );
     yield put({ type: "ADMIN_SET_SPECIFIC_EVENTS", payload: response.data });
   } catch (err) {
@@ -45,21 +54,20 @@ function* adminAddEvent(action) {
 
 function* adminEditEvent(action) {
   const eventObj = {
-    id: action.payload.id,
     event_type: action.payload.event_type,
     event_date: action.payload.event_date,
     event_name: action.payload.event_name,
-    user_id: action.payload.user_id,
-    calendar_id: action.payload,
-    calendar_id,
+    user_id: Number(action.payload.user_id),
+    calendar_id: Number(action.payload.calendar_id),
   };
   try {
-    yield axios.post(
-      `/api/events/admin-add-event${action.payload.id}`,
+    yield axios.put(
+      `/api/events/admin-edit-event/${Number(action.payload.id)}`,
       eventObj
     );
+    yield put({ type: "GET_ALL_EVENTS" });
   } catch (err) {
-    console.log("Error in POSTing event by admin");
+    console.log("Error in PUTing event by admin", err);
   }
 }
 function* adminGetAllOrders() {
@@ -78,6 +86,7 @@ function* adminSagas() {
   yield takeLatest("ADMIN_ADD_EVENTS", adminAddEvent);
   yield takeLatest("ADMIN_EDIT_EVENTS", adminEditEvent);
   yield takeLatest("ADMIN_GET_ALL_ORDERS", adminGetAllOrders);
+  yield takeLatest("ADMIN_GET_ALL_USERS", getAllUsers);
 }
 
 export default adminSagas;
