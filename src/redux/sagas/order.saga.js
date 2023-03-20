@@ -15,7 +15,7 @@ function* fetchOrder() {
 
 function* addOrder(action) {
     try {
-        yield axios.post("/api/orders", action.paylaod);
+        yield axios.post("/api/orders", action.payload);
         yield put({ 
             type: "FETCH_ORDER", 
         });

@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import UserPage from "../Pages/UserPage/UserPage";
 
 function UserForm() {
   const history = useHistory();
@@ -40,12 +41,6 @@ function UserForm() {
 // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
-<<<<<<< HEAD
-=======
-  
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
->>>>>>> origin
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState([]);
@@ -92,16 +87,16 @@ function UserForm() {
         isPayed
       },
     });
-    history.push("/registration");
-    setFirstName(""),
-      setLastName(""),
-      setEmail(""),
-      setAddress(""),
-      setCity(""),
-      setState(""),
-      setZip(""),
-      setPhone(""),
-      setPayment({ method: null }),
+    history.push("/invoiceCustomer");
+    setFirstName("");
+      setLastName("");
+      setEmail("");
+      setAddress("");
+      setCity("");
+      setState("");
+      setZip("");
+      setPhone("");
+      setPayment({ method: null });
       setTotal("");
   };
 
@@ -127,7 +122,7 @@ function UserForm() {
             sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}>
             <h1>Richland Music Parents</h1>
             <h2>Listing Form</h2>
-
+<UserPage/>
             <CardContent>
               <TextField
                 label="First Name"
@@ -200,7 +195,7 @@ function UserForm() {
             <CardContent>
               <TextField
                 label="Zip Code"
-                type="text"
+                type="number"
                 name="zip"
                 value={zip}
                 required
@@ -312,7 +307,9 @@ function UserForm() {
                   {order.payment}
                   <h4>Total:{order.total}</h4>
                 </p>
+    
               </div>
+              
             ))}
           </Card>
         </Grid>

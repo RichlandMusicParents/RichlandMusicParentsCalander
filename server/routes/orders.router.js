@@ -100,19 +100,19 @@ WHERE "orders"."user_id" = $1;
   }
 });
 
-router.get("/", (req, res) => {
-  const queryText = `SELECT * FROM order_details`;
+// router.get("/", (req, res) => {
+//   const queryText = `SELECT * FROM order_details`;
 
-  pool
-    .query(queryText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((err) => {
-      console.error("Error in GET all order details", err);
-      res.sendStatus(500);
-    });
-});
+//   pool
+//     .query(queryText)
+//     .then((result) => {
+//       res.send(result.rows);
+//     })
+//     .catch((err) => {
+//       console.error("Error in GET all order details", err);
+//       res.sendStatus(500);
+//     });
+// });
 
 /**
  * POST route template
@@ -146,7 +146,6 @@ router.post("/", (req, res) => {
     .query(queryText, [
       first_name,
       last_name,
-      total,
       address,
       city,
       state,
@@ -155,6 +154,7 @@ router.post("/", (req, res) => {
       payment_type,
       user_id,
       email,
+      total,
       is_payed,
       is_delivered
     ])
