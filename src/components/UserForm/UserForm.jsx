@@ -32,7 +32,7 @@ function UserForm() {
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
   const [total, setTotal] = useState(15);
-  const [payment, setPayment] = useState({ method: "" });
+  const [payment, setPayment] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -96,7 +96,7 @@ function UserForm() {
       setState("");
       setZip("");
       setPhone("");
-      setPayment({ method: null });
+      setPayment("");
       setTotal("");
   };
 
@@ -232,12 +232,11 @@ function UserForm() {
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
               <Select
-                labelId="payment-select"
-                label="Event Options"
-                value={payment.method}
-                onChange={(event) =>
-                  setPayment({ ...payment, method: event.target.value })
-                }>
+                 labelId="payment-select"
+                 label="Payment Options"
+                 value={payment}
+                 onChange={(event) => setPayment(event.target.value)}>
+                
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
                 <MenuItem value={"Check"}> Check </MenuItem>
