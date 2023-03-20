@@ -50,8 +50,8 @@ function UserForm() {
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
 
   const [selectCalendarId, setSelectedCalendarID] = useState(null);
 
@@ -60,7 +60,7 @@ function UserForm() {
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
 
-  console.log(firstName);
+  
   useEffect(() => {
     dispatch({ type: "FETCH_ORDER" });
 
@@ -85,8 +85,7 @@ function UserForm() {
       type: "ADD_ORDER",
       payload: {
         email,
-
-        address,
+         address,
         city,
         state,
         zip,
@@ -304,7 +303,7 @@ function UserForm() {
                 labelId="event-select"
                 label="Event Options"
                 value={events}
-                onChange={(event) => setEvents(event.target.value)}
+                onChange={(event) => setEventOption(event.target.value)}
               >
                 <MenuItem value={"Birthday"}> Birthday </MenuItem>
                 <MenuItem value={"Aniversary"}> Anniversary </MenuItem>
