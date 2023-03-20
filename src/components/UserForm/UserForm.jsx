@@ -25,6 +25,7 @@ function UserForm() {
 
   const orders = useSelector((store) => store.order);
   console.log("in order", orders);
+  
 // order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -51,23 +52,18 @@ function UserForm() {
     dispatch({ type: "FETCH_ORDER" });
   }, []);
 
-  // const eventHandleSubmit = () => {
-  //   dispatch({
-  //       type:`USER_ADD_EVENT`,
-  //       payload: {
-  //           eventOption,
-  //           date,
-  //           eventFor
-  // const eventHandleSubmit = () => {
-  //   dispatch({
-  //       type:`USER_ADD_EVENT`,
-  //       payload: {
-  //           eventOption,
-  //           date,
-  //           eventFor
+  // Dispatch for the events
+ 
+  const eventHandleSubmit = () => {
+    dispatch({
+      type: "ADD_EVENTS",
+      payload: {
+        event_type: eventOption,
+       event_date: date.$d,
+       event_name: eventFor
+      },
+    })};
 
-  //     },
-  // });
 
   const handleSubmit = () => {
     dispatch({
@@ -87,7 +83,7 @@ function UserForm() {
         isPayed
       },
     });
-    history.push("/invoiceCustomer");
+    history.push("/customerInvoice");
     setFirstName("");
       setLastName("");
       setEmail("");
@@ -226,7 +222,7 @@ function UserForm() {
               />
             </CardContent>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker />
+              <DatePicker value={date} onChange={(date) => setDate(date)} />
             </LocalizationProvider>
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
@@ -246,13 +242,14 @@ function UserForm() {
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Event Options</InputLabel>
 
-              <Select labelId="payment-select" label="Event Options">
+              <Select labelId="payment-select" label="Event Options"
+              value={eventOption}  onChange={(event) => setEventOption(event.target.value)}>
                 <MenuItem value={"Birthday"}> Birthday </MenuItem>
                 <MenuItem value={"Aniversary"}> Anniversary </MenuItem>
                 <MenuItem value={"In Memory Of"}> In Memory Of </MenuItem>
               </Select>
             </FormControl>
-            <Button> Add Event </Button>
+            <Button onClick={eventHandleSubmit} > Add Event </Button>
             <Button onClick={handleSubmit}> Check Out </Button>
 
             <h6>Delivered?</h6>

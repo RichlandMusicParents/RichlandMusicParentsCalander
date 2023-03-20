@@ -21,7 +21,7 @@ import LoginPage from './Pages/LoginPage/LoginPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import SplashPage from './Pages/SplashPage/splashPage';
 import Invoice from './Pages/CustomerInvoice/invoice';
-import EventForm from "./UserForm/EventForm";
+//import EventForm from "./UserForm/EventForm";
 
 
 import "./App.css";
