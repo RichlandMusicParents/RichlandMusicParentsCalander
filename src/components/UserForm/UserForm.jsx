@@ -147,7 +147,7 @@ function UserForm() {
                 label="First Name"
                 type="text"
                 name="firstname"
-                value={first_name}
+                value={firstName}
                 required
                 onChange={(event) => setFirstName(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
@@ -159,7 +159,7 @@ function UserForm() {
                 label="Last Name"
                 type="text"
                 name="lastname"
-                value={last_name}
+                value={lastName}
                 required
                 onChange={(event) => setLastName(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
