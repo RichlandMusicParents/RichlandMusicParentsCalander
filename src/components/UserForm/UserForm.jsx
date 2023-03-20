@@ -86,7 +86,8 @@ function UserForm() {
       type: "ADD_ORDER",
       payload: {
         email,
-
+        first_name: firstName,
+        last_name: lastName,
         address,
         city,
         state,
@@ -94,8 +95,6 @@ function UserForm() {
         phone,
         payment,
         total,
-        isDelivered,
-        isPayed,
         calendar_id: selectCalendarId,
       },
     });
@@ -305,7 +304,7 @@ function UserForm() {
                 labelId="event-select"
                 label="Event Options"
                 value={events}
-                onChange={(event) => setEvents(event.target.value)}
+                onChange={(event) => setEventOption(event.target.value)}
               >
                 <MenuItem value={"Birthday"}> Birthday </MenuItem>
                 <MenuItem value={"Aniversary"}> Anniversary </MenuItem>
@@ -317,54 +316,7 @@ function UserForm() {
 
             <h4>Total: {total}</h4>
 
-            <FormControl>
-              <FormLabel for="isPayed">Paid?</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-              >
-                <FormControlLabel
-                  value="No"
-                  control={<Radio />}
-                  label="No"
-                  checked={true}
-                  onChange={() => {}}
-                />
-                <FormControlLabel
-                  value="Yes"
-                  control={<Radio />}
-                  label="Yes"
-                  checked={isPayed}
-                  onChange={() => {}}
-                />
-              </RadioGroup>
-            </FormControl>
-            <div>
-              <FormControl>
-                <FormLabel for="isDelivered">Delivered?</FormLabel>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="No"
-                    control={<Radio />}
-                    label="No"
-                    checked={true}
-                    onChange={() => {}}
-                  />
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                    checked={isDelivered}
-                    onChange={() => {}}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div>
+            <div></div>
           </Card>
         </Grid>
       </Grid>
@@ -373,4 +325,5 @@ function UserForm() {
 }
 
 export default UserForm;
+
 
