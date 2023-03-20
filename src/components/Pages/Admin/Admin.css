@@ -1,5 +1,60 @@
-table {
-  border: 1px solid black;
+.events-container {
+  background-color: grey;
+  border: 1px solid gray;
+  width: 50rem;
+  height: 15rem;
+  margin-inline: auto;
+  margin-block: 1rem;
+  box-sizing: border-box;
+}
+
+.admin-add-event-form {
+  width: 100rem;
+  display: flex;
+  align-items: center;
+}
+
+.events-header {
+}
+
+.events-body {
+  width: 100%;
+  height: 79%;
+  /* background-color: blue; */
+}
+
+.events-list-header,
+.events-list-body {
+  display: flex;
+  width: 100%;
+  padding: 0;
+}
+
+.events-body-header {
+  height: 10%;
+  background-color: white;
+}
+
+.events-body-list {
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.events-list-title,
+.events-list-item {
+  width: 25%;
+  text-align: center;
+}
+
+.events-list-item {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .order-card {

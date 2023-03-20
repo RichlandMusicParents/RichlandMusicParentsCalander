@@ -28,12 +28,14 @@ import UserPage from "../Pages/UserPage/UserPage";
 function UserForm() {
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order);
+
   //console.log("in order", orders);
   const calendars = useSelector((store) => store.calendar);
   //console.log("in calendar", calendars);
   // order details form
+
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -49,14 +51,25 @@ function UserForm() {
   // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(1);
+
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const [selectCalendarId, setSelectedCalendarID] = useState(null);
+
   const [eventOption, setEventOption] = useState(null);
   const [date, setDate] = useState(null);
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
 
+  console.log(firstName);
   useEffect(() => {
+
+    dispatch({ type: "FETCH_ORDER" });
+
     dispatch({ type: "FETCH_CALENDAR" });
+
   }, []);
 
   // Dispatch for the events
@@ -76,9 +89,9 @@ function UserForm() {
     dispatch({
       type: "ADD_ORDER",
       payload: {
-        first_name,
-        last_name,
+
         email,
+
         address,
         city,
         state,
@@ -102,6 +115,7 @@ function UserForm() {
     setPhone("");
     setPayment("");
     setTotal("");
+
   };
 
   const handleAddEvent = () => {
@@ -109,10 +123,12 @@ function UserForm() {
     setTotal(total + (numEvents > 4 ? 0.5 : 0));
   };
 
+
   const handleAddCalendar = () => {
     setNumCalendars(numCalendars + 1);
     setTotal(total + 15);
   };
+
 
   return (
     <div
@@ -120,15 +136,18 @@ function UserForm() {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
-      }}>
+      }}
+    >
       <Grid
         container
         spacing={3}
         justifyContent="center"
-        sx={{ marginTop: "40px", marginBottom: "-10px" }}>
+        sx={{ marginTop: "40px", marginBottom: "-10px" }}
+      >
         <Grid item xs={12} md={13}>
           <Card
-            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}>
+            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}
+          >
             <h1>Richland Music Parents</h1>
             <h2>Listing Form</h2>
             <UserPage />
@@ -137,6 +156,7 @@ function UserForm() {
                 label="First Name"
                 type="text"
                 name="firstname"
+
                 value={first_name}
                 required
                 onChange={(event) => setFirstName(event.target.value)}
@@ -149,6 +169,7 @@ function UserForm() {
                 label="Last Name"
                 type="text"
                 name="lastname"
+
                 value={last_name}
                 required
                 onChange={(event) => setLastName(event.target.value)}
@@ -164,6 +185,7 @@ function UserForm() {
                 required
                 onChange={(event) => setEmail(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
+
               />
             </CardContent>
 
@@ -204,7 +226,9 @@ function UserForm() {
             <CardContent>
               <TextField
                 label="Zip Code"
+
                 type="number"
+
                 name="zip"
                 value={zip}
                 required
@@ -352,6 +376,7 @@ function UserForm() {
               </RadioGroup>
             </FormControl>
             </div>
+
 
 
           </Card>

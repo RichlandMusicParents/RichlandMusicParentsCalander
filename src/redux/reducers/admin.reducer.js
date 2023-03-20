@@ -29,6 +29,15 @@ const specificEvents = (state = [], action) => {
   }
 };
 
+const allUsers = (state = [], action) => {
+  switch (action.type) {
+    case "ADMIN_SET_ALL_USERS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 // registrationMessage holds the string that will display
 // on the registration screen if there's an error
 
@@ -39,4 +48,5 @@ export default combineReducers({
   allEvents,
   allOrders,
   specificEvents,
+  allUsers,
 });
