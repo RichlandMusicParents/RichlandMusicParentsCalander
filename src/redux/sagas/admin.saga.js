@@ -37,16 +37,15 @@ function* adminGetSpecificEvents(action) {
 
 function* adminAddEvent(action) {
   const eventObj = {
-    id: action.payload.id,
     event_type: action.payload.event_type,
     event_date: action.payload.event_date,
     event_name: action.payload.event_name,
     user_id: action.payload.user_id,
-    calendar_id: action.payload,
-    calendar_id,
+    calendar_id: action.payload.calendar_id,
   };
   try {
     yield axios.post("/api/events/admin-add-event", eventObj);
+    yield put({ type: "GET_ALL_EVENTS" });
   } catch (err) {
     console.log("Error in POSTing event by admin");
   }
@@ -80,6 +79,17 @@ function* adminGetAllOrders() {
   }
 }
 
+function* deleteEvent(action) {
+  try {
+    yield axios.delete(
+      `/api/events/admin-delete-event/${Number(action.payload)}`
+    );
+    yield put({ type: "GET_ALL_EVENTS" });
+  } catch (error) {
+    console.log("deleting venue request failed", error);
+  }
+}
+
 function* adminSagas() {
   yield takeLatest("GET_ALL_EVENTS", adminGetAllEvents);
   yield takeLatest("GET_SPECIFIC_EVENTS", adminGetSpecificEvents);
@@ -87,6 +97,7 @@ function* adminSagas() {
   yield takeLatest("ADMIN_EDIT_EVENTS", adminEditEvent);
   yield takeLatest("ADMIN_GET_ALL_ORDERS", adminGetAllOrders);
   yield takeLatest("ADMIN_GET_ALL_USERS", getAllUsers);
+  yield takeLatest("ADMIN_DELETE_EVENT", deleteEvent);
 }
 
 export default adminSagas;

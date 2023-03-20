@@ -134,6 +134,20 @@ WHERE
   }
 });
 
+router.delete("/admin-delete-event/:id", (req, res) => {
+  const text = `DELETE FROM "event" WHERE "id" = $1;`;
+  if (req.isAuthenticated()) {
+    pool
+      .query(text, [req.params.id])
+      .then((results) => res.sendStatus(204))
+      .catch((err) => {
+        console.log("Error making DELETE for events:", err);
+        res.sendStatus(500);
+      });
+  } else {
+    res.sendStatus(403);
+  }
+});
 
 router.post("/", (req, res) => {
   console.log("in Post Route", req.body);
@@ -141,28 +155,24 @@ router.post("/", (req, res) => {
 
   const queryText = `INSERT INTO "event" ("event_type", "event_date", "event_name", "user_id", "calendar_id")
 	VALUES ($1, $2, $3, $4, $5)
-  RETURNING *;`
+  RETURNING *;`;
 
   pool
-  .query(queryText, [
-    event_type,
-        event_date,
-        event_name,
-        user_id,
-        calendar_id
-  ])
-  .then((result) => {
-    res.send(result.rows[0]);
-  })
-  .catch((err) => {
-    console.error("Error in post stories", err);
-    res.sendStatus(500);
-  });
-
+    .query(queryText, [
+      event_type,
+      event_date,
+      event_name,
+      user_id,
+      calendar_id,
+    ])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in post stories", err);
+      res.sendStatus(500);
+    });
 });
-
-
-
 
 router.post("/user-add-events", (req, res) => {
   const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
@@ -198,6 +208,5 @@ router.get("/user-events/:id", (req, res) => {
       res.sendStatus(500);
     });
 });
-
 
 module.exports = router;
