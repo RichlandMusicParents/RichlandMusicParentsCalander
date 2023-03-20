@@ -55,10 +55,10 @@ function UserForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const [selectCalendarId, setSelectedCalendarID] = useState(null);
+  const [selectCalendarId, setSelectedCalendarID] = useState(0);
 
-  const [eventOption, setEventOption] = useState(null);
-  const [date, setDate] = useState(null);
+  const [eventOption, setEventOption] = useState("0");
+  const [date, setDate] = useState("");
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
 
@@ -88,12 +88,15 @@ function UserForm() {
 
     
     dispatch({
+      type: "ADMIN_ADD_EVENTS",
       
       type: "ADD_EVENTS",
       payload: {
         event_type: eventOption,
-        event_date: date.$d,
+        event_date: date,
         event_name: eventFor,
+        user_id: user.id,
+        calendar_id: selectCalendarId,
         calendar_id: calendar.id
       },
     });
@@ -112,9 +115,8 @@ function UserForm() {
         state,
         zip,
         phone,
-        payment,
+        payment_type: payment,
         total,
-        calendar_id: selectCalendarId,
       },
     });
     history.push("/customerInvoice");
@@ -265,9 +267,17 @@ function UserForm() {
                 sx={{ marginBottom: "10px", width: "50%" }}
               />
             </CardContent>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker value={date} onChange={(date) => setDate(date)} />
-            </LocalizationProvider>
+            </LocalizationProvider> */}
+            <TextField
+              sx={{
+                width: 150,
+              }}
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
@@ -322,14 +332,21 @@ function UserForm() {
               <InputLabel id="event-label"> Event Options</InputLabel>
 
               <Select
-                labelId="event-select"
-                label="Event Options"
-                value={events}
-                onChange={(event) => setEventOption(event.target.value)}
+                sx={{
+                  width: 150,
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Event Type" />
+                )}
+                name="event_type"
+                id="eType"
+                value={eventOption}
+                onChange={(e) => setEventOption(e.target.value)}
               >
-                <MenuItem value={"Birthday"}> Birthday </MenuItem>
-                <MenuItem value={"Aniversary"}> Anniversary </MenuItem>
-                <MenuItem value={"In Memory Of"}> In Memory Of </MenuItem>
+                <MenuItem value="0">Select Event Type</MenuItem>
+                <MenuItem value="birthday">Birthday</MenuItem>
+                <MenuItem value="anniversary">Anniversary</MenuItem>
+                <MenuItem value="memorial">Memorial</MenuItem>
               </Select>
             </FormControl>
             <Button onClick={eventHandleSubmit}> Add Event </Button>
@@ -346,4 +363,3 @@ function UserForm() {
 }
 
 export default UserForm;
-
