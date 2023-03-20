@@ -53,6 +53,7 @@ function UserForm() {
   const [numCalendars, setNumCalendars] = useState(1);
 
 
+
   const [selectCalendarId, setSelectedCalendarID] = useState(null);
 
   const [eventOption, setEventOption] = useState(null);
@@ -60,7 +61,7 @@ function UserForm() {
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
 
-  console.log(firstName);
+  
   useEffect(() => {
 
     dispatch({ type: "FETCH_ORDER" });
@@ -86,9 +87,9 @@ function UserForm() {
     dispatch({
       type: "ADD_ORDER",
       payload: {
-
+        first_name,
+        last_name,
         email,
-
         address,
         city,
         state,
@@ -96,8 +97,6 @@ function UserForm() {
         phone,
         payment,
         total,
-        isDelivered,
-        isPayed,
         calendar_id: selectCalendarId,
       },
     });
@@ -324,55 +323,6 @@ function UserForm() {
 
             <h4>Total: {total}</h4>
 
-            <FormControl>
-                <FormLabel for="isPayed">Paid?</FormLabel>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group">
-                  <FormControlLabel
-                    value="No"
-                    control={<Radio />}
-                    label="No"
-                    checked={true}
-                    onChange={() => {}}
-                  />
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                    checked={isPayed}
-                    onChange={() => {}}
-                  />
-                </RadioGroup>
-              </FormControl>
-            <div>
-         
-
-
-              <FormControl>
-              <FormLabel for="isDelivered">Delivered?</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group">
-                <FormControlLabel
-                  value="No"
-                  control={<Radio />}
-                  label="No"
-                  checked={true}
-                  onChange={() => {}}
-                />
-                <FormControlLabel
-                  value="Yes"
-                  control={<Radio />}
-                  label="Yes"
-                  checked={isDelivered}
-                  onChange={() => {}}
-                />
-              </RadioGroup>
-            </FormControl>
-            </div>
 
 
 
