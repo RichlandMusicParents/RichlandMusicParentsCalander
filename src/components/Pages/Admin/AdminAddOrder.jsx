@@ -27,6 +27,7 @@ export default function AdminAddOrder() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
+  const [uId, setUId] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
@@ -45,6 +46,7 @@ export default function AdminAddOrder() {
   const [userLast, setUserLast] = useState("");
   const dispatch = useDispatch();
   console.log("our user:", userId);
+  const order = [];
 
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_ALL_USERS" });
@@ -55,6 +57,7 @@ export default function AdminAddOrder() {
   useEffect(() => {
     user[0] !== undefined && setUserFirst(user[0].first_name);
     user[0] !== undefined && setUserLast(user[0].last_name);
+    user[0] !== undefined && setUId(user[0].id);
   }, [user]);
 
   function createEvent() {
@@ -62,11 +65,12 @@ export default function AdminAddOrder() {
       event_type: eventType,
       event_name: eventName,
       event_date: eventDate,
-      user_id: Number(userId),
+      user_id: uId,
       calendar_id: Number(calId),
     };
 
-    // dispatch({ type: "ADMIN_NEW_SPECIFIC_EVENTS", payload: eventObj });
+    console.log(eventObj);
+    dispatch({ type: "ADMIN_ADD_EVENT", payload: eventObj });
   }
 
   function addInfo() {
@@ -77,24 +81,30 @@ export default function AdminAddOrder() {
       city: city,
       state: state,
       zip: zip,
-      user_id: Number(userId),
+      user_id: uId,
       email: email,
       phone: phone,
-      total: 15 * Number(calendars),
+      total:
+        events.length > 5
+          ? (events.length - 5) * 0.5 + 15 * Number(calendars)
+          : 15 * Number(calendars),
       payment_type: paymentType,
       is_payed: isPayed,
       is_delivered: isDelivered,
     };
 
-    console.log("Order Object", orderObj);
+    dispatch({ type: "ADD_ORDER", payload: orderObj });
   }
+
+  console.log(order);
 
   return (
     <>
       <div className="admin-add-order">
         <header className="admin-add-order-header">
-          <h2>Add Customer Info</h2>
-          <h2>{userFirst}</h2>
+          <h2>
+            Add Info for {userFirst} {userLast}'s Order
+          </h2>
         </header>
         <div className="admin-add-order-form">
           <TextField
@@ -177,14 +187,6 @@ export default function AdminAddOrder() {
             type="number"
             value={calendars}
             onChange={(e) => setCalendars(e.target.value)}
-          />
-          <TextField
-            sx={{
-              width: 150,
-            }}
-            label=""
-            value={`${userFirst} ${userLast}`}
-            type="text"
           />
           <Select
             sx={{
@@ -276,6 +278,38 @@ export default function AdminAddOrder() {
       <div className="admin-events-view">
         <Button onClick={addInfo}>Add Order</Button>
       </div>
+      <Paper>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Event Type</TableCell>
+                <TableCell>Event Name</TableCell>
+                <TableCell>Event Date</TableCell>
+                <TableCell>Linked to</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {events.map((event) => (
+                <TableRow>
+                  <TableCell>{event.event_type}</TableCell>
+                  <TableCell>{event.event_name}</TableCell>
+                  <TableCell>{event.event_date}</TableCell>
+                  <TableCell>{`${userFirst} ${userLast}`}</TableCell>
+                  <TableCell>
+                    <Button>Edit</Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="contained">Remove</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
     </>
   );
 }

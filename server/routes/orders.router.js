@@ -100,7 +100,7 @@ WHERE "orders"."user_id" = $1;
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/add-order", (req, res) => {
   console.log("in Post Route", req.body);
   const userId = req.user.id;
 
