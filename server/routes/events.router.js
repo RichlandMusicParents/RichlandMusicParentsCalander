@@ -71,10 +71,6 @@ ORDER BY "id" ASC;
  * Post Route for an admin to add an event for a user
  */
 router.post("/admin-add-event/", rejectUnauthenticated, (req, res) => {
-  if (!req.user.is_admin) {
-    return res.sendStatus(401);
-  }
-
   const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
 
   const text = `
@@ -82,17 +78,14 @@ router.post("/admin-add-event/", rejectUnauthenticated, (req, res) => {
 	VALUES ($1, $2, $3, $4, $5)
   RETURNING *;
     `;
-  if (req.user.is_admin === true) {
-    pool
-      .query(text, [event_type, event_date, event_name, user_id, calendar_id])
-      .then((results) => res.send(results.rows))
-      .catch((error) => {
-        console.log("Error making SELECT for items:", error);
-        res.sendStatus(500);
-      });
-  } else {
-    res.sendStatus(403);
-  }
+
+  pool
+    .query(text, [event_type, event_date, event_name, user_id, calendar_id])
+    .then((results) => res.send(results.rows))
+    .catch((error) => {
+      console.log("Error making SELECT for items:", error);
+      res.sendStatus(500);
+    });
 });
 
 router.put("/admin-edit-event/:id", rejectUnauthenticated, (req, res) => {
