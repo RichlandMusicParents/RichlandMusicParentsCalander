@@ -1,71 +1,111 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Button,
+  Paper,
+} from "@mui/material";
+import { useDispatch } from "react-redux";
 
-// this function will be a way for the costumer to to review
-// what they ordered.
 
 
-
-export default function Invoice(){
-    const user= useSelector((store) => store.user)
-    const events= useSelector((store) => store.eventReducer)
-    const orders= useSelector((store) => store.order)    
-    return (
-        <>
-        <h1> Contact information</h1>
-        <div className="contactInfo">
-        {orders.map((order) => (
-    <section key={order.id}>
-      
-        <h2>Name:{order.first_name}{order.last_name}</h2>
-       <h2>Address:{order.address} </h2> 
-       <h2> Phone:{order.phone} </h2>
-        <h2>Email:{order.email} </h2>
-       </section>))}
-
-        </div>
-   
-       <div className="orderDetails">
-       {events.map((events) => (
-    <section key={events.id}>
-        <table>
-            
-            <tr>
-                <th>Date</th>
-                <th>Event Type</th>
-                <th>Name</th>
-            </tr>
-            <tr>
-                {/* <td>{events.event_date.$d}</td> */}
-                <td>{events.event_type}</td>
-                <td>{events.event_name}</td>
-            </tr>
-        </table>
+export default function Invoice() {
+    const user = useSelector((store) => store.user);
+    const events = useSelector((store) => store.eventReducer);
+    const orders = useSelector((store) => store.order);
+    const dispatch= useDispatch();
     
-       </section>))}
+    useEffect(() => {
+      dispatch({ type: "GET_USER_EVENT" });
+    }, []);
 
 
-       </div>
-       
-       <div className="eventTable">
+  //Function to delete a event row.
+  function deleteUserEvent(id){
+    dispatch({type: "USER_DELETE_EVENT", payload: id})
+   
+  }
+
+  return (
+    <>
+      <h1>Contact information</h1>
+      <div className="contactInfo">
+        {orders.map((order) => (
+          <section key={order.id}>
+            <h2>
+              Name: {order.first_name} {order.last_name}
+            </h2>
+            <h2>Address: {order.address}</h2>
+            <h2>Phone: {order.phone}</h2>
+            <h2>Email: {order.email}</h2>
+          </section>
+        ))}
+      </div>
+
+      <div className="orderDetails">
+        <h1>Event Details</h1>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Date</TableCell>
+                <TableCell>Event Type</TableCell>
+                <TableCell>Name</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {events.map((event) => (
+                <TableRow key={event.id}>
+                  <TableCell>{event.event_date}</TableCell>
+                  <TableCell>{event.event_type}</TableCell>
+                  <TableCell>{event.event_name}</TableCell>
+                  <TableCell><Button onClick={() => deleteUserEvent(event.id)}
+                  >Delete</Button></TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+
+      <div className="eventTable">
         <h1>Order Information</h1>
-       {orders.map((orderInfo) => (
-    <section key={orderInfo.id}>
-      
-        <h2>Address: {orderInfo.address}</h2>
-       <h2>City:{orderInfo.city} </h2> 
-       <h2> State:{orderInfo.state} </h2>
-        <h2>ZipCode:{orderInfo.zip} </h2>
-        <h2>Is it Delivered?:{orderInfo.isDelivered} </h2>
-        <h2>is it Payed?:{orderInfo.isPayed} </h2>
-        <h2>payment Type:{orderInfo.payment} </h2>
-        <h2>Total:{orderInfo.total} </h2>
-       </section>))}
-        
-
-        
-
-       </div>
-     </>)
-
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Address</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell>State</TableCell>
+                <TableCell>ZipCode</TableCell>
+                {/* <TableCell>Is it Delivered?</TableCell>
+                <TableCell>Is it Payed?</TableCell> */}
+                <TableCell>Payment Type</TableCell>
+                <TableCell>Total</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders.map((orderInfo) => (
+                <TableRow key={orderInfo.id}>
+                  <TableCell>{orderInfo.address}</TableCell>
+                  <TableCell>{orderInfo.city}</TableCell>
+                  <TableCell>{orderInfo.state}</TableCell>
+                  <TableCell>{orderInfo.zip}</TableCell>
+                  {/* <TableCell>{orderInfo.isDelivered}</TableCell>
+                  <TableCell>{orderInfo.isPayed}</TableCell> */}
+                  <TableCell>{orderInfo.payment_type}</TableCell>
+                  <TableCell>{orderInfo.total}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </>
+  );
 }

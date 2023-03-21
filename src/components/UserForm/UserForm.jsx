@@ -72,7 +72,7 @@ function UserForm() {
 
   const eventHandleSubmit = () => {
     dispatch({
-      type: "ADMIN_ADD_EVENTS",
+      type: `USER_ADD_EVENT`,
       payload: {
         event_type: eventOption,
         event_date: date,

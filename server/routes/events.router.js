@@ -198,4 +198,19 @@ router.get("/user-events/:id", (req, res) => {
     });
 });
 
+
+//delete event for user 
+router.delete("/delete-events/:id", (req, res) => {
+ 
+  const QUERYTEXT = `DELETE FROM "event" WHERE id = $1;`;
+  pool
+    .query(QUERYTEXT, [req.params.id])
+    .then((response) => {
+      res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.log("error in deleting event", error);
+    });
+});
+
 module.exports = router;
