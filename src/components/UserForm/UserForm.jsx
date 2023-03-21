@@ -36,6 +36,9 @@ function UserForm() {
   // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(0);
+
+
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [selectCalendarId, setSelectedCalendarID] = useState(0);
@@ -99,7 +102,10 @@ function UserForm() {
         zip,
         phone,
         payment_type: payment,
-        total,
+
+        total
+
+
       },
     });
     history.push("/customerInvoice");
@@ -330,6 +336,7 @@ function UserForm() {
             <Button onClick={handleSubmit}> Check Out </Button>
 
             <h4>Total: {total}</h4>
+
           </Card>
         </Grid>
       </Grid>
