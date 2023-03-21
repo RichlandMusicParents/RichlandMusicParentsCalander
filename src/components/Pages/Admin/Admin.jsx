@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import "../Admin/Admin.css";
 import AdminAddEvents from "./AdminAddEvents";
 import AdminEvents from "./AdminEditEvents";
+import { Button } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 export default function Admin() {
   const events = useSelector((store) => store.adminReducer.allEvents);
   const orders = useSelector((store) => store.adminReducer.allOrders);
   const user = useSelector((store) => store.user);
+  const history = useHistory();
   // const orderItems = [];
   const dispatch = useDispatch();
   useEffect(() => {
@@ -18,13 +21,23 @@ export default function Admin() {
   console.log("orders:", orders);
   console.log(user);
 
+  function sendToForm() {
+    history.push("/admin-order-form");
+  }
+
   // console.log(orders.order_items);
 
   return (
     <>
       <h1>Hello, {user.first_name}</h1>
       <AdminEvents />
-      <AdminAddEvents />
+      <Button
+        onClick={sendToForm}
+        sx={{ height: 50, margin: 1 }}
+        variant="contained"
+      >
+        Create New Order
+      </Button>
       <div className="section">
         <header className="orders-header">
           <h2>All Created Orders</h2>

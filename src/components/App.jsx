@@ -13,20 +13,20 @@ import Footer from "./Shared/Footer/Footer";
 
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 
-import AboutPage from './Pages/AboutPage/AboutPage';
-import UserPage from './Pages/UserPage/UserPage';
-import InfoPage from './Pages/InfoPage/InfoPage';
-import LandingPage from './Pages/LandingPage/LandingPage';
-import LoginPage from './Pages/LoginPage/LoginPage';
-import RegisterPage from './Pages/RegisterPage/RegisterPage';
-import SplashPage from './Pages/SplashPage/splashPage';
-import Invoice from './Pages/CustomerInvoice/invoice';
+import AboutPage from "./Pages/AboutPage/AboutPage";
+import UserPage from "./Pages/UserPage/UserPage";
+import InfoPage from "./Pages/InfoPage/InfoPage";
+import LandingPage from "./Pages/LandingPage/LandingPage";
+import LoginPage from "./Pages/LoginPage/LoginPage";
+import RegisterPage from "./Pages/RegisterPage/RegisterPage";
+import SplashPage from "./Pages/SplashPage/splashPage";
+import Invoice from "./Pages/CustomerInvoice/invoice";
 //import EventForm from "./UserForm/EventForm";
-
 
 import "./App.css";
 import UserForm from "./UserForm/UserForm";
 import Admin from "./Pages/Admin/Admin";
+import AdminOrderFrom from "./Pages/Admin/AdminOrderForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -108,13 +108,8 @@ function App() {
             )}
           </Route>
 
-
           {/* This is the page User sees upon visiting LocalHost 3000 Page */}
-          <Route
-           
-            exact
-            path="/splashPage"
-          >
+          <Route exact path="/splashPage">
             <SplashPage />
           </Route>
 
@@ -140,15 +135,23 @@ function App() {
             )}
           </Route>
 
-          <Route
-           
-           exact
-           path="/customerInvoice"
-         >
-           <Invoice/>
-         </Route>
+          <Route exact path="/admin-order-form">
+            {user.is_admin ? (
+              <AdminOrderFrom />
+            ) : (
+              <Route>
+                <h1>403</h1>
+                <h2>
+                  You do not have access to this page. Please sign in as an
+                  admin to view.
+                </h2>
+              </Route>
+            )}
+          </Route>
 
-
+          <Route exact path="/customerInvoice">
+            <Invoice />
+          </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
