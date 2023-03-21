@@ -48,7 +48,7 @@ function UserForm() {
   const [isPayed, setIsPayed] = useState(false);
   // event form
   const [eventFor, setEventFor] = useState("");
-  const [numCalendars, setNumCalendars] = useState(1);
+  const [numCalendars, setNumCalendars] = useState(0);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -88,7 +88,7 @@ function UserForm() {
     //let totalCost = total + eventCost + numCalendars * 15;
 
     dispatch({
-      type: "ADD_EVENT",
+      type: "USER_ADD_EVENT",
       payload: {
         event_type: eventOption,
         event_date: date,
@@ -110,7 +110,7 @@ function UserForm() {
         zip,
         phone,
         payment_type: payment,
-        total: totalCost,
+        total
       },
     });
     history.push("/customerInvoice");
@@ -345,7 +345,7 @@ function UserForm() {
             <Button> Add Event </Button>
             <Button onClick={handleSubmit}> Check Out </Button>
 
-            <h4>Total: {total}!</h4>
+            <h4>Total: {total}</h4>
 
            
           </Card>
