@@ -5,24 +5,15 @@ import {
   Grid,
   Card,
   CardContent,
-  CardActions,
   TextField,
   Button,
   Select,
   InputLabel,
   MenuItem,
   FormControl,
-  Input,
-  Radio,
+  Input
 } from "@mui/material";
-import FormLabel from "@mui/material/FormLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-
 import { useHistory } from "react-router-dom";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
 import UserPage from "../Pages/UserPage/UserPage";
 
 function UserForm() {
@@ -30,12 +21,8 @@ function UserForm() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order);
-
-  //console.log("in order", orders);
   const calendars = useSelector((store) => store.calendar);
-  //console.log("in calendar", calendars);
-  // order details form
-
+    // order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -49,43 +36,45 @@ function UserForm() {
   // event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(0);
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
   const [selectCalendarId, setSelectedCalendarID] = useState(0);
-
   const [eventOption, setEventOption] = useState("0");
   const [date, setDate] = useState("");
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
-  console.log(date);
-
-  console.log(firstName);
+ 
   useEffect(() => {
     dispatch({ type: "FETCH_ORDER" });
-
     dispatch({ type: "FETCH_CALENDAR" });
   }, []);
 
   // Dispatch for the events
 
-  const eventHandleSubmit = () => {
-    // dispatch({
-    //   type: `USER_ADD_EVENT`,
-    //   payload: {
-    //     event_type: eventOption,
-    //     event_date: date,
-    //     event_name: eventFor,
-    //     user_id: user.id,
-    //     calendar_id: selectCalendarId,
-    //   },
-    // });
-  };
+  // const eventHandleSubmit = () => {
+  //   dispatch({
+  //     type: `USER_ADD_EVENT`,
+  //     payload: {
+  //       event_type: eventOption,
+  //       event_date: date,
+  //       event_name: eventFor,
+  //       user_id: user.id,
+  //       calendar_id: selectCalendarId,
+  //     },
+  //   });
+  // };
 
   const handleSubmit = () => {
     //let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
     //let totalCost = total + eventCost + numCalendars * 15;
+
+    // dispatch({
+    //   type: "ADD_PRODUCT",
+    //       payload: {
+    //         name: numCalendars,
+    //         calendar_id: selectCalendarId,
+    //       }
+    // })
 
     dispatch({
       type: "USER_ADD_EVENT",
@@ -110,7 +99,7 @@ function UserForm() {
         zip,
         phone,
         payment_type: payment,
-        total
+        total,
       },
     });
     history.push("/customerInvoice");
@@ -125,7 +114,6 @@ function UserForm() {
     setPayment("");
     setTotal("");
   };
-
 
   const handleAddEvent = () => {
     setNumEvents(numEvents + 1);
@@ -143,18 +131,16 @@ function UserForm() {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
-      }}
-    >
+      }}>
       <Grid
         container
         spacing={3}
         justifyContent="center"
-        sx={{ marginTop: "40px", marginBottom: "-10px" }}
-      >
+        sx={{ marginTop: "40px", marginBottom: "-10px" }}>
+        
         <Grid item xs={12} md={13}>
           <Card
-            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}
-          >
+            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}>
             <h1>Richland Music Parents</h1>
             <h2>Listing Form</h2>
             <UserPage />
@@ -278,8 +264,7 @@ function UserForm() {
                 labelId="payment-select"
                 label="Payment Options"
                 value={payment}
-                onChange={(event) => setPayment(event.target.value)}
-              >
+                onChange={(event) => setPayment(event.target.value)}>
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
                 <MenuItem value={"Check"}> Check </MenuItem>
@@ -287,16 +272,15 @@ function UserForm() {
             </FormControl>
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel htmlFor="selectCalendarId">
-                {" "}
-                Calendar Year{" "}
+                
+                Calendar Year
               </InputLabel>
               <Select
                 className="calendar-dropdown"
                 name="selectedCaledarId"
                 onChange={(event) => setSelectedCalendarID(event.target.value)}
                 id="calendar"
-                value={selectCalendarId}
-              >
+                value={selectCalendarId}>
                 {calendars.map((calendar) => (
                   <MenuItem value={calendar.id} key={calendar.id}>
                     {calendar.calendar_name}
@@ -334,8 +318,7 @@ function UserForm() {
                 name="event_type"
                 id="eType"
                 value={eventOption}
-                onChange={(e) => setEventOption(e.target.value)}
-              >
+                onChange={(e) => setEventOption(e.target.value)}>
                 <MenuItem value="0">Select Event Type</MenuItem>
                 <MenuItem value="birthday">Birthday</MenuItem>
                 <MenuItem value="anniversary">Anniversary</MenuItem>
@@ -343,11 +326,10 @@ function UserForm() {
               </Select>
             </FormControl>
             <Button> Add Event </Button>
+            <p>Events left: {5 - numEvents}</p>
             <Button onClick={handleSubmit}> Check Out </Button>
 
             <h4>Total: {total}</h4>
-
-           
           </Card>
         </Grid>
       </Grid>
