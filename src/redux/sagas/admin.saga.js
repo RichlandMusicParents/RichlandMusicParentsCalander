@@ -23,11 +23,23 @@ function* getAllUsers() {
   }
 }
 
+function* getSpecificUser(action) {
+  console.log("specific user payload", Number(action.payload.id));
+  try {
+    const response = yield axios.get(
+      `/api/user/specific/${Number(action.payload.id)}`
+    );
+    yield put({ type: "ADMIN_SET_SPECIFIC_USERS", payload: response.data });
+  } catch (err) {
+    console.log("Error in admin GET all users", err);
+  }
+}
+
 function* adminGetSpecificEvents(action) {
   try {
     // passes the username and password from the payload to the server
     const response = yield axios.get(
-      `/api/events/specific-user-events/${action.payload}`
+      `/api/events/specific-user-events/${Number(action.payload.id)}`
     );
     yield put({ type: "ADMIN_SET_SPECIFIC_EVENTS", payload: response.data });
   } catch (err) {
@@ -98,6 +110,7 @@ function* adminSagas() {
   yield takeLatest("ADMIN_GET_ALL_ORDERS", adminGetAllOrders);
   yield takeLatest("ADMIN_GET_ALL_USERS", getAllUsers);
   yield takeLatest("ADMIN_DELETE_EVENT", deleteEvent);
+  yield takeLatest("ADMIN_GET_SPECIFIC_USER", getSpecificUser);
 }
 
 export default adminSagas;

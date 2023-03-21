@@ -135,7 +135,7 @@ function App() {
             )}
           </Route>
 
-          <Route exact path="/admin-order-form">
+          <Route exact path="/admin-order-form/:id">
             {user.is_admin ? (
               <AdminOrderFrom />
             ) : (

@@ -1,15 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../Admin/Admin.css";
 import AdminAddEvents from "./AdminAddEvents";
 import AdminEvents from "./AdminEditEvents";
-import { Button } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { Autocomplete, Box, Button, TextField } from "@mui/material";
+import { useHistory, useParams } from "react-router-dom";
 
 export default function Admin() {
   const events = useSelector((store) => store.adminReducer.allEvents);
   const orders = useSelector((store) => store.adminReducer.allOrders);
   const user = useSelector((store) => store.user);
+  const users = useSelector((store) => store.adminReducer.allUsers);
+  const [userId, setUserId] = useState(users[0]);
+  const [userIdInput, setUserIdInput] = useState("");
   const history = useHistory();
   // const orderItems = [];
   const dispatch = useDispatch();
@@ -22,7 +25,7 @@ export default function Admin() {
   console.log(user);
 
   function sendToForm() {
-    history.push("/admin-order-form");
+    history.push(`/admin-order-form/${userId.id}`);
   }
 
   // console.log(orders.order_items);
@@ -31,6 +34,29 @@ export default function Admin() {
     <>
       <h1>Hello, {user.first_name}</h1>
       <AdminEvents />
+      <h2>Create New Order For:</h2>
+      <Autocomplete
+        sx={{
+          width: 150,
+        }}
+        value={userId}
+        onChange={(event, newValue) => setUserId(newValue)}
+        inputValue={userIdInput}
+        onInputChange={(event, newInputValue) => setUserIdInput(newInputValue)}
+        id="user-list-lookup"
+        getOptionLabel={(users) => `${users.first_name} ${users.last_name}`}
+        options={users}
+        isOptionEqualToValue={(option, value) =>
+          option.first_name === value.first_name
+        }
+        noOptionsText={"No valid User"}
+        renderOption={(props, users) => (
+          <Box component="li" {...props} key={users.id}>
+            {users.first_name} {users.last_name}
+          </Box>
+        )}
+        renderInput={(params) => <TextField {...params} label="Linked User" />}
+      />
       <Button
         onClick={sendToForm}
         sx={{ height: 50, margin: 1 }}

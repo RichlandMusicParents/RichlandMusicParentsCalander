@@ -11,18 +11,19 @@ import {
   Paper,
   TableHead,
   TableContainer,
-  TablePagination,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import AdminAddEvents from "./AdminAddEvents";
 
 export default function AdminAddOrder() {
-  useEffect(() => {
-    dispatch({ type: "GET_SPECIFIC_EVENTS", payload: userId });
-  }, []);
-  const users = useSelector((store) => store.adminReducer.allUsers);
+  const userId = useParams();
+  const user = useSelector((store) => store.adminReducer.specificUser);
+  const events = useSelector((store) => store.adminReducer.specificEvents);
+  console.log(user);
+  console.log(events);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -32,18 +33,29 @@ export default function AdminAddOrder() {
   const [paymentType, setPaymentType] = useState("0");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [userId, setUserId] = useState();
   const [isPayed, setIsPayed] = useState(false);
   const [isDelivered, setIsDelivered] = useState(false);
-  const [userIdInput, setUserIdInput] = useState("");
   const [total, setTotal] = useState(0);
-  const [calendars, setCalendars] = useState(0);
-  const [eventType, setEventType] = useState("");
+  const [calendars, setCalendars] = useState();
+  const [eventType, setEventType] = useState("0");
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
-  const [calId, setCalId] = useState("");
+  const [calId, setCalId] = useState("0");
+  const [userFirst, setUserFirst] = useState("");
+  const [userLast, setUserLast] = useState("");
   const dispatch = useDispatch();
-  const events = [];
+  console.log("our user:", userId);
+
+  useEffect(() => {
+    dispatch({ type: "ADMIN_GET_ALL_USERS" });
+    dispatch({ type: "GET_SPECIFIC_EVENTS", payload: userId });
+    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
+  }, []);
+
+  useEffect(() => {
+    user[0] !== undefined && setUserFirst(user[0].first_name);
+    user[0] !== undefined && setUserLast(user[0].last_name);
+  }, [user]);
 
   function createEvent() {
     const eventObj = {
@@ -53,10 +65,11 @@ export default function AdminAddOrder() {
       user_id: Number(userId),
       calendar_id: Number(calId),
     };
+
+    // dispatch({ type: "ADMIN_NEW_SPECIFIC_EVENTS", payload: eventObj });
   }
 
   function addInfo() {
-    updateTotal();
     const orderObj = {
       first_name: firstName,
       last_name: lastName,
@@ -67,7 +80,7 @@ export default function AdminAddOrder() {
       user_id: Number(userId),
       email: email,
       phone: phone,
-      total: total,
+      total: 15 * Number(calendars),
       payment_type: paymentType,
       is_payed: isPayed,
       is_delivered: isDelivered,
@@ -76,16 +89,12 @@ export default function AdminAddOrder() {
     console.log("Order Object", orderObj);
   }
 
-  function updateTotal() {
-    setTotal(total + 15 * Number(calendars));
-    setTotal(events.length > 5 ? (events.length - 5) * 0.5 : total);
-  }
-
   return (
     <>
       <div className="admin-add-order">
         <header className="admin-add-order-header">
           <h2>Add Customer Info</h2>
+          <h2>{userFirst}</h2>
         </header>
         <div className="admin-add-order-form">
           <TextField
@@ -169,6 +178,14 @@ export default function AdminAddOrder() {
             value={calendars}
             onChange={(e) => setCalendars(e.target.value)}
           />
+          <TextField
+            sx={{
+              width: 150,
+            }}
+            label=""
+            value={`${userFirst} ${userLast}`}
+            type="text"
+          />
           <Select
             sx={{
               width: 150,
@@ -186,69 +203,78 @@ export default function AdminAddOrder() {
             <MenuItem value="check">Check</MenuItem>
             <MenuItem value="card">Card</MenuItem>
           </Select>
-          <Autocomplete
-            sx={{
-              width: 150,
-            }}
-            value={userId}
-            onChange={(event, newValue) => setUserId(newValue)}
-            inputValue={userIdInput}
-            onInputChange={(event, newInputValue) =>
-              setUserIdInput(newInputValue)
-            }
-            id="user-list-lookup"
-            getOptionLabel={(users) => `${users.first_name} ${users.last_name}`}
-            options={users}
-            isOptionEqualToValue={(option, value) =>
-              option.first_name === value.first_name
-            }
-            noOptionsText={"No valid User"}
-            renderOption={(props, users) => (
-              <Box component="li" {...props} key={users.id}>
-                {users.first_name} {users.last_name}
-              </Box>
-            )}
-            renderInput={(params) => (
-              <TextField {...params} label="Linked User" />
-            )}
-          />
-          <Button onClick={addInfo}>Add Info</Button>
         </div>
-        <AdminAddEvents />
+        <div className="admin-add-events">
+          <header>
+            <h2>Add New Event</h2>
+          </header>
+          <div className="admin-add-event-form">
+            <Select
+              sx={{
+                width: 150,
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Event Type" />
+              )}
+              name="event_type"
+              id="eType"
+              value={eventType}
+              onChange={(e) => setEventType(e.target.value)}
+            >
+              <MenuItem value="0">Select Event Type</MenuItem>
+              <MenuItem value="birthday">Birthday</MenuItem>
+              <MenuItem value="anniversary">Anniversary</MenuItem>
+              <MenuItem value="memorial">Memorial</MenuItem>
+            </Select>
+            <TextField
+              sx={{
+                width: 150,
+              }}
+              label="Event Name"
+              type="text"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+            />
+            <TextField
+              sx={{
+                width: 150,
+              }}
+              type="date"
+              value={eventDate}
+              onChange={(e) => setEventDate(e.target.value)}
+            />
+
+            <Select
+              sx={{
+                width: 150,
+              }}
+              name="calendar"
+              id="eType"
+              renderInput={(params) => (
+                <TextField {...params} label="Calendar" />
+              )}
+              value={calId}
+              onChange={(e) => setCalId(e.target.value)}
+            >
+              <MenuItem value="0">Select Calendar</MenuItem>
+              <MenuItem value="1">2023</MenuItem>
+            </Select>
+            <Button
+              sx={{
+                width: 150,
+                height: 50,
+              }}
+              variant="contained"
+              onClick={createEvent}
+            >
+              Add Event
+            </Button>
+          </div>
+        </div>
         <h2>{total}</h2>
       </div>
       <div className="admin-events-view">
-        <Paper>
-          <h2>Created Events</h2>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow
-                  sx={{
-                    width: 100,
-                    height: 50,
-                    margin: 0,
-                  }}
-                >
-                  <TableCell>Event Type</TableCell>
-                  <TableCell>Event Name</TableCell>
-                  <TableCell>Event Date</TableCell>
-                  <TableCell>Created By</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+        <Button onClick={addInfo}>Add Order</Button>
       </div>
     </>
   );
