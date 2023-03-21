@@ -71,8 +71,24 @@ function UserForm() {
   // Dispatch for the events
 
   const eventHandleSubmit = () => {
+    // dispatch({
+    //   type: `USER_ADD_EVENT`,
+    //   payload: {
+    //     event_type: eventOption,
+    //     event_date: date,
+    //     event_name: eventFor,
+    //     user_id: user.id,
+    //     calendar_id: selectCalendarId,
+    //   },
+    // });
+  };
+
+  const handleSubmit = () => {
+    //let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
+    //let totalCost = total + eventCost + numCalendars * 15;
+
     dispatch({
-      type: `USER_ADD_EVENT`,
+      type: "ADD_EVENT",
       payload: {
         event_type: eventOption,
         event_date: date,
@@ -81,9 +97,7 @@ function UserForm() {
         calendar_id: selectCalendarId,
       },
     });
-  };
 
-  const handleSubmit = () => {
     dispatch({
       type: "ADD_ORDER",
       payload: {
@@ -96,7 +110,7 @@ function UserForm() {
         zip,
         phone,
         payment_type: payment,
-        total,
+        total: totalCost,
       },
     });
     history.push("/customerInvoice");
@@ -111,6 +125,7 @@ function UserForm() {
     setPayment("");
     setTotal("");
   };
+
 
   const handleAddEvent = () => {
     setNumEvents(numEvents + 1);
@@ -327,12 +342,12 @@ function UserForm() {
                 <MenuItem value="memorial">Memorial</MenuItem>
               </Select>
             </FormControl>
-            <Button onClick={eventHandleSubmit}> Add Event </Button>
+            <Button> Add Event </Button>
             <Button onClick={handleSubmit}> Check Out </Button>
 
-            <h4>Total: {total}</h4>
+            <h4>Total: {total}!</h4>
 
-            <div></div>
+           
           </Card>
         </Grid>
       </Grid>
