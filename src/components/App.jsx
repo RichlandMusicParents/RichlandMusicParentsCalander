@@ -27,6 +27,7 @@ import "./App.css";
 import UserForm from "./UserForm/UserForm";
 import Admin from "./Pages/Admin/Admin";
 import AdminOrderFrom from "./Pages/Admin/AdminOrderForm";
+import AdminAddEvents from "./Pages/Admin/AdminAddEvents";
 
 function App() {
   const dispatch = useDispatch();
@@ -138,6 +139,20 @@ function App() {
           <Route exact path="/admin-order-form/:id">
             {user.is_admin ? (
               <AdminOrderFrom />
+            ) : (
+              <Route>
+                <h1>403</h1>
+                <h2>
+                  You do not have access to this page. Please sign in as an
+                  admin to view.
+                </h2>
+              </Route>
+            )}
+          </Route>
+
+          <Route exact path="/admin-events/:id">
+            {user.is_admin ? (
+              <AdminAddEvents />
             ) : (
               <Route>
                 <h1>403</h1>

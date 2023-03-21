@@ -14,15 +14,15 @@ export default function Admin() {
   const [userId, setUserId] = useState(users[0]);
   const [userIdInput, setUserIdInput] = useState("");
   const history = useHistory();
-  // const orderItems = [];
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: "GET_ALL_EVENTS" });
     dispatch({ type: "ADMIN_GET_ALL_ORDERS" });
+    dispatch({ type: "ADMIN_GET_ALL_USERS" });
   }, [dispatch]);
-  console.log(events);
+
   console.log("orders:", orders);
-  console.log(user);
+  console.log(userId);
 
   function sendToForm() {
     history.push(`/admin-order-form/${userId.id}`);

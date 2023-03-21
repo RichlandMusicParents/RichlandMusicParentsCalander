@@ -24,9 +24,22 @@ function* addOrder(action) {
   }
 }
 
+function* getSpecificOrder(action) {
+  try {
+    // passes the username and password from the payload to the server
+    const response = yield axios.get(
+      `/api/events/specific-orders/${Number(action.payload)}`
+    );
+    yield put({ type: "SET_SPECIFIC_ORDER", payload: response.data });
+  } catch (err) {
+    console.log("Error with getting specific user events", err);
+  }
+}
+
 function* orderSaga() {
   yield takeLatest("FETCH_ORDER", fetchOrder);
   yield takeLatest("ADD_ORDER", addOrder);
+  yield takeLatest("GET_SPECIFIC_ORDER", getSpecificOrder);
 }
 
 export default orderSaga;

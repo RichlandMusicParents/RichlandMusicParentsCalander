@@ -18,10 +18,12 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 export default function AdminEvents() {
   const events = useSelector((store) => store.adminReducer.allEvents);
   const users = useSelector((store) => store.adminReducer.allUsers);
+  const id = useParams();
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(0);
   const [editEventType, setEditEventType] = useState("");
@@ -35,12 +37,10 @@ export default function AdminEvents() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: "GET_ALL_EVENTS" });
-    dispatch({ type: "ADMIN_GET_ALL_ORDERS" });
-    dispatch({ type: "ADMIN_GET_ALL_USERS" });
+    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: id });
   }, [dispatch]);
-  console.log(events);
-  console.log(users);
+  // console.log(events);
+  // console.log(users);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
