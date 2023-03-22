@@ -29,6 +29,15 @@ const specificEvents = (state = [], action) => {
   }
 };
 
+const specificUser = (state = {}, action) => {
+  switch (action.type) {
+    case "ADMIN_SET_SPECIFIC_USERS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const allUsers = (state = [], action) => {
   switch (action.type) {
     case "ADMIN_SET_ALL_USERS":
@@ -49,4 +58,5 @@ export default combineReducers({
   allOrders,
   specificEvents,
   allUsers,
+  specificUser,
 });

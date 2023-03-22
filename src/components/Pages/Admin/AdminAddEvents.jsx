@@ -2,30 +2,62 @@ import {
   Autocomplete,
   Button,
   MenuItem,
+  Paper,
   Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export default function AdminAddEvents() {
-  const events = useSelector((store) => store.adminReducer.allEvents);
-  const users = useSelector((store) => store.adminReducer.allUsers);
+  const id = useParams();
+  const events = useSelector((store) => store.adminReducer.specificEvents);
+  const user = useSelector((store) => store.adminReducer.specificUser);
+  const order = useSelector((store) => store.order.newOrder);
+  const products = useSelector((store) => store.product);
   const [eventType, setEventType] = useState("0");
   const [eventDate, setEventDate] = useState("");
+  const [orderId, setOrderId] = useState(0);
   const [eventName, setEventName] = useState("");
   const [calId, setCalId] = useState("0");
-  const [userId, setUserId] = useState(users[0]);
-  const [userIdInput, setUserIdInput] = useState("");
+  const [quantity, setQuantity] = useState(0);
   const dispatch = useDispatch();
-
-  console.log(calId);
+  console.log(order);
+  console.log(user);
 
   useEffect(() => {
-    dispatch({ type: "GET_ALL_EVENTS" });
-    dispatch({ type: "ADMIN_GET_ALL_USERS" });
+    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: id });
+    dispatch({ type: "GET_SPECIFIC_EVENTS", payload: id });
+    dispatch({ type: "GET_NEW_ORDER", payload: id });
+    dispatch({ type: "FETCH_PRODUCTS" });
   }, [dispatch]);
+
+  useEffect(() => {
+    order[0] !== undefined && setOrderId(order[0].id);
+  }, [order]);
+
+  console.log("Order ID:", orderId);
+  console.log(products);
+
+  function addItems(id, price) {
+    console.log(id, price);
+    const orderItems = {
+      quantity: 1,
+      price,
+      product_id: id,
+      order_id: orderId,
+    };
+
+    console.log(orderItems);
+  }
 
   function addEvent() {
     const eventObj = {
@@ -42,93 +74,114 @@ export default function AdminAddEvents() {
   }
   return (
     <>
-      <div className="admin-add-events">
-        <header>
-          <h2>Add New Event</h2>
+      <div className="add-items-container">
+        <header className="add-items">
+          <h2>Add Items</h2>
         </header>
-        <div className="admin-add-event-form">
-          <Select
-            sx={{
-              width: 150,
-            }}
-            renderInput={(params) => (
-              <TextField {...params} label="Event Type" />
-            )}
-            name="event_type"
-            id="eType"
-            value={eventType}
-            onChange={(e) => setEventType(e.target.value)}
-          >
-            <MenuItem value="0">Select Event Type</MenuItem>
-            <MenuItem value="birthday">Birthday</MenuItem>
-            <MenuItem value="anniversary">Anniversary</MenuItem>
-            <MenuItem value="memorial">Memorial</MenuItem>
-          </Select>
-          <TextField
-            sx={{
-              width: 150,
-            }}
-            label="Event Name"
-            type="text"
-            value={eventName}
-            onChange={(e) => setEventName(e.target.value)}
-          />
-          <TextField
-            sx={{
-              width: 150,
-            }}
-            type="date"
-            value={eventDate}
-            onChange={(e) => setEventDate(e.target.value)}
-          />
-          <Autocomplete
-            sx={{
-              width: 150,
-            }}
-            value={userId}
-            onChange={(event, newValue) => setUserId(newValue)}
-            inputValue={userIdInput}
-            onInputChange={(event, newInputValue) =>
-              setUserIdInput(newInputValue)
-            }
-            id="user-list-lookup"
-            getOptionLabel={(users) => `${users.first_name} ${users.last_name}`}
-            options={users}
-            isOptionEqualToValue={(option, value) =>
-              option.first_name === value.first_name
-            }
-            noOptionsText={"No valid User"}
-            renderOption={(props, users) => (
-              <Box component="li" {...props} key={users.id}>
-                {users.first_name} {users.last_name}
-              </Box>
-            )}
-            renderInput={(params) => <TextField {...params} label="User" />}
-          />
-          <Select
-            sx={{
-              width: 150,
-            }}
-            name="calendar"
-            id="eType"
-            renderInput={(params) => <TextField {...params} label="Calendar" />}
-            value={calId}
-            onChange={(e) => setCalId(e.target.value)}
-          >
-            <MenuItem value="0">Select Calendar</MenuItem>
-            <MenuItem value="1">2023</MenuItem>
-          </Select>
-          <Button
-            sx={{
-              width: 150,
-              height: 50,
-            }}
-            variant="contained"
-            onClick={addEvent}
-          >
-            Add Event
-          </Button>
+        <div className="items-form">
+          {products.map((product) => (
+            <>
+              <h3>
+                {product.name}: {product.price}
+              </h3>
+              <Button onClick={() => addItems(product.id, product.price)}>
+                Add
+              </Button>
+            </>
+          ))}
         </div>
+      </div>
+      <div className="admin-add-event-form">
+        <Select
+          sx={{
+            width: 150,
+          }}
+          renderInput={(params) => <TextField {...params} label="Event Type" />}
+          name="event_type"
+          id="eType"
+          value={eventType}
+          onChange={(e) => setEventType(e.target.value)}
+        >
+          <MenuItem value="0">Select Event Type</MenuItem>
+          <MenuItem value="birthday">Birthday</MenuItem>
+          <MenuItem value="anniversary">Anniversary</MenuItem>
+          <MenuItem value="memorial">Memorial</MenuItem>
+        </Select>
+        <TextField
+          sx={{
+            width: 150,
+          }}
+          label="Event Name"
+          type="text"
+          value={eventName}
+          onChange={(e) => setEventName(e.target.value)}
+        />
+        <TextField
+          sx={{
+            width: 150,
+          }}
+          type="date"
+          value={eventDate}
+          onChange={(e) => setEventDate(e.target.value)}
+        />
+
+        <Select
+          sx={{
+            width: 150,
+          }}
+          name="calendar"
+          id="eType"
+          renderInput={(params) => <TextField {...params} label="Calendar" />}
+          value={calId}
+          onChange={(e) => setCalId(e.target.value)}
+        >
+          <MenuItem value="0">Select Calendar</MenuItem>
+          <MenuItem value="1">2023</MenuItem>
+        </Select>
+        <Button
+          sx={{
+            width: 150,
+            height: 50,
+          }}
+          variant="contained"
+          onClick={addEvent}
+        >
+          Add Event
+        </Button>
+      </div>
+      <div className="admin-events-view">
+        <Paper>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Event Type</TableCell>
+                  <TableCell>Event Name</TableCell>
+                  <TableCell>Event Date</TableCell>
+                  <TableCell>Linked to</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {events.map((event) => (
+                  <TableRow>
+                    <TableCell>{event.event_type}</TableCell>
+                    <TableCell>{event.event_name}</TableCell>
+                    <TableCell>{event.event_date}</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>
+                      <Button>Edit</Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="contained">Remove</Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       </div>
     </>
   );

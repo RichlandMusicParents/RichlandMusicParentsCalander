@@ -14,6 +14,32 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
+router.get("/specific/:id", rejectUnauthenticated, (req, res) => {
+  if (!req.user.is_admin) {
+    return res.sendStatus(401);
+  }
+
+  const text = `
+    SELECT
+	*
+    FROM
+	"user"
+  WHERE "id" = $1
+    `;
+
+  if (req.user.is_admin === true) {
+    pool
+      .query(text, [req.params.id])
+      .then((results) => res.send(results.rows))
+      .catch((error) => {
+        console.log("Error making SELECT for items:", error);
+        res.sendStatus(500);
+      });
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 router.get("/all-users", rejectUnauthenticated, (req, res) => {
   if (!req.user.is_admin) {
     return res.sendStatus(401);

@@ -63,10 +63,6 @@ router.post("/add-order-items", rejectUnauthenticated, (req, res) => {
 // Get route to get all orders by specific user
 
 router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
-  if (!req.user.is_admin) {
-    return res.sendStatus(401);
-  }
-
   const text = `
   SELECT
 	*,
@@ -87,20 +83,35 @@ FROM
 	"orders"
 WHERE "orders"."user_id" = $1;
         `;
-  if (req.user.is_admin === true) {
-    pool
-      .query(text, [req.params.id])
-      .then((results) => res.send(results.rows))
-      .catch((error) => {
-        console.log("Error making SELECT for items:", error);
-        res.sendStatus(500);
-      });
-  } else {
-    res.sendStatus(403);
-  }
+
+  pool
+    .query(text, [req.params.id])
+    .then((results) => res.send(results.rows))
+    .catch((error) => {
+      console.log("Error making SELECT for items:", error);
+      res.sendStatus(500);
+    });
 });
 
-router.post("/", (req, res) => {
+router.get("/new-order/:id", rejectUnauthenticated, (req, res) => {
+  const text = `
+  SELECT
+	*
+FROM
+	"orders"
+WHERE "user_id" = $1;
+        `;
+
+  pool
+    .query(text, [req.params.id])
+    .then((results) => res.send(results.rows))
+    .catch((error) => {
+      console.log("Error making SELECT for items:", error);
+      res.sendStatus(500);
+    });
+});
+
+router.post("/add-order", (req, res) => {
   console.log("in Post Route", req.body);
   const userId = req.user.id;
 
@@ -123,6 +134,7 @@ router.post("/", (req, res) => {
     email,
     is_payed,
     is_delivered,
+    user_id,
   } = req.body;
 
   pool
@@ -139,7 +151,7 @@ router.post("/", (req, res) => {
       total,
       is_payed,
       is_delivered,
-      userId,
+      user_id,
     ])
     .then((result) => {
       res.send(result.rows[0]);
