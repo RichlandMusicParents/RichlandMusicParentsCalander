@@ -39,12 +39,32 @@ function* deleteUserEvent(action) {
     console.log("Error in deleting an event", error);
   }
 }
+// allows user to edit events on the invoice page.
+function* editUserEvent(action){
+  const eventObj = {
+    event_type: action.payload.event_type,
+    event_date: action.payload.event_date,
+    event_name: action.payload.event_name,
+    user_id: Number(action.payload.user_id),
+    calendar_id: Number(action.payload.calendar_id),
+  };
+  try{
+    yield axios.put(
+      `/api/events/user-edit-event/${Number(action.payload.id)}`,
+      eventObj
+    );
+    yield put ({type: "GET_USER_EVENT"});
+  } catch(error){
+    console.log("error in updating event saga", error);
+  }
+}
 
 
 function* eventSaga() {
   yield takeLatest(`GET_USER_EVENT`, viewEvent);
   yield takeLatest(`USER_ADD_EVENT`, addEvent);
   yield takeLatest("USER_DELETE_EVENT", deleteUserEvent)
+  yield takeLatest("EDIT_USER_EVENT",editUserEvent )
 }
 
 export default eventSaga;
