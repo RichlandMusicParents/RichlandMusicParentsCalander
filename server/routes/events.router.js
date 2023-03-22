@@ -1,3 +1,4 @@
+const { response } = require("express");
 const express = require("express");
 const {
   rejectUnauthenticated,
@@ -211,6 +212,18 @@ router.delete("/delete-events/:id", (req, res) => {
     .catch((error) => {
       console.log("error in deleting event", error);
     });
+});
+
+//Edit event for user
+router.put("/user-edit-event/:id", (req,res) =>{
+  const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
+  const QUERYTEXT=`UPDATE "event" SET "event_type" = $1, "event_date" = $2,
+  "event_name" = $3, "user_id" = $4, "calendar_id" = $5 WHERE "id" = $6;`;
+  pool.query(QUERYTEXT, [event_type, event_date, event_name,user_id,calendar_id, req.params.id]).then((response) =>{
+    res.sendStatus(204);
+  }).catch((error) =>{
+    console.log("error in updating event", error);
+  });
 });
 
 module.exports = router;
