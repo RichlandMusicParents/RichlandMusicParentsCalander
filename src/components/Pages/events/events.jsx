@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+//import { useHistory } from "react-router-dom";
+
 import {
   Grid,
   Card,
@@ -33,12 +35,15 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 
 function Events(){
+    const history = useHistory();
     const dispatch= useDispatch();
     const event = useSelector((store) => store.eventReducer);
     const calendars = useSelector((store) => store.calendar);
     const user = useSelector((store) => store.user);
     useEffect(() => {
         dispatch({ type: "GET_USER_EVENT" });
+         dispatch({ type: "FETCH_PRODUCT" });
+            dispatch({ type: "FETCH_CALENDAR" });
       }, []);
   
   
@@ -49,6 +54,16 @@ function Events(){
   // Dispatch for the events
 
   const eventHandleSubmit = () => {
+       //let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
+    //let totalCost = total + eventCost + numCalendars * 15;
+
+    // dispatch({
+    //   type: "ADD_PRODUCT",
+    //       payload: {
+    //         name: numCalendars,
+    //         calendar_id: selectCalendarId,
+    //       }
+    // })
     dispatch({
       type: `USER_ADD_EVENT`,
       payload: {
@@ -64,19 +79,16 @@ function Events(){
     setNumEvents(numEvents + 1);
     setTotal(total + (numEvents > 4 ? 0.5 : 0));
   };
+  
 
   const handleAddCalendar = () => {
     setNumCalendars(numCalendars + 1);
     setTotal(total + 15);
   };
 
-
+   // event form
     const [eventFor, setEventFor] = useState("");
     const [numCalendars, setNumCalendars] = useState(1);
-  
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-  
     const [selectCalendarId, setSelectedCalendarID] = useState(0);
     const [payment, setPayment] = useState("");
     const [eventOption, setEventOption] = useState("0");
@@ -108,20 +120,7 @@ function Events(){
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
-            <FormControl sx={{ m: 1, width: 300 }}>
-              <InputLabel id="event-label"> Payment Options</InputLabel>
-
-              <Select
-                labelId="payment-select"
-                label="Payment Options"
-                value={payment}
-                onChange={(event) => setPayment(event.target.value)}
-              >
-                <MenuItem value={"Debit"}> Debit </MenuItem>
-                <MenuItem value={"Cash"}> Cash </MenuItem>
-                <MenuItem value={"Check"}> Check </MenuItem>
-              </Select>
-            </FormControl>
+            
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel htmlFor="selectCalendarId">
                 {" "}
@@ -179,10 +178,12 @@ function Events(){
                 <MenuItem value="memorial">Memorial</MenuItem>
               </Select>
             </FormControl>
-            <Button onClick={eventHandleSubmit}> Add Event </Button>
+            <Button onClick={eventHandleSubmit}> Check Out </Button>
+           
 
 
             <h4>Total: {total}</h4>
+            <p>Events left: {5 - numEvents}</p>
 
             <div></div>
             <div className="orderDetails">
