@@ -21,6 +21,7 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import SplashPage from "./Pages/SplashPage/splashPage";
 import Invoice from "./Pages/CustomerInvoice/invoice";
+import Events from "./Pages/calendar/events";
 //import EventForm from "./UserForm/EventForm";
 
 import "./App.css";
@@ -117,9 +118,10 @@ function App() {
             <UserForm />
           </Route>
 
-          {/* <Route path="/event">
-            <EventForm />
-          </Route> */}
+
+          <Route path="/events">
+            <Events />
+          </Route>
 
           <Route exact path="/admin">
             {user.is_admin ? (
