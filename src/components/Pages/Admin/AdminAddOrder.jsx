@@ -1,10 +1,4 @@
-import {
-  Autocomplete,
-  Button,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +22,6 @@ export default function AdminAddOrder() {
   const [isPayed, setIsPayed] = useState(false);
   const [isDelivered, setIsDelivered] = useState(false);
   const [total, setTotal] = useState(0);
-  const [calendars, setCalendars] = useState();
   const [userFirst, setUserFirst] = useState("");
   const [userLast, setUserLast] = useState("");
   const dispatch = useDispatch();

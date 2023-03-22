@@ -15,8 +15,9 @@ function* fetchOrder() {
 
 function* getNewOrder(action) {
   try {
+    console.log("new order payload", Number(action.payload));
     const response = yield axios.get(
-      `/api/orders/new-order/${action.payload.id}`
+      `/api/orders/new-order/${Number(action.payload.id)}`
     );
     yield put({ type: "SET_NEW_ORDER", payload: response.data });
   } catch (err) {
@@ -41,7 +42,6 @@ function* getSpecificOrder(action) {
     const response = yield axios.get(
       `/api/events/specific-orders/${Number(action.payload.id)}`
     );
-    console.log("Specific Order Payload", action.payload);
     yield put({ type: "SET_SPECIFIC_ORDER", payload: response.data });
   } catch (err) {
     console.log("Error with getting specific user events", err);

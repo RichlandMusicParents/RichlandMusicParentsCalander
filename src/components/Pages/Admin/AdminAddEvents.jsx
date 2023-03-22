@@ -44,16 +44,15 @@ export default function AdminAddEvents() {
   const [editEventName, setEditEventName] = useState("");
   const [editCalId, setEditCalId] = useState(0);
   const dispatch = useDispatch();
-  console.log(order);
 
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: id });
-    dispatch({ type: "GET_SPECIFIC_EVENTS", payload: id });
     dispatch({ type: "GET_NEW_ORDER", payload: id });
     dispatch({
       type: "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
       payload: Number(id.id),
     });
+    dispatch({ type: "GET_SPECIFIC_EVENTS", payload: id });
     //
     dispatch({ type: "FETCH_PRODUCTS" });
   }, [dispatch]);
@@ -61,15 +60,6 @@ export default function AdminAddEvents() {
   useEffect(() => {
     order[0] !== undefined && setOrderId(order[0].id);
   }, [order]);
-
-  useEffect(() => {
-    user[0] !== undefined && setUserId(user[0].id);
-  }, [user]);
-
-  console.log("Order ID:", orderId);
-  console.log(products);
-
-  console.log("user id:", userId);
 
   function addItems(product_id, price) {
     console.log(product_id, price);
@@ -82,7 +72,6 @@ export default function AdminAddEvents() {
     };
 
     dispatch({ type: "ADMIN_ADD_ORDER_ITEMS", payload: orderItems });
-    // console.log(orderItems);
   }
 
   function saveUpdate(product_id, price) {
@@ -97,7 +86,7 @@ export default function AdminAddEvents() {
     };
 
     dispatch({ type: "ADMIN_EDIT_ORDER_ITEMS", payload: orderItems });
-    // console.log(orderItems);
+    setItemEditMode(false);
   }
 
   function editEvents(id, type, name, date, editCalId) {
@@ -129,8 +118,6 @@ export default function AdminAddEvents() {
       calendar_id: Number(calId),
     };
 
-    console.log("Event being created:", eventObj);
-
     dispatch({ type: "ADMIN_ADD_EVENTS", payload: eventObj });
   }
 
@@ -144,8 +131,6 @@ export default function AdminAddEvents() {
       calendar_id: editCalId,
     };
 
-    console.log(editEventObj);
-
     dispatch({ type: "ADMIN_EDIT_EVENTS", payload: editEventObj });
 
     setEditMode(false);
@@ -157,22 +142,20 @@ export default function AdminAddEvents() {
         <header className="add-items">
           <h2>Add Items</h2>
         </header>
-        <div className="items-form">
-          {products.map((product) => (
-            <>
-              <h3>
-                {product.name}: {product.price}
-              </h3>
-              <Button onClick={() => addItems(product.id, product.price)}>
-                Add
-              </Button>
-            </>
-          ))}
-        </div>
+        {products.map((product) => (
+          <div key={product.id} className="items-form">
+            <h3>
+              {product.name}: {product.price}
+            </h3>
+            <Button onClick={() => addItems(product.id, product.price)}>
+              Add
+            </Button>
+          </div>
+        ))}
         {orderItems.map((item) => (
           <div className="items-cart">
             {itemEditMode && item.id === itemEditId ? (
-              <>
+              <div key={item.id} className="item">
                 <h3>{item.name}</h3>
                 <TextField
                   sx={{
@@ -186,10 +169,9 @@ export default function AdminAddEvents() {
                 <Button onClick={() => saveUpdate(item.product_id, item.price)}>
                   Update
                 </Button>
-              </>
+              </div>
             ) : (
-              <>
-                {" "}
+              <div key={item.id} className="item">
                 <h3>{item.name}</h3>
                 <TextField
                   sx={{
@@ -200,7 +182,7 @@ export default function AdminAddEvents() {
                   value={item.quantity}
                   onClick={() => updateItem(item.id, item.quantity)}
                 />
-              </>
+              </div>
             )}
           </div>
         ))}
