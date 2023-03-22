@@ -47,6 +47,15 @@ const allUsers = (state = [], action) => {
   }
 };
 
+const specificOrderItems = (state = [], action) => {
+  switch (action.type) {
+    case "ADMIN_SET_ORDER_ITEMS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 // registrationMessage holds the string that will display
 // on the registration screen if there's an error
 
@@ -59,4 +68,5 @@ export default combineReducers({
   specificEvents,
   allUsers,
   specificUser,
+  specificOrderItems,
 });
