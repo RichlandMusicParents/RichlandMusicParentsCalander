@@ -181,7 +181,7 @@ function Events(){
               </Select>
             </FormControl>
             
-            <Button onClick={eventHandleSubmit}> Check Out </Button>
+          
            
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel htmlFor="numCalendars">
@@ -190,28 +190,38 @@ function Events(){
               <Input
                 id="numEvents"
                 type="number"
-                value={numEventsQuan}
+                value={numEvents}
                 onChange={(event) =>
-                  setNumEventsQuan(Number(event.target.value))
+                  setNumEvents(Number(event.target.value))
                 }
               />
-              <Button onClick={handleAddEvent}> Add Event</Button>
               </FormControl>
+
+              <br />
+              <br />
+
+              <Button onClick={eventHandleSubmit}> Check Out </Button>
 
             <h4>Total: {total}</h4>
             <p>Events left: {5 - numEvents}</p>
-            <div>
+           
             {products.map((product) => (
-            <>
+          
+             <div key={product.id}>
               <h3>
                 {product.name}: {product.price}
               </h3>
-              <Button onClick={() => handleAddCalendar(product.id, product.price)}>
+
+              {product.name === "Extra Event" && (
+              <Button onClick={handleAddEvent}>Add Event</Button>
+              )}
+              {product.name === "Calendar" && ( 
+                <Button onClick={() => handleAddCalendar(product.id, product.price)}>
                 Add Calender
               </Button>
-            </>
+              )}
+              </div>
           ))}
-            </div>
           
 
             <div></div>
