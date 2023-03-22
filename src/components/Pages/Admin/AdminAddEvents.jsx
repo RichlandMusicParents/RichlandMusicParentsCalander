@@ -21,33 +21,42 @@ export default function AdminAddEvents() {
   const id = useParams();
   const events = useSelector((store) => store.adminReducer.specificEvents);
   const user = useSelector((store) => store.adminReducer.specificUser);
-  const order = useSelector((store) => store.order);
+  const order = useSelector((store) => store.order.newOrder);
   const products = useSelector((store) => store.product);
   const [eventType, setEventType] = useState("0");
   const [eventDate, setEventDate] = useState("");
+  const [orderId, setOrderId] = useState(0);
   const [eventName, setEventName] = useState("");
   const [calId, setCalId] = useState("0");
   const [quantity, setQuantity] = useState(0);
   const dispatch = useDispatch();
   console.log(order);
-  console.log(calId);
+  console.log(user);
 
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: id });
     dispatch({ type: "GET_SPECIFIC_EVENTS", payload: id });
-    dispatch({ type: "GET_SPECIFIC_ORDER", payload: id });
+    dispatch({ type: "GET_NEW_ORDER", payload: id });
     dispatch({ type: "FETCH_PRODUCTS" });
   }, [dispatch]);
 
+  useEffect(() => {
+    order[0] !== undefined && setOrderId(order[0].id);
+  }, [order]);
+
+  console.log("Order ID:", orderId);
   console.log(products);
 
-  function addOrderItems() {
+  function addItems(id, price) {
+    console.log(id, price);
     const orderItems = {
-      quantity,
+      quantity: 1,
       price,
-      product_id,
-      order_id,
+      product_id: id,
+      order_id: orderId,
     };
+
+    console.log(orderItems);
   }
 
   function addEvent() {
@@ -75,14 +84,9 @@ export default function AdminAddEvents() {
               <h3>
                 {product.name}: {product.price}
               </h3>
-              <TextField
-                sx={{
-                  width: 50,
-                }}
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-              />
+              <Button onClick={() => addItems(product.id, product.price)}>
+                Add
+              </Button>
             </>
           ))}
         </div>

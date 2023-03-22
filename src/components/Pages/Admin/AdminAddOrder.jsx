@@ -63,7 +63,7 @@ export default function AdminAddOrder() {
     // console.log(orderObj);
 
     dispatch({ type: "ADD_ORDER", payload: orderObj });
-    // history.push(`/admin-events/${uId}`);
+    history.push(`/admin-events/${uId}`);
   }
 
   return (

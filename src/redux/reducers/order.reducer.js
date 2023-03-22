@@ -11,9 +11,9 @@ const orderReducer = (state = [], action) => {
   }
 };
 
-const specificOrder = (state = [], action) => {
+const newOrder = (state = [], action) => {
   switch (action.type) {
-    case "SET_SPECIFIC_ORDER":
+    case "SET_NEW_ORDER":
       return action.payload;
     default:
       return state;
@@ -22,5 +22,5 @@ const specificOrder = (state = [], action) => {
 
 export default combineReducers({
   orderReducer,
-  specificOrder,
+  newOrder,
 });

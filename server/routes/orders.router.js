@@ -93,6 +93,24 @@ WHERE "orders"."user_id" = $1;
     });
 });
 
+router.get("/new-order/:id", rejectUnauthenticated, (req, res) => {
+  const text = `
+  SELECT
+	*
+FROM
+	"orders"
+WHERE "user_id" = $1;
+        `;
+
+  pool
+    .query(text, [req.params.id])
+    .then((results) => res.send(results.rows))
+    .catch((error) => {
+      console.log("Error making SELECT for items:", error);
+      res.sendStatus(500);
+    });
+});
+
 router.post("/add-order", (req, res) => {
   console.log("in Post Route", req.body);
   const userId = req.user.id;
