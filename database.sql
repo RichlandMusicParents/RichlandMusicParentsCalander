@@ -181,7 +181,8 @@ CREATE TABLE "order_items" (
 	"quantity" int NOT NULL,
 	"price" numeric(10, 2) NOT NULL,
 	"product_id" int REFERENCES "product",
-	"order_id" int REFERENCES "orders"
+	"order_id" int REFERENCES "orders" ON DELETE CASCADE, 
+	"user_id" int REFERENCES "user"
 );
 
 -- Insert --
