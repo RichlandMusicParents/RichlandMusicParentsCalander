@@ -1,8 +1,10 @@
 const orderItemsReducer = (state = [], action) => {
     switch (action.type) {
-        case "SET_ORDERITEMS":
+
+        case "SET_ORDER_ITEMS":
           return action.payload;
-        case "ADD_ORDERITEMS":
+        case "ADD_ORDER_ITEMS":
+
           return [...state, action.payload];
         default:
           return state;

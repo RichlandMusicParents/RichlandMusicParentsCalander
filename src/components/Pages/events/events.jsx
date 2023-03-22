@@ -63,6 +63,7 @@ function Events(){
       type: "ADD_PRODUCT",
           payload: {
             name: numCalendars,
+            price,
             calendar_id: selectCalendarId,
           }
     })
@@ -90,7 +91,6 @@ function Events(){
 
    // event form
     const [eventFor, setEventFor] = useState("");
-    const [numEventsQuan, setNumEventsQuan] = useState(0);
     const [numCalendars, setNumCalendars] = useState(0);
     const [selectCalendarId, setSelectedCalendarID] = useState(0);
     const [payment, setPayment] = useState("");
