@@ -11,6 +11,7 @@ const passport = require("./strategies/user.strategy");
 const userRouter = require("./routes/user.router");
 const eventsRouter = require("./routes/events.router");
 const ordersRouter = require("./routes/orders.router");
+const orderitemsRouter = require("./routes/orderitems.router");
 const productsRouter = require("./routes/products.router");
 const calendarRouter = require("./routes/calendar.router");
 
@@ -29,6 +30,7 @@ app.use(passport.session());
 app.use("/api/user", userRouter);
 app.use("/api/events", eventsRouter);
 app.use("/api/orders", ordersRouter);
+app.use("/api/orderitems", orderitemsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/calendar", calendarRouter);
 
