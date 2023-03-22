@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import {
   Grid,
@@ -28,8 +28,6 @@ import {
 import FormLabel from "@mui/material/FormLabel";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
-import { useHistory } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -39,10 +37,13 @@ function Events(){
     const dispatch= useDispatch();
     const event = useSelector((store) => store.eventReducer);
     const calendars = useSelector((store) => store.calendar);
+    const products = useSelector((store) => store.product);
+    console.log("in products", products)
     const user = useSelector((store) => store.user);
+    
     useEffect(() => {
         dispatch({ type: "GET_USER_EVENT" });
-         dispatch({ type: "FETCH_PRODUCT" });
+         dispatch({ type: "FETCH_USER_PRODUCTS" });
             dispatch({ type: "FETCH_CALENDAR" });
       }, []);
   
@@ -51,19 +52,20 @@ function Events(){
     function deleteUserEvent(id){
       dispatch({type: "USER_DELETE_EVENT", payload: id})
     }  
-  // Dispatch for the events
 
+  // Dispatch for the events
   const eventHandleSubmit = () => {
+    history.push("/customerInvoice")
        //let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
     //let totalCost = total + eventCost + numCalendars * 15;
 
-    // dispatch({
-    //   type: "ADD_PRODUCT",
-    //       payload: {
-    //         name: numCalendars,
-    //         calendar_id: selectCalendarId,
-    //       }
-    // })
+    dispatch({
+      type: "ADD_PRODUCT",
+          payload: {
+            name: numCalendars,
+            calendar_id: selectCalendarId,
+          }
+    })
     dispatch({
       type: `USER_ADD_EVENT`,
       payload: {
@@ -88,7 +90,8 @@ function Events(){
 
    // event form
     const [eventFor, setEventFor] = useState("");
-    const [numCalendars, setNumCalendars] = useState(1);
+    const [numEventsQuan, setNumEventsQuan] = useState(0);
+    const [numCalendars, setNumCalendars] = useState(0);
     const [selectCalendarId, setSelectedCalendarID] = useState(0);
     const [payment, setPayment] = useState("");
     const [eventOption, setEventOption] = useState("0");
@@ -154,7 +157,6 @@ function Events(){
                 }
               />
 
-              <Button onClick={handleAddCalendar}> Add Calendar</Button>
             </FormControl>
 
             <FormControl sx={{ m: 1, width: 300 }}>
@@ -178,12 +180,39 @@ function Events(){
                 <MenuItem value="memorial">Memorial</MenuItem>
               </Select>
             </FormControl>
+            
             <Button onClick={eventHandleSubmit}> Check Out </Button>
            
-
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel htmlFor="numCalendars">
+                Number of Events
+              </InputLabel>
+              <Input
+                id="numEvents"
+                type="number"
+                value={numEventsQuan}
+                onChange={(event) =>
+                  setNumEventsQuan(Number(event.target.value))
+                }
+              />
+              <Button onClick={handleAddEvent}> Add Event</Button>
+              </FormControl>
 
             <h4>Total: {total}</h4>
             <p>Events left: {5 - numEvents}</p>
+            <div>
+            {products.map((product) => (
+            <>
+              <h3>
+                {product.name}: {product.price}
+              </h3>
+              <Button onClick={() => handleAddCalendar(product.id, product.price)}>
+                Add Calender
+              </Button>
+            </>
+          ))}
+            </div>
+          
 
             <div></div>
             <div className="orderDetails">
@@ -214,6 +243,5 @@ function Events(){
 
         </>
     )
-    
     
 } export default Events
