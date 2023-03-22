@@ -67,7 +67,7 @@ function Events(){
 
   const handleAddCalendar = () => {
     setNumCalendars(numCalendars + 1);
-    setTotal(total + 15);
+    setTotal(total + 15)
   };
 
 
