@@ -11,6 +11,17 @@ function* fetchProducts() {
   }
 }
 
+
+function* fetchUserProducts() {
+  try {
+    const response = yield axios.get("/api/products/");
+    const product = response.data;
+    yield put({ type: "SET_PRODUCTS", payload: product });
+  } catch (error) {
+    console.log("Error fetching products", error);
+  }
+}
+
 function* addProduct(action) {
   try {
     yield axios.post("/api/products", action.payload);
@@ -23,6 +34,7 @@ function* addProduct(action) {
 }
 
 function* productSaga() {
+  yield takeLatest("FETCH_USER_PRODUCTS", fetchUserProducts)
   yield takeLatest("FETCH_PRODUCTS", fetchProducts);
   yield takeLatest("ADD_PRODUCT", addProduct);
 }

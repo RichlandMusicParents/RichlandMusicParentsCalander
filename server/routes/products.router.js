@@ -32,6 +32,21 @@ FROM
   }
 });
 
+//GET route for user
+router.get('/', (req, res) => {
+  const queryText = 'SELECT * FROM "product"';
+  pool.query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log('Error getting product', error);
+      res.sendStatus(500);
+    });
+});
+
+
+
 router.post("/add-products", rejectUnauthenticated, (req, res) => {
   if (!req.user.is_admin) {
     return res.sendStatus(401);

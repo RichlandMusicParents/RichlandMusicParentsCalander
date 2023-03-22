@@ -67,8 +67,7 @@ function UserForm() {
         zip,
         phone,
         payment_type: payment,
-        total
-
+        user_id: user.id,
 
       },
     });
@@ -82,7 +81,7 @@ function UserForm() {
     setZip("");
     setPhone("");
     setPayment("");
-    setTotal("");
+  
   };
 
 
@@ -209,7 +208,7 @@ function UserForm() {
                 <MenuItem value={"Check"}> Check </MenuItem>
               </Select>
             </FormControl>
-            <h4>Total: {total}</h4>
+            
            
             <Button onClick={handleSubmit}> Continue </Button>
 
