@@ -50,7 +50,9 @@ function Events(){
      const [date, setDate] = useState("");
      const [events, setEvents] = useState("");
      const [numEvents, setNumEvents] = useState(0);
+     const [quantity, setQuantity] = useState(1);
      const [total, setTotal] = useState(0);
+     const [name, setName] = useState(null);
     
     useEffect(() => {
         dispatch({ type: "GET_USER_EVENT" });
@@ -66,47 +68,28 @@ function Events(){
 
   // Dispatch for the events
   const eventHandleSubmit = () => {
-    history.push("/customerInvoice")
+    
 
     dispatch({
-      type: "ADD_ORDER_ITEM", 
+      type: "ADD_ORDER_ITEMS", 
       payload: {
-        name: "Calendar",
-        price:15,
+        price: total,
         product_id: selectedProductId,
-        quantity: numCalendars,
+        quantity,
         order_id: orderId,
-        user_id: user.id,
-
-       
+        user_id: user.id
       },
     });
 
     dispatch({
       type: "ADD_PRODUCT",
           payload: {
-            name: numCalendars,
-            price: total,
+            name,
+            price,
             calendar_id: selectCalendarId,
-            quantity: numCalendars + 1
+            quantity,
           }
     })
-
-
-    if (numEvents > 4) {
-      dispatch({
-        type: "ADD_ORDER_ITEM", 
-        payload: {
-          name: "Extra Event",
-          price: 0.5,
-          quantity: numEvents - 4, 
-          product_id: selectedProductId,
-          order_id: orderId,
-          user_id: user.id,
-        
-        },
-      });  
-  };
 
   
     dispatch({
@@ -128,8 +111,13 @@ function Events(){
 
   const handleAddCalendar = () => {
     setNumCalendars(numCalendars + 1);
+    setQuantity(quantity + 1)
     setTotal(total + 15);
   };
+
+  const handleCheckout = () => {
+    history.push("/customerInvoice")
+  }
 
   
     return (
@@ -213,6 +201,25 @@ function Events(){
                 <MenuItem value="memorial">Memorial</MenuItem>
               </Select>
             </FormControl>
+
+            <FormControl>
+            <InputLabel htmlFor="selectCalendarId">
+                Select Item
+              </InputLabel>
+            <Select
+                className="product-dropdown"
+                name="selectedProduct"
+                onChange={(event) => setSelectedProductId(event.target.value)}
+                id="product"
+                value={selectedProductId}
+              >
+                {products.map((product) => (
+                  <MenuItem value={product.id} key={product.id}>
+                    {product.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             
           
            
@@ -233,7 +240,8 @@ function Events(){
               <br />
               <br />
 
-              <Button onClick={eventHandleSubmit}> Check Out </Button>
+              <Button onClick={eventHandleSubmit}> Submit Event </Button>
+              <Button onClick={handleCheckout}> Check Out </Button>
 
             <h4>Total: {total}</h4>
             {numEvents >= 5 ? (
