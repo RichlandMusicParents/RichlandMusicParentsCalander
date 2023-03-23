@@ -121,6 +121,13 @@ export default function AdminAddEvents() {
     setQuantity(itemQuantity);
   }
 
+  function deleteOrderItem(id) {
+    dispatch({
+      type: "ADMIN_DELETE_ORDER_ITEM",
+      payload: { id: id, user_id: userId },
+    });
+  }
+
   function addEvent() {
     const eventObj = {
       event_type: eventType,
@@ -198,6 +205,7 @@ export default function AdminAddEvents() {
                   value={item.quantity}
                   onClick={() => updateItem(item.id, item.quantity)}
                 />
+                <Button onClick={() => deleteOrderItem(item.id)}>Remove</Button>
               </div>
             )}
           </div>

@@ -105,7 +105,20 @@ router.put("/edit-order-items/:id", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
-// Get route to get all orders by specific user
+
+router.delete("/delete-order-item/:id", rejectUnauthenticated, (req, res) => {
+  const text = `DELETE FROM "order_items" WHERE "id" = $1;`;
+
+  pool
+    .query(text, [req.params.id])
+    .then((result) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log("Error in DELETEing order item", err);
+      res.sendStatus(500);
+    });
+});
 
 router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
   const text = `

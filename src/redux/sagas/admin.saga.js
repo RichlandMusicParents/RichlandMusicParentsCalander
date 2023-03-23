@@ -1,4 +1,4 @@
-import { put, takeLatest } from "redux-saga/effects";
+import { put, take, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
 // ------ EVENTS SAGA ---------------------------------------------------------------------------------------
@@ -168,6 +168,18 @@ function* editOrderItem(action) {
   }
 }
 
+function* adminDeleteOrderItem(action) {
+  try {
+    yield axios.delete(`/api/orders/delete-order-item/${action.payload.id}`);
+    yield put({
+      type: "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
+      payload: action.payload.user_id.id,
+    });
+  } catch (err) {
+    console.log("Error in DELETE order items SAGA", err);
+  }
+}
+
 // ---------------- END ORDER ITEMS SAGA ------------------------------------------------------------------------------------------------
 
 // ---------------- ORDERS SAGA ------------------------------------------------------------------------------------------------
@@ -252,6 +264,7 @@ function* adminSagas() {
     "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
     adminGetSpecificOrderItems
   );
+  yield takeLatest("ADMIN_DELETE_ORDER_ITEM", adminDeleteOrderItem);
   // USER
   yield takeLatest("ADMIN_GET_ALL_USERS", getAllUsers);
   yield takeLatest("ADMIN_GET_SPECIFIC_USER", getSpecificUser);
