@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import {
   CardContent,
@@ -39,18 +40,19 @@ function Events(){
     const user = useSelector((store) => store.user);
 
      // event form
+    //  const { order_id } = useParams();
+    // console.log("IN PARAMS", order_id)
      const [eventFor, setEventFor] = useState("");
      const [numCalendars, setNumCalendars] = useState(0);
      const [selectCalendarId, setSelectedCalendarID] = useState(0);
      const [selectedProductId, setSelectedProductId] = useState(0);
-
-     const [orderId, setOrderId] = useState(0);
-     const [price, setPrice] = useState(15);
+     const [selectedOrderId, setSelectedOrderId] = useState(0);
+     const [price, setPrice] = useState(0);
      const [eventOption, setEventOption] = useState("0");
      const [date, setDate] = useState("");
      const [events, setEvents] = useState("");
      const [numEvents, setNumEvents] = useState(0);
-     const [quantity, setQuantity] = useState(1);
+     const [quantity, setQuantity] = useState(0);
      const [total, setTotal] = useState(0);
      const [name, setName] = useState(null);
     
@@ -68,7 +70,16 @@ function Events(){
 
   // Dispatch for the events
   const eventHandleSubmit = () => {
-    
+
+    // const orderObj = {
+    //   price: total,
+    //   product_id: selectedProductId,
+    //   quantity,
+    //   order_id: selectedOrderId,
+    //   user_id: user.id
+    // }
+
+    //console.log("in order items" ,orderObj);
 
     dispatch({
       type: "ADD_ORDER_ITEMS", 
@@ -76,10 +87,14 @@ function Events(){
         price: total,
         product_id: selectedProductId,
         quantity,
-        order_id: orderId,
+        order_id: selectedOrderId,
         user_id: user.id
       },
     });
+
+
+
+console.log("IN ORDER_ID", selectedOrderId)
 
     dispatch({
       type: "ADD_PRODUCT",
@@ -105,6 +120,7 @@ function Events(){
   };
   const handleAddEvent = () => {
     setNumEvents(numEvents + 1);
+    setQuantity(quantity + 1)
     setTotal(total + (numEvents > 4 ? 0.5 : 0));
   };
   
@@ -202,7 +218,7 @@ function Events(){
               </Select>
             </FormControl>
 
-            <FormControl>
+           <FormControl>
             <InputLabel htmlFor="selectCalendarId">
                 Select Item
               </InputLabel>
@@ -252,9 +268,7 @@ function Events(){
             {products.map((product) => (
           
              <div key={product.id}>
-              <h3>
-                {product.name}: {product.price}
-              </h3>
+             
 
               {product.name === "Extra Event" && (
               <Button onClick={handleAddEvent}>Add Event</Button>
