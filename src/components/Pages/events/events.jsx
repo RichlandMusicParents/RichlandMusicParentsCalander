@@ -295,16 +295,23 @@ console.log("IN ORDER_ID", selectedOrderId)
               </TableRow>
             </TableHead>
             <TableBody>
-              {event.map((event) => (
-                <TableRow key={event.id}>
-                  <TableCell>{event.event_date}</TableCell>
-                  <TableCell>{event.event_type}</TableCell>
-                  <TableCell>{event.event_name}</TableCell>
-                  <TableCell><Button onClick={() => deleteUserEvent(event.id)}
-                  >Delete</Button></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+  {events.map((event) => {
+    const eventDate = new Date(event.event_date);
+    const formattedDate = eventDate.toLocaleDateString();
+
+    return (
+      <TableRow key={event.id}>
+        <TableCell>{formattedDate}</TableCell>
+        <TableCell>{event.event_type}</TableCell>
+        <TableCell>{event.event_name}</TableCell>
+        <TableCell>
+          <Button onClick={() => deleteUserEvent(event.id)}>Delete</Button>
+        </TableCell>
+      </TableRow>
+    );
+  })}
+</TableBody>
+
           </Table>
         </TableContainer>
       </div>
