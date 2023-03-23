@@ -20,7 +20,7 @@ function UserForm() {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-  const orders = useSelector((store) => store.order);
+ 
     // order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");

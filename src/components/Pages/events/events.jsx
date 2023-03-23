@@ -4,8 +4,6 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import {
-  Grid,
-  Card,
   CardContent,
   CardActions,
   TextField,
@@ -15,7 +13,6 @@ import {
   MenuItem,
   FormControl,
   Input,
-  Radio,
   TableContainer,
   Paper,
   Table,
@@ -40,6 +37,20 @@ function Events(){
     const products = useSelector((store) => store.product);
     console.log("in products", products)
     const user = useSelector((store) => store.user);
+
+     // event form
+     const [eventFor, setEventFor] = useState("");
+     const [numCalendars, setNumCalendars] = useState(0);
+     const [selectCalendarId, setSelectedCalendarID] = useState(0);
+     const [selectedProductId, setSelectedProductId] = useState(0);
+
+     const [orderId, setOrderId] = useState(0);
+     const [price, setPrice] = useState(15);
+     const [eventOption, setEventOption] = useState("0");
+     const [date, setDate] = useState("");
+     const [events, setEvents] = useState("");
+     const [numEvents, setNumEvents] = useState(0);
+     const [total, setTotal] = useState(0);
     
     useEffect(() => {
         dispatch({ type: "GET_USER_EVENT" });
@@ -56,17 +67,48 @@ function Events(){
   // Dispatch for the events
   const eventHandleSubmit = () => {
     history.push("/customerInvoice")
-       //let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
-    //let totalCost = total + eventCost + numCalendars * 15;
+
+    dispatch({
+      type: "ADD_ORDER_ITEM", 
+      payload: {
+        name: "Calendar",
+        price:15,
+        product_id: selectedProductId,
+        quantity: numCalendars,
+        order_id: orderId,
+        user_id: user.id,
+
+       
+      },
+    });
 
     dispatch({
       type: "ADD_PRODUCT",
           payload: {
             name: numCalendars,
-            price,
+            price: total,
             calendar_id: selectCalendarId,
+            quantity: numCalendars + 1
           }
     })
+
+
+    if (numEvents > 4) {
+      dispatch({
+        type: "ADD_ORDER_ITEM", 
+        payload: {
+          name: "Extra Event",
+          price: 0.5,
+          quantity: numEvents - 4, 
+          product_id: selectedProductId,
+          order_id: orderId,
+          user_id: user.id,
+        
+        },
+      });  
+  };
+
+  
     dispatch({
       type: `USER_ADD_EVENT`,
       payload: {
@@ -89,16 +131,7 @@ function Events(){
     setTotal(total + 15);
   };
 
-   // event form
-    const [eventFor, setEventFor] = useState("");
-    const [numCalendars, setNumCalendars] = useState(0);
-    const [selectCalendarId, setSelectedCalendarID] = useState(0);
-    const [payment, setPayment] = useState("");
-    const [eventOption, setEventOption] = useState("0");
-    const [date, setDate] = useState("");
-    const [events, setEvents] = useState("");
-    const [numEvents, setNumEvents] = useState(0);
-    const [total, setTotal] = useState(0);
+  
     return (
         <>
          <CardContent>
@@ -203,8 +236,11 @@ function Events(){
               <Button onClick={eventHandleSubmit}> Check Out </Button>
 
             <h4>Total: {total}</h4>
-            <p>Events left: {5 - numEvents}</p>
-           
+            {numEvents >= 5 ? (
+            <p>You've reached the maximum amount of events. An extra event will cost $0.50.</p>
+            ) : (
+            <p>You have {5 - numEvents} events left.</p> )}
+
             {products.map((product) => (
           
              <div key={product.id}>
@@ -252,6 +288,7 @@ function Events(){
       </div>
 
         </>
-    )
+    )}
     
-} export default Events
+
+export default Events
