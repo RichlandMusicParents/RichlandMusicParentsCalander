@@ -59,7 +59,7 @@ export default function AdminAddEvents() {
   const [itemEditMode, setItemEditMode] = useState(false);
   const [itemEditId, setItemEditId] = useState(0);
   const [editMode, setEditMode] = useState(false);
-  const [editId, setEditId] = useState(0);
+  const [eventEditId, setEventEditId] = useState(0);
   const [editEventType, setEditEventType] = useState("");
   const [editEventDate, setEditEventDate] = useState("");
   const [editEventName, setEditEventName] = useState("");
@@ -99,7 +99,7 @@ export default function AdminAddEvents() {
   }
 
   function editEvents(id, type, name, date, editCalId) {
-    setEditId(id);
+    setEventEditId(id);
     setEditMode(true);
     setEditEventType(type);
     setEditEventDate(date);
@@ -109,7 +109,10 @@ export default function AdminAddEvents() {
 
   function deleteEvent(id) {
     console.log(id);
-    dispatch({ type: "ADMIN_DELETE_EVENT", payload: userId });
+    dispatch({
+      type: "ADMIN_DELETE_EVENT",
+      payload: { id: id, user_id: userId },
+    });
   }
 
   function updateItem(id, itemQuantity) {
@@ -132,7 +135,7 @@ export default function AdminAddEvents() {
 
   function saveEditEvent() {
     const editEventObj = {
-      id: editId,
+      id: eventEditId,
       event_type: editEventType,
       event_name: editEventName,
       event_date: editEventDate,
@@ -142,7 +145,7 @@ export default function AdminAddEvents() {
 
     dispatch({ type: "ADMIN_EDIT_EVENTS", payload: editEventObj });
 
-    setEditMode(false);
+    setEventEditId(false);
   }
 
   function sendToReview() {
@@ -288,7 +291,7 @@ export default function AdminAddEvents() {
                     }}
                     key={event.id}
                   >
-                    {editMode && edituserId === event.userId ? (
+                    {editMode && eventEditId === event.id ? (
                       <>
                         <TableCell>
                           <Select

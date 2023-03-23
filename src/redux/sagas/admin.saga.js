@@ -66,12 +66,15 @@ function* adminEditEvent(action) {
 
 function* deleteEvent(action) {
   try {
-    yield axios.delete(
-      `/api/events/admin-delete-event/${Number(action.payload)}`
-    );
+    console.log(action.payload);
+    yield axios.delete(`/api/events/admin-delete-event/${action.payload.id}`);
     yield put({ type: "GET_ALL_EVENTS" });
+    yield put({
+      type: "GET_SPECIFIC_EVENTS",
+      payload: action.payload.user_id.id,
+    });
   } catch (error) {
-    console.log("deleting venue request failed", error);
+    console.log("DELETEing event failed", error);
   }
 }
 
