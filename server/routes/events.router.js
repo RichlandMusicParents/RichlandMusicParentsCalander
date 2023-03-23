@@ -140,7 +140,7 @@ router.delete("/admin-delete-event/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  console.log("in Post Route", req.body);
+  console.log("in Post Route for events", req.body);
   const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
 
   const queryText = `INSERT INTO "event" ("event_type", "event_date", "event_name", "user_id", "calendar_id")
@@ -159,7 +159,7 @@ router.post("/", (req, res) => {
       res.send(result.rows[0]);
     })
     .catch((err) => {
-      console.error("Error in post stories", err);
+      console.error("Error in post event", err);
       res.sendStatus(500);
     });
 });
