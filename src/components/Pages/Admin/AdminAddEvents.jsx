@@ -1,5 +1,4 @@
 import {
-  Autocomplete,
   Button,
   MenuItem,
   Paper,
@@ -12,14 +11,27 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { format } from "date-fns";
 
 export default function AdminAddEvents() {
-  const id = useParams();
+  const userId = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
+    dispatch({ type: "GET_NEW_ORDER", payload: userId });
+    dispatch({ type: "GET_SPECIFIC_EVENTS", payload: userId.id });
+    dispatch({ type: "FETCH_PRODUCTS" });
+    dispatch({
+      type: "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
+      payload: userId.id,
+    });
+  }, [dispatch]);
+
   const events = useSelector((store) => store.adminReducer.specificEvents);
   const user = useSelector((store) => store.adminReducer.specificUser);
   const orderItems = useSelector(
@@ -27,11 +39,20 @@ export default function AdminAddEvents() {
   );
   const order = useSelector((store) => store.order.newOrder);
   const products = useSelector((store) => store.product);
-  console.log("our order items", orderItems);
-  const [userId, setUserId] = useState(0);
+
+  useEffect(() => {
+    order[0] !== undefined && setOrderId(order[0].id);
+  }, [order]);
+
+  console.log("User ID:", Number(userId.id));
+  console.log("Order items:", orderItems);
+  console.log("User:", user);
+  console.log("Events:", events);
+  console.log("Order:", order);
+
+  const [orderId, setOrderId] = useState(0);
   const [eventType, setEventType] = useState("0");
   const [eventDate, setEventDate] = useState("");
-  const [orderId, setOrderId] = useState(0);
   const [eventName, setEventName] = useState("");
   const [calId, setCalId] = useState("0");
   const [quantity, setQuantity] = useState(0);
@@ -43,19 +64,6 @@ export default function AdminAddEvents() {
   const [editEventDate, setEditEventDate] = useState("");
   const [editEventName, setEditEventName] = useState("");
   const [editCalId, setEditCalId] = useState(0);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: id });
-    dispatch({ type: "GET_NEW_ORDER", payload: id });
-    dispatch({
-      type: "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
-      payload: Number(id.id),
-    });
-    dispatch({ type: "GET_SPECIFIC_EVENTS", payload: id });
-    //
-    dispatch({ type: "FETCH_PRODUCTS" });
-  }, [dispatch]);
 
   useEffect(() => {
     order[0] !== undefined && setOrderId(order[0].id);
@@ -68,10 +76,11 @@ export default function AdminAddEvents() {
       price,
       product_id,
       order_id: Number(orderId),
-      user_id: Number(id.id),
+      user_id: Number(userId.id),
     };
 
     dispatch({ type: "ADMIN_ADD_ORDER_ITEMS", payload: orderItems });
+    // console.log(orderItems);
   }
 
   function saveUpdate(product_id, price) {
@@ -82,7 +91,7 @@ export default function AdminAddEvents() {
       price,
       product_id,
       order_id: Number(orderId),
-      user_id: Number(id.id),
+      user_id: Number(userId.id),
     };
 
     dispatch({ type: "ADMIN_EDIT_ORDER_ITEMS", payload: orderItems });
@@ -100,7 +109,7 @@ export default function AdminAddEvents() {
 
   function deleteEvent(id) {
     console.log(id);
-    dispatch({ type: "ADMIN_DELETE_EVENT", payload: id });
+    dispatch({ type: "ADMIN_DELETE_EVENT", payload: userId });
   }
 
   function updateItem(id, itemQuantity) {
@@ -114,7 +123,7 @@ export default function AdminAddEvents() {
       event_type: eventType,
       event_name: eventName,
       event_date: eventDate,
-      user_id: id.id,
+      user_id: userId.id,
       calendar_id: Number(calId),
     };
 
@@ -127,13 +136,17 @@ export default function AdminAddEvents() {
       event_type: editEventType,
       event_name: editEventName,
       event_date: editEventDate,
-      user_id: id.id,
+      user_id: userId.id,
       calendar_id: editCalId,
     };
 
     dispatch({ type: "ADMIN_EDIT_EVENTS", payload: editEventObj });
 
     setEditMode(false);
+  }
+
+  function sendToReview() {
+    history.push(`/admin-order-review/${Number(userId.id)}`);
   }
 
   return (
@@ -275,7 +288,7 @@ export default function AdminAddEvents() {
                     }}
                     key={event.id}
                   >
-                    {editMode && editId === event.id ? (
+                    {editMode && edituserId === event.userId ? (
                       <>
                         <TableCell>
                           <Select
@@ -372,6 +385,7 @@ export default function AdminAddEvents() {
             </Table>
           </TableContainer>
         </Paper>
+        <Button onClick={sendToReview}>Review</Button>
       </div>
     </>
   );

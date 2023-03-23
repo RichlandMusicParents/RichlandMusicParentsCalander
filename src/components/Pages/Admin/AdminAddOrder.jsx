@@ -6,9 +6,18 @@ import { useHistory, useParams } from "react-router-dom";
 
 export default function AdminAddOrder() {
   const history = useHistory();
-  const id = useParams();
-  const user = useSelector((store) => store.adminReducer.specificUser);
+  const userId = useParams();
 
+  useEffect(() => {
+    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
+    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId });
+  }, []);
+  const user = useSelector((store) => store.adminReducer.specificUser);
+  const specificOrder = useSelector(
+    (store) => store.adminReducer.specificOrder
+  );
+  console.log("User ID:", Number(userId.id));
+  console.log("Specific Order:", specificOrder);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -27,13 +36,8 @@ export default function AdminAddOrder() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: id });
-  }, []);
-
-  useEffect(() => {
     user[0] !== undefined && setUserFirst(user[0].first_name);
     user[0] !== undefined && setUserLast(user[0].last_name);
-    user[0] !== undefined && setUId(user[0].id);
   }, [user]);
 
   function addInfo() {
@@ -44,7 +48,7 @@ export default function AdminAddOrder() {
       city: city,
       state: state,
       zip: zip,
-      user_id: Number(id.id),
+      user_id: Number(userId.id),
       email: email,
       phone: phone,
       total: total,
@@ -55,8 +59,9 @@ export default function AdminAddOrder() {
 
     // console.log(orderObj);
 
-    dispatch({ type: "ADD_ORDER", payload: orderObj });
-    history.push(`/admin-events/${uId}`);
+    dispatch({ type: "ADMIN_EDIT_ORDER", payload: orderObj });
+    console.log(orderObj);
+    history.push(`/admin-events/${userId.id}`);
   }
 
   return (

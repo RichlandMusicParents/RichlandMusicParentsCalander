@@ -61,7 +61,7 @@ WHERE
     })
     .catch((err) => {
       console.log("Error getting specific order items", err);
-      res.sendStatus(505);
+      res.sendStatus(500);
     });
 });
 

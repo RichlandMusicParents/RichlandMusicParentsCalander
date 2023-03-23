@@ -7,12 +7,6 @@ import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 
 export default function Admin() {
-  const events = useSelector((store) => store.adminReducer.allEvents);
-  const orders = useSelector((store) => store.adminReducer.allOrders);
-  const user = useSelector((store) => store.user);
-  const users = useSelector((store) => store.adminReducer.allUsers);
-  const [userId, setUserId] = useState(users[0]);
-  const [userIdInput, setUserIdInput] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,11 +14,33 @@ export default function Admin() {
     dispatch({ type: "ADMIN_GET_ALL_ORDERS" });
     dispatch({ type: "ADMIN_GET_ALL_USERS" });
   }, [dispatch]);
+  const orders = useSelector((store) => store.adminReducer.allOrders);
+  const user = useSelector((store) => store.user);
+  const users = useSelector((store) => store.adminReducer.allUsers);
+  const [userId, setUserId] = useState(users[0]);
+  const [userIdInput, setUserIdInput] = useState("");
 
-  console.log("orders:", orders);
-  console.log(userId);
+  console.log("Orders:", orders);
+  console.log("User", userId);
 
   function sendToForm() {
+    const orderObj = {
+      first_name: "",
+      last_name: "",
+      address: "",
+      city: "",
+      state: "",
+      zip: 0,
+      user_id: Number(userId.id),
+      email: "",
+      phone: "",
+      total: 0,
+      payment_type: "",
+      is_payed: false,
+      is_delivered: false,
+    };
+
+    dispatch({ type: "ADD_ORDER", payload: orderObj });
     history.push(`/admin-order-form/${userId.id}`);
   }
 
@@ -95,7 +111,7 @@ export default function Admin() {
               </p>
               {/* <p>Calendars: {order.order_items[0].quantity}</p>s */}
               {/* <p>Extra Events: {order.order_items}</p> */}
-              <p>Events: {order.order_events.length}</p>
+              {/* <p>Events: {order.order_events.length}</p> */}
               <p>Total ${order.total}</p>
             </div>
           ))}
