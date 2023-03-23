@@ -15,11 +15,14 @@ import {
   Select,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
+import eventReducer from "../../../redux/reducers/event.reducer";
+import orderReducer from "../../../redux/reducers/order.reducer";
 
 export default function Invoice() {
   const user = useSelector((store) => store.user);
   const events = useSelector((store) => store.eventReducer);
-  const orders = useSelector((store) => store.order);
+  const orders = useSelector((store) => store.order.orderReducer);
+
   const calendars = useSelector((store) => store.calendar);
   const dispatch = useDispatch();
   //State
