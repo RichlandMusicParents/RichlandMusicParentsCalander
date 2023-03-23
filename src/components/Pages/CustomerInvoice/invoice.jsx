@@ -36,10 +36,11 @@ export default function Invoice() {
   const [editingEventId, setEditingEventId] = useState(null);
   // State to track which order is being edited
   const [editingOrderId, setEditingOrderId] = useState(null);
+  const [editOrderInfo, setEditOrderInfo] = useState({});
 
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
-  }, []);
+  }, [dispatch]);
 
   //Function to delete a event row.
   function deleteUserEvent(id) {
@@ -60,6 +61,9 @@ export default function Invoice() {
     setEditingEventId(null);
   }
 
+  //Edit Order details:
+  function saveEditOrder() {}
+
   return (
     <>
       <h1>Contact information</h1>
@@ -72,6 +76,7 @@ export default function Invoice() {
             <h2>Address: {order.address}</h2>
             <h2>Phone: {order.phone}</h2>
             <h2>Email: {order.email}</h2>
+            <h2>Email: {order.id}</h2>
           </section>
         ))}
       </div>
@@ -141,7 +146,14 @@ export default function Invoice() {
                         </Button>
                       </>
                     ) : (
-                      <Button onClick={() => setEditingEventId(event.id)}>
+                      <Button
+                        onClick={() => {
+                          setEditingEventId(event.id);
+                          setEditEventType(event.event_type);
+                          setEditEventName(event.event_name);
+                          setEditEventDate(event.event_date);
+                        }}
+                      >
                         Edit
                       </Button>
                     )}
@@ -159,7 +171,6 @@ export default function Invoice() {
       </div>
 
       <div className="eventTable">
-        {/* ...existing code... */}
         <TableBody>
           {orders.map((orderInfo) => (
             <TableRow key={orderInfo.id}>

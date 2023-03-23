@@ -1,16 +1,33 @@
 import axios from "axios";
-import { put, select, takeLatest } from "redux-saga/effects";
+import { put, select, take, takeLatest } from "redux-saga/effects";
+
 
 // User views an event.
 function* viewEvent(action) {
-  const user = yield select((store) => store.user);
+  let user = yield select((store) => store.user);
+
+  // Check if the user.id is not defined
+  if (!user.id) {
+    // Dispatch an action to fetch user data
+    yield put({ type: "FETCH_USER" });
+
+    // Wait for the user data to be fetched
+    const userDataAction = yield take("SET_USER");
+
+    // Update the user object with the fetched data
+    user = userDataAction.payload;
+  }
+
   try {
     const response = yield axios.get(`/api/events/user-events/${user.id}`);
-    yield put({type: "SET_EVENTS", payload:response.data})
+    yield put({ type: "SET_EVENTS", payload: response.data });
   } catch (error) {
     console.log("Error in fetching events", error);
   }
 }
+
+
+//END HERE
 
 //User adds an event.
 function* addEvent(action) {
