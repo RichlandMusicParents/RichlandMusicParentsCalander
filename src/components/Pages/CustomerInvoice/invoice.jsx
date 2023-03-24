@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-
 import {
   Table,
   TableBody,
@@ -23,8 +22,8 @@ import { useHistory } from "react-router-dom";
 export default function Invoice() {
   const user = useSelector((store) => store.user);
   const events = useSelector((store) => store.eventReducer);
-  const orders = useSelector((store) => store.order.orderReducer);
-  
+  const orders = useSelector((store) => store.order.newOrder);
+
   const history = useHistory();
 
   const calendars = useSelector((store) => store.calendar);
@@ -51,9 +50,8 @@ export default function Invoice() {
     dispatch({ type: "USER_DELETE_EVENT", payload: id });
   }
   //Function that pushes user to to the order complete page.
-  function nextPage(){
-    history.push(`/Complete`)
-
+  function nextPage() {
+    history.push(`/Complete`);
   }
 
   //Edit events.
@@ -221,7 +219,7 @@ export default function Invoice() {
             </TableRow>
           ))}
         </TableBody>
-        <Button onClick={() => nextPage()} >Complete Order</Button>
+        <Button onClick={() => nextPage()}>Complete Order</Button>
       </div>
     </>
   );
