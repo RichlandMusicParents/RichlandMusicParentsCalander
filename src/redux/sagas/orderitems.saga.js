@@ -18,7 +18,7 @@ function* addOrderItems(action) {
 
     const response = yield axios.post("/api/orderitems", action.payload);
     yield put({
-      type: "ADD_ORDER_ITEMS",
+      type: "FETCH_ORDER_ITEMS",
       payload: orderItem
     });
   } catch (error) {
