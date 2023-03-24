@@ -221,7 +221,9 @@ export default function Invoice() {
             </TableRow>
           ))}
         </TableBody>
+
         <Button onClick={() => nextPage()} >Complete Order</Button>
+
       </div>
     </>
   );
