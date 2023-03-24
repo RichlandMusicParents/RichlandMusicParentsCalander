@@ -55,7 +55,7 @@ export default function AdminAddEvents() {
   const [eventDate, setEventDate] = useState("");
   const [eventName, setEventName] = useState("");
   const [calId, setCalId] = useState("0");
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [itemEditMode, setItemEditMode] = useState(false);
   const [itemEditId, setItemEditId] = useState(0);
   const [editMode, setEditMode] = useState(false);
@@ -70,9 +70,8 @@ export default function AdminAddEvents() {
   }, [order]);
 
   function addItems(product_id, price) {
-    console.log(product_id, price);
     const orderItems = {
-      quantity: 1,
+      quantity: quantity,
       price,
       product_id,
       order_id: Number(orderId),
@@ -166,20 +165,26 @@ export default function AdminAddEvents() {
           <h2>Add Items</h2>
         </header>
         {products.map((product) => (
-          <div key={product.id} className="items-form">
-            <h3>
-              {product.name}: {product.price}
-            </h3>
-            <Button onClick={() => addItems(product.id, product.price)}>
-              Add
-            </Button>
-          </div>
+          <>
+            {!orderItems.some((item) => item.product_id === product.id) && (
+              <div key={product.id} className="items-form">
+                <h3>
+                  {product.name}: {product.price}
+                </h3>
+                <Button onClick={() => addItems(product.id, product.price)}>
+                  Add
+                </Button>
+              </div>
+            )}
+          </>
         ))}
         {orderItems.map((item) => (
           <div className="items-cart">
             {itemEditMode && item.id === itemEditId ? (
               <div key={item.id} className="item">
-                <h3>{item.name}</h3>
+                <h3>
+                  {item.name} {item.price}
+                </h3>
                 <TextField
                   sx={{
                     width: 50,
@@ -195,7 +200,9 @@ export default function AdminAddEvents() {
               </div>
             ) : (
               <div key={item.id} className="item">
-                <h3>{item.name}</h3>
+                <h3>
+                  {item.name} {item.price}
+                </h3>
                 <TextField
                   sx={{
                     width: 50,
