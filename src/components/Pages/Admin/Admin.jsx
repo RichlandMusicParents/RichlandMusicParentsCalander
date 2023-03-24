@@ -27,6 +27,10 @@ export default function Admin() {
     history.push(`/admin-order-form/${userId.id}`);
   }
 
+  function sendToRegister() {
+    history.push("/admin-register");
+  }
+
   // console.log(orders.order_items);
 
   return (
@@ -62,6 +66,13 @@ export default function Admin() {
         variant="contained"
       >
         Create New Order
+      </Button>
+      <Button
+        onClick={sendToRegister}
+        sx={{ height: 50, margin: 1 }}
+        variant="contained"
+      >
+        Create New User
       </Button>
       <div className="section">
         <header className="orders-header">
