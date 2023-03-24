@@ -13,12 +13,13 @@ import {
   Paper,
   TextField,
   MenuItem,
-  Select,
+  Select
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import eventReducer from "../../../redux/reducers/event.reducer";
 import orderReducer from "../../../redux/reducers/order.reducer";
 import { useHistory } from "react-router-dom";
+import Notification from "../Notification/Notification";
 
 export default function Invoice() {
   const user = useSelector((store) => store.user);
@@ -223,7 +224,7 @@ export default function Invoice() {
         </TableBody>
 
         <Button onClick={() => nextPage()} >Complete Order</Button>
-
+        <Notification/>
       </div>
     </>
   );
