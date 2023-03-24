@@ -28,7 +28,7 @@ export default function Invoice() {
 
   const calendars = useSelector((store) => store.calendar);
   const dispatch = useDispatch();
-  //State for event
+  //State for events
   const [editEventType, setEditEventType] = useState("");
   const [editEventName, setEditEventName] = useState("");
   const [editEventDate, setEditEventDate] = useState("");
