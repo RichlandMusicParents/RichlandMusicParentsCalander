@@ -24,6 +24,7 @@ export default function OrderCompleted() {
 
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
+    dispatch({ type: "GET_NEW_ORDER"});
   }, []);
 
   return (

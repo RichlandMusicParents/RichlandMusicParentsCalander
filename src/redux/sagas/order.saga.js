@@ -59,11 +59,41 @@ function* getSpecificOrder(action) {
 }
 
 
+//Edit an order
+function* editOrder(action){
+  const eventObj={
+    first_name: action.payload.first_name,
+    last_name: action.payload.last_name,
+    address: action.payload.address ,
+    city: action.payload.city ,
+    state: action.payload.state ,
+    zip:  action.payload.zip,
+    phone: action.payload.phone,
+    email: action.payload.email,
+    total: action.payload.total,
+    payment_type: action.payload.payment_type ,
+    is_payed: action.payload.is_payed ,
+    is_delivered: action.payload.is_delivered ,
+    user_id: Number(action.payload.user_id) ,
+   };
+  try{
+    yield axios.put(
+      `/api/orders/edit-order/${Number(action.payload.id)}`,
+      eventObj
+    );
+    yield put ({type: "GET_NEW_ORDER"});
+  } catch(error){
+    console.log("error in updating order saga", error);
+  }
+}
+
+
 function* orderSaga() {
   yield takeLatest("FETCH_ORDER", fetchOrder);
   yield takeLatest("ADD_ORDERS", addOrder);
   // yield takeLatest("GET_SPECIFIC_ORDER", getSpecificOrder);
   yield takeLatest("GET_NEW_ORDER", getNewOrder);
+  yield takeLatest("EDIT_ORDER", editOrder)
 }
 
 export default orderSaga;

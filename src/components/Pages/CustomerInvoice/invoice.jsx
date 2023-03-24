@@ -29,12 +29,23 @@ export default function Invoice() {
 
   const calendars = useSelector((store) => store.calendar);
   const dispatch = useDispatch();
-  //State
+  //State for events
   const [editEventType, setEditEventType] = useState("");
   const [editEventName, setEditEventName] = useState("");
   const [editEventDate, setEditEventDate] = useState("");
-  const [editCreatedBy, setEditCreatedBy] = useState(null);
-  const [editCalId, setEditCalId] = useState(null);
+
+  //State for order
+  const [editFirstName, setEditFirstName] = useState("");
+  const [editLastName, setEditLastName] = useState("");
+  const [editAddress, setEditAddress] = useState("");
+  const [editCity, setEditCity] = useState("");
+  const [editState, setEditState] = useState("");
+  const [editZip, setEditZip] = useState("");
+  const [editPhone, setEditPhone] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+
+  //contact info
+  const [editingContactInfo, setEditingContactInfo] = useState(false);
 
   // State to track which event is being edited
   const [editingEventId, setEditingEventId] = useState(null);
@@ -44,6 +55,7 @@ export default function Invoice() {
 
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
+    dispatch({ type: "GET_NEW_ORDER" });
   }, [dispatch]);
 
   //Function to delete a event row.
@@ -69,8 +81,27 @@ export default function Invoice() {
     setEditingEventId(null);
   }
 
-  //Edit Order details:
-  function saveEditOrder() {}
+  // Edit Order details:
+  function saveEditOrder(id) {
+    const editOrderObj = {
+      first_name: editFirstName,
+      last_name: editLastName,
+      address: editAddress,
+      city: editCity,
+      state: editState,
+      zip: editZip,
+      phone: editPhone,
+      email: editEmail,
+      total: 0,
+      payment_type: editOrderInfo.payment_type,
+      is_payed: false,
+      is_delivered: false,
+      user_id: user.id,
+      id: id,
+    };
+    dispatch({ type: "EDIT_ORDER", payload: editOrderObj });
+    setEditingOrderId(null);
+  }
 
   return (
     <>
@@ -79,12 +110,69 @@ export default function Invoice() {
         {orders.map((order) => (
           <section key={order.id}>
             <h2>
-              Name: {order.first_name} {order.last_name}
+              Name:{" "}
+              {editingContactInfo ? (
+                <TextField
+                  defaultValue={`${order.first_name} ${order.last_name}`}
+                  onChange={(e) => {
+                    setEditFirstName(e.target.value.split(" ")[0]);
+                    setEditLastName(e.target.value.split(" ")[1]);
+                  }}
+                />
+              ) : (
+                `${order.first_name} ${order.last_name}`
+              )}
             </h2>
-            <h2>Address: {order.address}</h2>
-            <h2>Phone: {order.phone}</h2>
-            <h2>Email: {order.email}</h2>
-            <h2>Email: {order.id}</h2>
+            <h2>
+              Address:{" "}
+              {editingContactInfo ? (
+                <TextField
+                  defaultValue={order.address}
+                  onChange={(e) => setEditAddress(e.target.value)}
+                />
+              ) : (
+                order.address
+              )}
+            </h2>
+            <h2>
+              Phone:{" "}
+              {editingContactInfo ? (
+                <TextField
+                  defaultValue={order.phone}
+                  onChange={(e) => setEditPhone(e.target.value)}
+                />
+              ) : (
+                order.phone
+              )}
+            </h2>
+            <h2>
+              Email:{" "}
+              {editingContactInfo ? (
+                <TextField
+                  defaultValue={order.email}
+                  onChange={(e) => setEditEmail(e.target.value)}
+                />
+              ) : (
+                order.email
+              )}
+            </h2>
+            {editingContactInfo ? (
+              <>
+                <Button
+                  onClick={() => {
+                    saveEditOrder(order.id);
+                    setEditingContactInfo(false);
+                  }}
+                >
+                  Save
+                </Button>
+                <Button onClick={() => setEditingContactInfo(false)}>
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <Button onClick={() => setEditingContactInfo(true)}>Edit</Button>
+            )}
           </section>
         ))}
       </div>
@@ -187,19 +275,45 @@ export default function Invoice() {
                   {editingOrderId === orderInfo.id ? (
                     <TextField
                       defaultValue={orderInfo[field]}
-                      onChange={(e) =>
-                        setEditOrderInfo({
-                          ...editOrderInfo,
-                          [field]: e.target.value,
-                        })
-                      }
+                      onChange={(e) => {
+                        if (field === "address") {
+                          setEditAddress(e.target.value);
+                        } else if (field === "city") {
+                          setEditCity(e.target.value);
+                        } else if (field === "state") {
+                          setEditState(e.target.value);
+                        } else if (field === "zip") {
+                          setEditZip(e.target.value);
+                        }
+                      }}
                     />
                   ) : (
                     orderInfo[field]
                   )}
                 </TableCell>
               ))}
-              <TableCell>{orderInfo.payment_type}</TableCell>
+              <TableCell>
+                {editingOrderId === orderInfo.id ? (
+                  <Select
+                    value={editOrderInfo.payment_type || orderInfo.payment_type}
+                    onChange={(e) =>
+                      setEditOrderInfo({
+                        ...editOrderInfo,
+                        payment_type: e.target.value,
+                      })
+                    }
+                    displayEmpty
+                  >
+                    <MenuItem value={orderInfo.payment_type}>
+                      <em>{orderInfo.payment_type}</em>
+                    </MenuItem>
+                    <MenuItem value="Cash">Cash</MenuItem>
+                    <MenuItem value="Check">Check</MenuItem>
+                  </Select>
+                ) : (
+                  orderInfo.payment_type
+                )}
+              </TableCell>
               <TableCell>{orderInfo.total}</TableCell>
               <TableCell>
                 {editingOrderId === orderInfo.id ? (
@@ -212,7 +326,22 @@ export default function Invoice() {
                     </Button>
                   </>
                 ) : (
-                  <Button onClick={() => setEditingOrderId(orderInfo.id)}>
+                  <Button
+                    onClick={() => {
+                      setEditingOrderId(orderInfo.id);
+                      setEditFirstName(orderInfo.first_name);
+                      setEditLastName(orderInfo.last_name);
+                      setEditAddress(orderInfo.address);
+                      setEditCity(orderInfo.city);
+                      setEditState(orderInfo.state);
+                      setEditZip(orderInfo.zip);
+                      setEditPhone(orderInfo.phone);
+                      setEditEmail(orderInfo.email);
+                      setEditOrderInfo({
+                        payment_type: orderInfo.payment_type,
+                      });
+                    }}
+                  >
                     Edit
                   </Button>
                 )}
