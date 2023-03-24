@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 export default function OrderCompleted() {
   const user = useSelector((store) => store.user);
   const events = useSelector((store) => store.eventReducer);
-  const orders = useSelector((store) => store.order.orderReducer);
+  const orders = useSelector((store) => store.order.newOrder);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -35,9 +35,9 @@ function UserForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  useEffect(() => {
-    dispatch({ type: "FETCH_ORDER" });
-  }, []);
+  // useEffect(() => {
+  //   dispatch({ type: "FETCH_ORDER" });
+  // }, []);
 
   // Dispatch for the events
 
@@ -56,7 +56,7 @@ function UserForm() {
 
   const handleSubmit = () => {
     dispatch({
-      type: "ADD_ORDER",
+      type: "ADD_ORDERS",
       payload: {
         email,
         first_name: firstName,
