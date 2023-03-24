@@ -129,7 +129,7 @@ router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
 			json_agg("event".*) AS "order_events"
 		FROM
 			"event"
-		WHERE
+		WHER
 			"event".user_id = "orders".user_id), (
 		SELECT
 			json_agg("order_items".*) AS "order_items"
@@ -153,12 +153,12 @@ WHERE "orders"."user_id" = $1;
 
 router.get("/new-order/:id", rejectUnauthenticated, (req, res) => {
   const text = `
-  SELECT
-	*
-FROM
-	"orders"
-WHERE "user_id" = $1;
-        `;
+  SELECT *
+FROM "orders"
+WHERE "user_id" = $1
+ORDER BY "id" DESC
+LIMIT 1;
+`;
 
   pool
     .query(text, [req.params.id])

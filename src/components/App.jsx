@@ -21,6 +21,8 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import SplashPage from "./Pages/SplashPage/splashPage";
 import Invoice from "./Pages/CustomerInvoice/invoice";
+import Events from "./Pages/events/events";
+import Notification from "./Pages/Notification/Notification";
 //import EventForm from "./UserForm/EventForm";
 
 import "./App.css";
@@ -28,8 +30,12 @@ import UserForm from "./UserForm/UserForm";
 import Admin from "./Pages/Admin/Admin";
 import AdminOrderFrom from "./Pages/Admin/AdminOrderForm";
 import AdminAddEvents from "./Pages/Admin/AdminAddEvents";
+
 import AdminReducer from "../redux/reducers/admin.reducer";
 import AdminOrderOverview from "./Pages/Admin/AdminOrderOverview";
+
+import OrderCompleted from "./Pages/CustomerInvoice/orderComplete";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -120,9 +126,15 @@ function App() {
             <UserForm />
           </Route>
 
-          {/* <Route path="/event">
-            <EventForm />
-          </Route> */}
+
+          <Route path="/events">
+            <Events />
+          </Route>
+          
+          {/* This is the final final page the user sees that thanks them for ordering and to view their orders. */}
+          <Route path="/Complete">
+            <OrderCompleted />
+          </Route>
 
           <Route exact path="/admin">
             {user.is_admin ? (
@@ -183,6 +195,8 @@ function App() {
           <Route exact path="/customerInvoice">
             <Invoice />
           </Route>
+
+          
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>

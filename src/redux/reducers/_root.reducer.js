@@ -6,8 +6,7 @@ import adminReducer from "./admin.reducer";
 import eventReducer from "./event.reducer";
 import product from "./product.reducer";
 import calendar from "./calendar.reducer";
-
-
+import orderItemsReducer from "./orderitems.reducer";
 
 import order from './order.reducer';
 
@@ -28,6 +27,8 @@ const rootReducer = combineReducers({
   eventReducer,
   product,
   calendar,
+  orderItemsReducer,
+
 
 });
 

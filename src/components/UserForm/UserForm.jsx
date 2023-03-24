@@ -20,8 +20,7 @@ function UserForm() {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-  const orders = useSelector((store) => store.order);
-  const calendars = useSelector((store) => store.calendar);
+ 
     // order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -33,24 +32,12 @@ function UserForm() {
   const [email, setEmail] = useState("");
   const [isDelivered, setIsDelivered] = useState(false);
   const [isPayed, setIsPayed] = useState(false);
-  // event form
-  const [eventFor, setEventFor] = useState("");
-  const [numCalendars, setNumCalendars] = useState(0);
-
-
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [selectCalendarId, setSelectedCalendarID] = useState(0);
-  const [eventOption, setEventOption] = useState("0");
-  const [date, setDate] = useState("");
-  const [events, setEvents] = useState("");
-  const [numEvents, setNumEvents] = useState(0);
- 
-  useEffect(() => {
-    dispatch({ type: "FETCH_ORDER" });
-    dispatch({ type: "FETCH_CALENDAR" });
-  }, []);
+
+  // useEffect(() => {
+  //   dispatch({ type: "FETCH_ORDER" });
+  // }, []);
 
   // Dispatch for the events
 
@@ -68,30 +55,8 @@ function UserForm() {
   // };
 
   const handleSubmit = () => {
-    //let eventCost = numEvents > 5 ? (numEvents - 5) * 0.5 : 0;
-    //let totalCost = total + eventCost + numCalendars * 15;
-
-    // dispatch({
-    //   type: "ADD_PRODUCT",
-    //       payload: {
-    //         name: numCalendars,
-    //         calendar_id: selectCalendarId,
-    //       }
-    // })
-
     dispatch({
-      type: "USER_ADD_EVENT",
-      payload: {
-        event_type: eventOption,
-        event_date: date,
-        event_name: eventFor,
-        user_id: user.id,
-        calendar_id: selectCalendarId,
-      },
-    });
-
-    dispatch({
-      type: "ADD_ORDER",
+      type: "ADD_ORDERS",
       payload: {
         email,
         first_name: firstName,
@@ -102,13 +67,11 @@ function UserForm() {
         zip,
         phone,
         payment_type: payment,
-
-        total
-
+        user_id: user.id,
 
       },
     });
-    history.push("/customerInvoice");
+    history.push("/events");
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -118,18 +81,9 @@ function UserForm() {
     setZip("");
     setPhone("");
     setPayment("");
-    setTotal("");
+  
   };
 
-  const handleAddEvent = () => {
-    setNumEvents(numEvents + 1);
-    setTotal(total + (numEvents > 4 ? 0.5 : 0));
-  };
-
-  const handleAddCalendar = () => {
-    setNumCalendars(numCalendars + 1);
-    setTotal(total + 15);
-  };
 
   return (
     <div
@@ -241,28 +195,6 @@ function UserForm() {
                 sx={{ marginBottom: "10px", width: "50%" }}
               />
             </CardContent>
-            <CardContent>
-              <TextField
-                label="Event for"
-                type="text"
-                name="Event for"
-                value={eventFor}
-                required
-                onChange={(event) => setEventFor(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
-              />
-            </CardContent>
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker value={date} onChange={(date) => setDate(date)} />
-            </LocalizationProvider> */}
-            <TextField
-              sx={{
-                width: 150,
-              }}
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
@@ -276,66 +208,10 @@ function UserForm() {
                 <MenuItem value={"Check"}> Check </MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{ m: 1, width: 300 }}>
-              <InputLabel htmlFor="selectCalendarId">
-                
-                Calendar Year
-              </InputLabel>
-              <Select
-                className="calendar-dropdown"
-                name="selectedCaledarId"
-                onChange={(event) => setSelectedCalendarID(event.target.value)}
-                id="calendar"
-                value={selectCalendarId}>
-                {calendars.map((calendar) => (
-                  <MenuItem value={calendar.id} key={calendar.id}>
-                    {calendar.calendar_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            
+           
+            <Button onClick={handleSubmit}> Continue </Button>
 
-            <FormControl sx={{ m: 1, width: 300 }}>
-              <InputLabel htmlFor="numCalendars">
-                Number of Calendars
-              </InputLabel>
-              <Input
-                id="numCalendars"
-                type="number"
-                value={numCalendars}
-                onChange={(event) =>
-                  setNumCalendars(Number(event.target.value))
-                }
-              />
-
-              <Button onClick={handleAddCalendar}> Add Calendar</Button>
-            </FormControl>
-
-            <FormControl sx={{ m: 1, width: 300 }}>
-              <InputLabel id="event-label"> Event Options</InputLabel>
-
-              <Select
-                sx={{
-                  width: 150,
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Event Type" />
-                )}
-                name="event_type"
-                id="eType"
-                value={eventOption}
-                onChange={(e) => setEventOption(e.target.value)}>
-                <MenuItem value="0">Select Event Type</MenuItem>
-                <MenuItem value="birthday">Birthday</MenuItem>
-                <MenuItem value="anniversary">Anniversary</MenuItem>
-                <MenuItem value="memorial">Memorial</MenuItem>
-              </Select>
-            </FormControl>
-            <Button> Add Event </Button>
-            <p>Events left: {5 - numEvents}</p>
-            <Button onClick={handleSubmit}> Check Out </Button>
-
-            <h4>Total: {total}</h4>
 
           </Card>
         </Grid>
