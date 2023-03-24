@@ -46,17 +46,30 @@ const allUsers = (state = [], action) => {
       return state;
   }
 };
+const specificOrderItems = (state = [], action) => {
+  switch (action.type) {
+    case "ADMIN_SET_ORDER_ITEMS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
-// registrationMessage holds the string that will display
-// on the registration screen if there's an error
+const specificOrder = (state = [], action) => {
+  switch (action.type) {
+    case "ADMIN_SET_SPECIFIC_ORDER":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
-// make one object that has keys loginMessage, registrationMessage
-// these will be on the redux state at:
-// state.errors.loginMessage and state.errors.registrationMessage
 export default combineReducers({
   allEvents,
   allOrders,
   specificEvents,
   allUsers,
   specificUser,
+  specificOrderItems,
+  specificOrder,
 });

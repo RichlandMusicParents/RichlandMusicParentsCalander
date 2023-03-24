@@ -1,10 +1,4 @@
-import {
-  Autocomplete,
-  Button,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +6,21 @@ import { useHistory, useParams } from "react-router-dom";
 
 export default function AdminAddOrder() {
   const history = useHistory();
-  const id = useParams();
-  const user = useSelector((store) => store.adminReducer.specificUser);
+  const userId = useParams();
 
+  useEffect(() => {
+    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
+    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId });
+  }, []);
+  const user = useSelector((store) => store.adminReducer.specificUser);
+  const specificOrder = useSelector(
+    (store) => store.adminReducer.specificOrder
+  );
+  console.log("User ID:", Number(userId.id));
+  console.log("Specific Order:", specificOrder);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
-  const [uId, setUId] = useState(0);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
@@ -28,20 +30,9 @@ export default function AdminAddOrder() {
   const [isPayed, setIsPayed] = useState(false);
   const [isDelivered, setIsDelivered] = useState(false);
   const [total, setTotal] = useState(0);
-  const [calendars, setCalendars] = useState();
   const [userFirst, setUserFirst] = useState("");
   const [userLast, setUserLast] = useState("");
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: id });
-  }, []);
-
-  useEffect(() => {
-    user[0] !== undefined && setUserFirst(user[0].first_name);
-    user[0] !== undefined && setUserLast(user[0].last_name);
-    user[0] !== undefined && setUId(user[0].id);
-  }, [user]);
 
   function addInfo() {
     const orderObj = {
@@ -50,8 +41,8 @@ export default function AdminAddOrder() {
       address: address,
       city: city,
       state: state,
-      zip: zip,
-      user_id: Number(id.id),
+      zip: Number(zip),
+      user_id: Number(userId.id),
       email: email,
       phone: phone,
       total: total,
@@ -60,10 +51,9 @@ export default function AdminAddOrder() {
       is_delivered: isDelivered,
     };
 
-    // console.log(orderObj);
-
     dispatch({ type: "ADD_ORDER", payload: orderObj });
-    history.push(`/admin-events/${uId}`);
+    // console.log(orderObj);
+    history.push(`/admin-events/${userId.id}`);
   }
 
   return (

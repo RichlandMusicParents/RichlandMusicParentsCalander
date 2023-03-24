@@ -44,14 +44,35 @@ FROM
   }
 });
 
-router.post("/add-order-items", rejectUnauthenticated, (req, res) => {
-  const queryText = `INSERT INTO "order_items" ("quantity", "price", "product_id", "order_id")
-	VALUES ($1, $2, $3, $4);`;
+router.get("/specific-order-items/:id", rejectUnauthenticated, (req, res) => {
+  const text = `SELECT
+	*, 
+	(SELECT 
+	"product"."name" FROM "product" WHERE "product".id = "order_items"."product_id" )
+FROM
+	order_items
+WHERE
+	user_id = $1;
+`;
+  pool
+    .query(text, [req.params.id])
+    .then((results) => {
+      res.send(results.rows);
+    })
+    .catch((err) => {
+      console.log("Error getting specific order items", err);
+      res.sendStatus(500);
+    });
+});
 
-  const { quantity, price, product_id, order_id } = req.body;
+router.post("/add-order-items", rejectUnauthenticated, (req, res) => {
+  const queryText = `INSERT INTO "order_items" ("quantity", "price", "product_id", "order_id", "user_id")
+	VALUES ($1, $2, $3, $4, $5);`;
+
+  const { quantity, price, product_id, order_id, user_id } = req.body;
 
   pool
-    .query(queryText, [quantity, price, product_id, order_id])
+    .query(queryText, [quantity, price, product_id, order_id, user_id])
     .then((result) => {
       res.send(result.rows[0]);
     })
@@ -60,7 +81,44 @@ router.post("/add-order-items", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
-// Get route to get all orders by specific user
+
+router.put("/edit-order-items/:id", rejectUnauthenticated, (req, res) => {
+  const queryText = `UPDATE "order_items" SET "quantity" = $1, "price" = $2, "product_id" = $3, "order_id" = $4, "user_id" = $5
+	WHERE "id" = $6;`;
+
+  const { quantity, price, product_id, order_id, user_id } = req.body;
+
+  pool
+    .query(queryText, [
+      quantity,
+      price,
+      product_id,
+      order_id,
+      user_id,
+      req.params.id,
+    ])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error in editing order items", err);
+      res.sendStatus(500);
+    });
+});
+
+router.delete("/delete-order-item/:id", rejectUnauthenticated, (req, res) => {
+  const text = `DELETE FROM "order_items" WHERE "id" = $1;`;
+
+  pool
+    .query(text, [req.params.id])
+    .then((result) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log("Error in DELETEing order item", err);
+      res.sendStatus(500);
+    });
+});
 
 router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
   const text = `

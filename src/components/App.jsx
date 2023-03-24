@@ -30,7 +30,12 @@ import UserForm from "./UserForm/UserForm";
 import Admin from "./Pages/Admin/Admin";
 import AdminOrderFrom from "./Pages/Admin/AdminOrderForm";
 import AdminAddEvents from "./Pages/Admin/AdminAddEvents";
+
+import AdminReducer from "../redux/reducers/admin.reducer";
+import AdminOrderOverview from "./Pages/Admin/AdminOrderOverview";
+
 import OrderCompleted from "./Pages/CustomerInvoice/orderComplete";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -162,6 +167,20 @@ function App() {
           <Route exact path="/admin-events/:id">
             {user.is_admin ? (
               <AdminAddEvents />
+            ) : (
+              <Route>
+                <h1>403</h1>
+                <h2>
+                  You do not have access to this page. Please sign in as an
+                  admin to view.
+                </h2>
+              </Route>
+            )}
+          </Route>
+
+          <Route exact path="/admin-order-review/:id">
+            {user.is_admin ? (
+              <AdminOrderOverview />
             ) : (
               <Route>
                 <h1>403</h1>
