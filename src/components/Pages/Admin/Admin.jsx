@@ -24,23 +24,6 @@ export default function Admin() {
   console.log("User", userId);
 
   function sendToForm() {
-    const orderObj = {
-      first_name: "",
-      last_name: "",
-      address: "",
-      city: "",
-      state: "",
-      zip: 0,
-      user_id: Number(userId.id),
-      email: "",
-      phone: "",
-      total: 0,
-      payment_type: "",
-      is_payed: false,
-      is_delivered: false,
-    };
-
-    dispatch({ type: "ADD_ORDER", payload: orderObj });
     history.push(`/admin-order-form/${userId.id}`);
   }
 

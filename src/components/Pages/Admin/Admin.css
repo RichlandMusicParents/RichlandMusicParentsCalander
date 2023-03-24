@@ -76,3 +76,12 @@ li {
   justify-content: space-between;
   width: 100%;
 }
+
+.edit-order-info-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-order-info-form > input {
+  padding: 5px;
+}

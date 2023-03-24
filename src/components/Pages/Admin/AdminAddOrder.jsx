@@ -21,7 +21,6 @@ export default function AdminAddOrder() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
-  const [uId, setUId] = useState(0);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
@@ -35,11 +34,6 @@ export default function AdminAddOrder() {
   const [userLast, setUserLast] = useState("");
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    user[0] !== undefined && setUserFirst(user[0].first_name);
-    user[0] !== undefined && setUserLast(user[0].last_name);
-  }, [user]);
-
   function addInfo() {
     const orderObj = {
       first_name: firstName,
@@ -47,7 +41,7 @@ export default function AdminAddOrder() {
       address: address,
       city: city,
       state: state,
-      zip: zip,
+      zip: Number(zip),
       user_id: Number(userId.id),
       email: email,
       phone: phone,
@@ -57,10 +51,8 @@ export default function AdminAddOrder() {
       is_delivered: isDelivered,
     };
 
+    dispatch({ type: "ADD_ORDER", payload: orderObj });
     // console.log(orderObj);
-
-    dispatch({ type: "ADMIN_EDIT_ORDER", payload: orderObj });
-    console.log(orderObj);
     history.push(`/admin-events/${userId.id}`);
   }
 

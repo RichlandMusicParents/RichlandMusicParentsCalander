@@ -93,9 +93,8 @@ function* getAllUsers() {
 
 function* getSpecificUser(action) {
   try {
-    const response = yield axios.get(
-      `/api/user/specific/${Number(action.payload.id)}`
-    );
+    console.log(action.payload);
+    const response = yield axios.get(`/api/user/specific/${action.payload.id}`);
     yield put({ type: "ADMIN_SET_SPECIFIC_USERS", payload: response.data });
   } catch (err) {
     console.log("Error in admin GET all users", err);
@@ -188,9 +187,7 @@ function* adminDeleteOrderItem(action) {
 
 function* adminGetSpecificOrder(action) {
   try {
-    const response = yield axios.get(
-      `/api/orders/new-order/${Number(action.payload.id)}`
-    );
+    const response = yield axios.get(`/api/orders/new-order/${action.payload}`);
     yield put({ type: "ADMIN_SET_SPECIFIC_ORDER", payload: response.data });
   } catch (err) {
     console.log(
@@ -223,20 +220,18 @@ function* adminEditOrder(action) {
     phone: action.payload.phone,
     email: action.payload.email,
     total: action.payload.total,
+    user_id: action.payload.user_id,
     payment_type: action.payload.payment_type,
     is_payed: action.payload.is_payed,
     is_delivered: action.payload.is_delivered,
-    user_id: action.payload.user_id,
   };
   try {
-    yield axios.put(
-      `/api/orders/edit-order/${action.payload.id}`,
-      orderObj,
-      action.payload
-    );
-    // yield put({
-    //   type: "FETCH_ORDER",
-    // });
+    console.log(action.payload.user_id);
+    yield axios.put(`/api/orders/edit-order/${action.payload.id}`, orderObj);
+    yield put({
+      type: "ADMIN_GET_SPECIFIC_ORDER",
+      payload: action.payload.user_id,
+    });
   } catch (error) {
     console.log("User post order failed", error);
   }
