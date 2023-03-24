@@ -46,7 +46,7 @@ function Events(){
      const [numCalendars, setNumCalendars] = useState(0);
      const [selectCalendarId, setSelectedCalendarID] = useState(0);
      const [selectedProductId, setSelectedProductId] = useState(0);
-     const [selectedOrderId, setSelectedOrderId] = useState(0);
+     const [selectedOrderId, setSelectedOrderId] = useState(null);
      const [price, setPrice] = useState(0);
      const [eventOption, setEventOption] = useState("0");
      const [date, setDate] = useState("");
@@ -82,21 +82,6 @@ function Events(){
     //console.log("in order items" ,orderObj);
 
     dispatch({
-      type: "ADD_ORDER_ITEMS", 
-      payload: {
-        price: total,
-        product_id: selectedProductId,
-        quantity,
-        order_id: selectedOrderId,
-        user_id: user.id
-      },
-    });
-
-
-
-console.log("IN ORDER_ID", selectedOrderId)
-
-    dispatch({
       type: "ADD_PRODUCT",
           payload: {
             name,
@@ -106,7 +91,7 @@ console.log("IN ORDER_ID", selectedOrderId)
           }
     })
 
-  
+
     dispatch({
       type: `USER_ADD_EVENT`,
       payload: {
@@ -115,6 +100,17 @@ console.log("IN ORDER_ID", selectedOrderId)
         event_name: eventFor,
         user_id: user.id,
         calendar_id: selectCalendarId,
+      },
+    });
+
+    dispatch({
+      type: "ADD_ORDER_ITEMS", 
+      payload: {
+        price: total,
+        product_id: selectedProductId,
+        quantity,
+        order_id: selectedOrderId,
+        user_id: user.id
       },
     });
   };
