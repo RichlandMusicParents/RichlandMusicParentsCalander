@@ -70,6 +70,8 @@ function Events(){
 
   // Dispatch for the events
   const eventHandleSubmit = () => {
+    setNumEvents(numEvents + 1);
+
 
     // const orderObj = {
     //   price: total,

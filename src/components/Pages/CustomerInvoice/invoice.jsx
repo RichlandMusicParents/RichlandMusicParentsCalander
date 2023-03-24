@@ -212,6 +212,7 @@ export default function Invoice() {
             </TableRow>
           ))}
         </TableBody>
+        <Button>Confirm Checkout</Button>
       </div>
     </>
   );
