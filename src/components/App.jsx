@@ -29,6 +29,7 @@ import UserForm from "./UserForm/UserForm";
 import Admin from "./Pages/Admin/Admin";
 import AdminOrderFrom from "./Pages/Admin/AdminOrderForm";
 import AdminAddEvents from "./Pages/Admin/AdminAddEvents";
+import OrderCompleted from "./Pages/CustomerInvoice/orderComplete";
 
 function App() {
   const dispatch = useDispatch();
@@ -122,6 +123,11 @@ function App() {
 
           <Route path="/events">
             <Events />
+          </Route>
+          
+          {/* This is the final final page the user sees that thanks them for ordering and to view their orders. */}
+          <Route path="/Complete">
+            <OrderCompleted />
           </Route>
 
           <Route exact path="/admin">

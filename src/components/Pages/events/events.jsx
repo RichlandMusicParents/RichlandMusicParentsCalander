@@ -302,7 +302,8 @@ function Events(){
                   >Delete</Button></TableCell>
                 </TableRow>
               ))}
-            </TableBody>
+          </TableBody>
+
           </Table>
         </TableContainer>
       </div>

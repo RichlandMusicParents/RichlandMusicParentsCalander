@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+
 import {
   Table,
   TableBody,
@@ -17,11 +18,14 @@ import {
 import { useDispatch } from "react-redux";
 import eventReducer from "../../../redux/reducers/event.reducer";
 import orderReducer from "../../../redux/reducers/order.reducer";
+import { useHistory } from "react-router-dom";
 
 export default function Invoice() {
   const user = useSelector((store) => store.user);
   const events = useSelector((store) => store.eventReducer);
   const orders = useSelector((store) => store.order.orderReducer);
+  
+  const history = useHistory();
 
   const calendars = useSelector((store) => store.calendar);
   const dispatch = useDispatch();
@@ -45,6 +49,11 @@ export default function Invoice() {
   //Function to delete a event row.
   function deleteUserEvent(id) {
     dispatch({ type: "USER_DELETE_EVENT", payload: id });
+  }
+  //Function that pushes user to to the order complete page.
+  function nextPage(){
+    history.push(`/Complete`)
+
   }
 
   //Edit events.
@@ -81,7 +90,7 @@ export default function Invoice() {
         ))}
       </div>
 
-      <div className="orderDetails">
+      <div className="eventDetails">
         <h1>Event Details</h1>
         <TableContainer component={Paper}>
           <Table>
@@ -170,7 +179,7 @@ export default function Invoice() {
         </TableContainer>
       </div>
 
-      <div className="eventTable">
+      <div className="orderDetails">
         <TableBody>
           {orders.map((orderInfo) => (
             <TableRow key={orderInfo.id}>
@@ -212,7 +221,9 @@ export default function Invoice() {
             </TableRow>
           ))}
         </TableBody>
-        <Button>Confirm Checkout</Button>
+
+        <Button onClick={() => nextPage()} >Complete Order</Button>
+
       </div>
     </>
   );
