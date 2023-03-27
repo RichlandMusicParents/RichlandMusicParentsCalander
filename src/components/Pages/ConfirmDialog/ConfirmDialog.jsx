@@ -21,6 +21,13 @@ const handleClose = () => {
 setOpen(false)
 };
 
+const handleConfirm = () => {
+    setShowConfirmation(false);
+    setTimeout(() => {
+        history.push("/Complete")
+    }, 5000);
+
+};
 
     return (
         <>
@@ -33,19 +40,20 @@ setOpen(false)
         >
             {showConfirmation && ( 
                 <>
-     <DialogTitle id="alert-title"> {"Confirm Order?"}
+     <DialogTitle id="alert-title"> {"Confirm Order?"}</DialogTitle>
+     <DialogContent id="alert-description"> 
+     Are you sure you want to complete the order? 
+     </DialogContent>
+     <DialogActions>
+        <Button onClick={handleClose}>No</Button>
+        <Button onClick={handleConfirm} autofocus>Yes</Button>
 
-     </DialogTitle>
-                </>
+     </DialogActions>
+            </>
             )}
-        
-                
-   
             <DialogContent>
-
+                
             </DialogContent>
-
-       
         </Dialog>
         </>
     );

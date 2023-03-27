@@ -378,8 +378,6 @@ export default function Invoice() {
           ))}
         </TableBody>
 
-
-        <Button onClick={() => nextPage()} >Complete Order</Button>
         <Notification/>
         <ConfirmDialog/>
 
