@@ -36,6 +36,7 @@ import AdminOrderOverview from "./Pages/Admin/AdminOrderOverview";
 
 import OrderCompleted from "./Pages/CustomerInvoice/orderComplete";
 import { AdminRegisterUser } from "./Pages/Admin/AdminRegisterUser";
+import { AdminEditUser } from "./Pages/Admin/AdminEditUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -194,6 +195,20 @@ function App() {
           <Route exact path="/admin-register">
             {user.is_admin ? (
               <AdminRegisterUser />
+            ) : (
+              <Route>
+                <h1>403</h1>
+                <h2>
+                  You do not have access to this page. Please sign in as an
+                  admin to view.
+                </h2>
+              </Route>
+            )}
+          </Route>
+
+          <Route exact path="/admin-edit-user/:id">
+            {user.is_admin ? (
+              <AdminEditUser />
             ) : (
               <Route>
                 <h1>403</h1>

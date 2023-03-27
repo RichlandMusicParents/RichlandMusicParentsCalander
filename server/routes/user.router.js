@@ -155,4 +155,21 @@ WHERE "id" = $6
   }
 });
 
+router.put("/admin-update-user/:id", rejectUnauthenticated, (req, res) => {
+  const text = `
+  UPDATE "user" 
+  SET "is_admin" = $1
+  WHERE "id"  = $2
+  `;
+
+  pool
+    .query(text, [req.body.is_admin, req.params.id])
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log("error in updating user admin privileges", err);
+    });
+});
+
 module.exports = router;

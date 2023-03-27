@@ -91,9 +91,18 @@ function* getAllUsers() {
   }
 }
 
+function* adminEditUser(action) {
+  try {
+    yield axios.put(`/api/user/admin-update-user/${action.payload.id}`, {
+      is_admin: action.payload.is_admin,
+    });
+  } catch (err) {
+    console.log("Error in putting saga for admin edit user", err);
+  }
+}
+
 function* getSpecificUser(action) {
   try {
-    console.log(action.payload);
     const response = yield axios.get(`/api/user/specific/${action.payload.id}`);
     yield put({ type: "ADMIN_SET_SPECIFIC_USERS", payload: response.data });
   } catch (err) {
@@ -283,6 +292,7 @@ function* adminSagas() {
   registerUser;
   yield takeLatest("ADMIN_GET_SPECIFIC_USER", getSpecificUser);
   yield takeLatest("ADMIN_REGISTER_USER", registerUser);
+  yield takeLatest("ADMIN_EDIT_USER", adminEditUser);
 }
 
 export default adminSagas;
