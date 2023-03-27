@@ -101,6 +101,15 @@ function* getSpecificUser(action) {
   }
 }
 
+function* registerUser(action) {
+  try {
+    yield axios.post("/api/user/admin-register", action.payload);
+    yield put({ type: "ADMIN_GET_ALL_USERS" });
+  } catch (err) {
+    console.log("Error in admin register user", err);
+  }
+}
+
 // ---------------- END USER SAGA ------------------------------------------------------------------------------------------------
 
 // ---------------- ORDER ITEMS SAGA ------------------------------------------------------------------------------------------------
@@ -209,6 +218,14 @@ function* adminGetAllOrders() {
   }
 }
 
+function* adminAddOrder(action) {
+  try {
+    yield axios.post("/api/orders/add-order", action.payload);
+  } catch (error) {
+    console.log("User post order failed", error);
+  }
+}
+
 function* adminEditOrder(action) {
   const orderObj = {
     first_name: action.payload.first_name,
@@ -252,6 +269,7 @@ function* adminSagas() {
   yield takeLatest("ADMIN_GET_ALL_ORDERS", adminGetAllOrders);
   yield takeLatest("ADMIN_EDIT_ORDER", adminEditOrder);
   yield takeLatest("ADMIN_GET_SPECIFIC_ORDER", adminGetSpecificOrder);
+  yield takeLatest("ADMIN_ADD_ORDER", adminAddOrder);
   // ORDER ITEMS
   yield takeLatest("ADMIN_ADD_ORDER_ITEMS", adminAddOrderItems);
   yield takeLatest("ADMIN_EDIT_ORDER_ITEMS", editOrderItem);
@@ -262,7 +280,9 @@ function* adminSagas() {
   yield takeLatest("ADMIN_DELETE_ORDER_ITEM", adminDeleteOrderItem);
   // USER
   yield takeLatest("ADMIN_GET_ALL_USERS", getAllUsers);
+  registerUser;
   yield takeLatest("ADMIN_GET_SPECIFIC_USER", getSpecificUser);
+  yield takeLatest("ADMIN_REGISTER_USER", registerUser);
 }
 
 export default adminSagas;

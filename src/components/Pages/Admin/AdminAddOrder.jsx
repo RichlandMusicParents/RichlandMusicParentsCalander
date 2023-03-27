@@ -10,14 +10,12 @@ export default function AdminAddOrder() {
 
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
-    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId });
   }, []);
   const user = useSelector((store) => store.adminReducer.specificUser);
   const specificOrder = useSelector(
     (store) => store.adminReducer.specificOrder
   );
   console.log("User ID:", Number(userId.id));
-  console.log("Specific Order:", specificOrder);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -51,10 +49,15 @@ export default function AdminAddOrder() {
       is_delivered: isDelivered,
     };
 
-    dispatch({ type: "ADD_ORDER", payload: orderObj });
+    dispatch({ type: "ADMIN_ADD_ORDER", payload: orderObj });
     // console.log(orderObj);
     history.push(`/admin-events/${userId.id}`);
   }
+
+  useEffect(() => {
+    user[0] !== undefined && setUserFirst(user[0].first_name);
+    user[0] !== undefined && setUserLast(user[0].last_name);
+  }, [user]);
 
   return (
     <>

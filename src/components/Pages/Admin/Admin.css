@@ -85,3 +85,14 @@ li {
 .edit-order-info-form > input {
   padding: 5px;
 }
+
+.subtotal {
+  border: none;
+  font-size: 2rem;
+  outline: none;
+  font-weight: bold;
+}
+
+.update-item {
+  display: flex;
+}

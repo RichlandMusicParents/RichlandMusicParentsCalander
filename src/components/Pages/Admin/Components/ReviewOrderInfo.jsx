@@ -49,10 +49,10 @@ export default function ReviewOrderInfo() {
   const [zip, setZip] = useState(0);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [total, setTotal] = useState(0);
+  const [orderTotal, setOrderTotal] = useState(0);
   const [paymentType, setPaymentType] = useState("0");
-  const [isPayed, setIsPayed] = useState(false);
-  const [isDelivered, setIsDelivered] = useState(false);
+  const [isPayed, setIsPayed] = useState(null);
+  const [isDelivered, setIsDelivered] = useState(null);
 
   useEffect(() => {
     specificOrder[0] !== undefined && setFirstName(specificOrder[0].first_name);
@@ -63,6 +63,17 @@ export default function ReviewOrderInfo() {
     specificOrder[0] !== undefined && setState(specificOrder[0].state);
     specificOrder[0] !== undefined && setEmail(specificOrder[0].email);
     specificOrder[0] !== undefined && setPhone(specificOrder[0].phone);
+    specificOrder[0] !== undefined &&
+      setPaymentType(specificOrder[0].payment_type);
+    specificOrder[0] !== undefined &&
+      setIsDelivered(specificOrder[0].is_delivered);
+    specificOrder[0] !== undefined && setIsPayed(specificOrder[0].is_payed);
+    specificOrder[0] !== undefined && setOrderTotal(specificOrder[0].total);
+  }, [specificOrder]);
+
+  useEffect(() => {
+    specificOrder[0] !== undefined &&
+      setOrderTotal(Number(specificOrder[0].total));
   }, [specificOrder]);
 
   function saveOrderInfo() {
@@ -77,7 +88,7 @@ export default function ReviewOrderInfo() {
       user_id: Number(userId.id),
       email: email,
       phone: phone,
-      total: total,
+      total: orderTotal,
       payment_type: paymentType,
       is_payed: isPayed,
       is_delivered: isDelivered,
@@ -244,24 +255,6 @@ export default function ReviewOrderInfo() {
                         />
                       </RadioGroup>
                     </FormControl>
-                    <Select
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Payment Method" />
-                      )}
-                      name="payment_type"
-                      id="pType"
-                      value={paymentType}
-                      onChange={(e) => setPaymentType(e.target.value)}
-                    >
-                      <MenuItem value="0">Select Payment Type</MenuItem>
-                      <MenuItem value="Cash">Cash</MenuItem>
-                      <MenuItem value="Check">Check</MenuItem>
-                      <MenuItem value="Card">Card</MenuItem>
-                    </Select>
                     <Button
                       sx={{
                         width: 150,

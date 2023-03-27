@@ -35,7 +35,7 @@ import AdminReducer from "../redux/reducers/admin.reducer";
 import AdminOrderOverview from "./Pages/Admin/AdminOrderOverview";
 
 import OrderCompleted from "./Pages/CustomerInvoice/orderComplete";
-
+import { AdminRegisterUser } from "./Pages/Admin/AdminRegisterUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -126,11 +126,10 @@ function App() {
             <UserForm />
           </Route>
 
-
           <Route path="/events">
             <Events />
           </Route>
-          
+
           {/* This is the final final page the user sees that thanks them for ordering and to view their orders. */}
           <Route path="/Complete">
             <OrderCompleted />
@@ -192,11 +191,23 @@ function App() {
             )}
           </Route>
 
+          <Route exact path="/admin-register">
+            {user.is_admin ? (
+              <AdminRegisterUser />
+            ) : (
+              <Route>
+                <h1>403</h1>
+                <h2>
+                  You do not have access to this page. Please sign in as an
+                  admin to view.
+                </h2>
+              </Route>
+            )}
+          </Route>
+
           <Route exact path="/customerInvoice">
             <Invoice />
           </Route>
-
-          
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
