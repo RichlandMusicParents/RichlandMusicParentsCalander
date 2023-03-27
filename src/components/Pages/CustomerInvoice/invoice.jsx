@@ -19,6 +19,7 @@ import eventReducer from "../../../redux/reducers/event.reducer";
 import orderReducer from "../../../redux/reducers/order.reducer";
 import { useHistory } from "react-router-dom";
 import Notification from "../Notification/Notification";
+import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
 
 export default function Invoice() {
   const user = useSelector((store) => store.user);
@@ -380,6 +381,7 @@ export default function Invoice() {
 
         <Button onClick={() => nextPage()} >Complete Order</Button>
         <Notification/>
+        <ConfirmDialog/>
 
       </div>
     </>
