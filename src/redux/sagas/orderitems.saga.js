@@ -14,12 +14,12 @@ function* fetchOrderItems() {
 
 function* addOrderItems(action) {
   try {
-    const orderItem = response.data;
+    
 
-    const response = yield axios.post("/api/orderitems", action.payload);
+    const response = yield axios.post("/api/orderitems/", action.payload);
     yield put({
       type: "FETCH_ORDER_ITEMS",
-      payload: orderItem
+     
     });
   } catch (error) {
     console.log("Error adding order_items", error);
