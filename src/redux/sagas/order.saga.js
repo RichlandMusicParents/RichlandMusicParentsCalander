@@ -40,17 +40,17 @@ function* addOrder(action) {
   }
 }
 
-function* getSpecificOrder(action) {
-  try {
-    // passes the username and password from the payload to the server
-    const response = yield axios.get(
-      `/api/events/specific-orders/${Number(action.payload.id)}`
-    );
-    yield put({ type: "SET_SPECIFIC_ORDER", payload: response.data });
-  } catch (err) {
-    console.log("Error with getting specific user events", err);
-  }
-}
+// function* getSpecificOrder(action) {
+//   try {
+//     // passes the username and password from the payload to the server
+//     const response = yield axios.get(
+//       `/api/events/specific-orders/${Number(action.payload.id)}`
+//     );
+//     yield put({ type: "SET_SPECIFIC_ORDER", payload: response.data });
+//   } catch (err) {
+//     console.log("Error with getting specific user events", err);
+//   }
+// }
 
 //Edit an order
 function* editOrder(action) {

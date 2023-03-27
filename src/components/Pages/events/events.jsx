@@ -38,7 +38,7 @@ function Events(){
     const products = useSelector((store) => store.product);
     console.log("in products", products)
     const user = useSelector((store) => store.user);
-
+    const orders = useSelector((store) => store.order.newOrder);
      // event form
     //  const { order_id } = useParams();
     // console.log("IN PARAMS", order_id)
@@ -60,8 +60,12 @@ function Events(){
         dispatch({ type: "GET_USER_EVENT" });
          dispatch({ type: "FETCH_USER_PRODUCTS" });
             dispatch({ type: "FETCH_CALENDAR" });
+            dispatch({ type: "GET_NEW_ORDER" });
       }, []);
   
+      function testbutton(){
+        console.log("this is orderid", orders[0].id)
+      }
   
     //Function to delete a event row.
     function deleteUserEvent(id){
@@ -71,6 +75,7 @@ function Events(){
   // Dispatch for the events
   const eventHandleSubmit = () => {
     setNumEvents(numEvents + 1);
+    console.log("this is ID", orders.id)
 
 
     // const orderObj = {
@@ -111,8 +116,9 @@ function Events(){
         price: total,
         product_id: selectedProductId,
         quantity,
-        order_id: selectedOrderId,
-        user_id: user.id
+        order_id: orders[0].id,
+        user_id: user.id,
+        
       },
     });
   };
@@ -147,6 +153,7 @@ function Events(){
   
     return (
         <>
+        <Button onClick={ testbutton} > test</Button>
          <CardContent>
               <TextField
                 label="Event for"
@@ -156,6 +163,7 @@ function Events(){
                 required
                 onChange={(event) => setEventFor(event.target.value)}
                 sx={{ marginBottom: "10px", width: "50%" }}
+                
               />
             </CardContent>
             {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -317,6 +325,14 @@ function Events(){
 
           </Table>
         </TableContainer>
+        
+              {orders.map((order) => (
+                <section key={order.id}>
+                  <h1>this is order id: (setSelectedOrderId{order.id})</h1>
+                 
+                </section>
+              ))}
+          
       </div>
 
         </>

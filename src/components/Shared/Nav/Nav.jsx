@@ -24,7 +24,7 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && user.is_admin === true ? (
           <>
-            <Link className="navLink" to="/user">
+            <Link className="navLink" to="/userform">
               Home
             </Link>
 
