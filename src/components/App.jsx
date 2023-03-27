@@ -29,7 +29,7 @@ import "./App.css";
 import UserForm from "./UserForm/UserForm";
 
 import OrderCompleted from "./Pages/CustomerInvoice/orderComplete";
-import Admin from "./Pages/Admin/Pages/Admin";
+import Admin from "./Pages/Admin/Pages/AdminHome";
 import AdminOrderFrom from "./Pages/Admin/Pages/AdminOrderForm";
 import AdminAddEvents from "./Pages/Admin/Pages/AdminAddEvents";
 import AdminOrderOverview from "./Pages/Admin/Pages/AdminOrderOverview";
@@ -134,7 +134,7 @@ function App() {
             <OrderCompleted />
           </Route>
 
-          <Route exact path="/admin">
+          <Route exact path="/admin-home">
             {user.is_admin ? (
               <Admin />
             ) : (

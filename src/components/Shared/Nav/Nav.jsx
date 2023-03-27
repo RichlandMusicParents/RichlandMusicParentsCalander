@@ -28,7 +28,7 @@ function Nav() {
               Home
             </Link>
 
-            <Link className="navLink" to="/admin">
+            <Link className="navLink" to="/admin-home">
               Admin
             </Link>
 
