@@ -56,7 +56,7 @@ export default function OrderCompleted() {
         mt={2}
       >
 
-        <h2>Your order is confirmed!</h2>
+        <h2 style={{ color: "red"}}>Your order is confirmed!</h2>
         <Typography variant="h4" component="h1" gutterBottom>
           Contact Information
         </Typography>
