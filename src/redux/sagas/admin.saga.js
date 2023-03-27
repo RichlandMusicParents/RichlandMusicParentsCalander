@@ -59,6 +59,7 @@ function* adminEditEvent(action) {
       type: "GET_SPECIFIC_EVENTS",
       payload: action.payload.user_id,
     });
+    yield put({ type: "ADMIN_GET_ALL_EVENTS" });
   } catch (err) {
     console.log("Error in PUTing event by admin", err);
   }
