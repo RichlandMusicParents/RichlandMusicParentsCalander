@@ -31,6 +31,10 @@ export default function Admin() {
     history.push("/admin-register");
   }
 
+  function editOrder(id, user_id) {
+    history.push(`/admin-order-review/${user_id}`);
+  }
+
   // console.log(orders.order_items);
 
   return (
@@ -82,6 +86,9 @@ export default function Admin() {
           {orders.map((order) => (
             <div key={order.id} className="order-card">
               <h2>Order Number: {order.id}</h2>
+              <Button onClick={() => editOrder(order.id, order.user_id)}>
+                Edit
+              </Button>
               <div className="order-card-header">
                 <p>
                   {order.first_name} {order.last_name}

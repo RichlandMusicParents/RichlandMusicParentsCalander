@@ -218,6 +218,14 @@ function* adminGetAllOrders() {
   }
 }
 
+function* adminAddOrder(action) {
+  try {
+    yield axios.post("/api/orders/add-order", action.payload);
+  } catch (error) {
+    console.log("User post order failed", error);
+  }
+}
+
 function* adminEditOrder(action) {
   const orderObj = {
     first_name: action.payload.first_name,
@@ -261,6 +269,7 @@ function* adminSagas() {
   yield takeLatest("ADMIN_GET_ALL_ORDERS", adminGetAllOrders);
   yield takeLatest("ADMIN_EDIT_ORDER", adminEditOrder);
   yield takeLatest("ADMIN_GET_SPECIFIC_ORDER", adminGetSpecificOrder);
+  yield takeLatest("ADMIN_ADD_ORDER", adminAddOrder);
   // ORDER ITEMS
   yield takeLatest("ADMIN_ADD_ORDER_ITEMS", adminAddOrderItems);
   yield takeLatest("ADMIN_EDIT_ORDER_ITEMS", editOrderItem);

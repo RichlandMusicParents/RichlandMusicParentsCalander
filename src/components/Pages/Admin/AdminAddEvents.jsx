@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { format } from "date-fns";
+import { NumericFormat } from "react-number-format";
 
 export default function AdminAddEvents() {
   const userId = useParams();
@@ -50,6 +51,10 @@ export default function AdminAddEvents() {
   console.log("Events:", events);
   console.log("Order:", order);
 
+  const [cartTotal, setCartTotal] = useState(0);
+
+  console.log(cartTotal);
+
   const [orderId, setOrderId] = useState(0);
   const [eventType, setEventType] = useState("0");
   const [eventDate, setEventDate] = useState("");
@@ -68,6 +73,19 @@ export default function AdminAddEvents() {
   useEffect(() => {
     order[0] !== undefined && setOrderId(order[0].id);
   }, [order]);
+
+  useEffect(() => {
+    total();
+  }, [orderItems]);
+
+  const total = () => {
+    let totalVal = 0;
+    for (let i = 0; i < orderItems.length; i++) {
+      totalVal +=
+        Number(orderItems[i].price).toFixed(2) * Number(orderItems[i].quantity);
+    }
+    setCartTotal(totalVal);
+  };
 
   function addItems(product_id, price) {
     const orderItems = {
@@ -125,6 +143,7 @@ export default function AdminAddEvents() {
       type: "ADMIN_DELETE_ORDER_ITEM",
       payload: { id: id, user_id: userId },
     });
+    setQuantity(1);
   }
 
   function addEvent() {
@@ -155,7 +174,54 @@ export default function AdminAddEvents() {
   }
 
   function sendToReview() {
+    saveOrderInfo();
     history.push(`/admin-order-review/${Number(userId.id)}`);
+  }
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState(0);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [paymentType, setPaymentType] = useState("0");
+  const [isPayed, setIsPayed] = useState(false);
+  const [isDelivered, setIsDelivered] = useState(false);
+
+  useEffect(() => {
+    order[0] !== undefined && setFirstName(order[0].first_name);
+    order[0] !== undefined && setLastName(order[0].last_name);
+    order[0] !== undefined && setAddress(order[0].address);
+    order[0] !== undefined && setCity(order[0].city);
+    order[0] !== undefined && setZip(order[0].zip);
+    order[0] !== undefined && setState(order[0].state);
+    order[0] !== undefined && setEmail(order[0].email);
+    order[0] !== undefined && setPhone(order[0].phone);
+  }, [order]);
+
+  function saveOrderInfo() {
+    const orderObj = {
+      id: orderId,
+      first_name: firstName,
+      last_name: lastName,
+      address: address,
+      city: city,
+      state: state,
+      zip: Number(zip),
+      user_id: Number(userId.id),
+      email: email,
+      phone: phone,
+      total: cartTotal,
+      payment_type: paymentType,
+      is_payed: isPayed,
+      is_delivered: isDelivered,
+    };
+
+    // console.log(orderObj);
+
+    dispatch({ type: "ADMIN_EDIT_ORDER", payload: orderObj });
   }
 
   return (
@@ -403,7 +469,18 @@ export default function AdminAddEvents() {
             </Table>
           </TableContainer>
         </Paper>
-        <Button onClick={sendToReview}>Review</Button>
+        <h2>
+          <NumericFormat
+            className="subtotal"
+            value={cartTotal}
+            decimalScale={4}
+            prefix={"$"}
+            readOnly
+          />
+        </h2>
+        <Button onClick={sendToReview} variant="contained">
+          Review
+        </Button>
       </div>
     </>
   );
