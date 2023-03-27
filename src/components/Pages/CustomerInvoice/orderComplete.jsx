@@ -11,21 +11,40 @@ import {
   Box,
   Typography,
   Toolbar,
+  Button,
 } from "@mui/material";
-
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 // import "./OrderCompleted.css";
+
 
 export default function OrderCompleted() {
   const user = useSelector((store) => store.user);
   const events = useSelector((store) => store.eventReducer);
   const orders = useSelector((store) => store.order.newOrder);
   const dispatch = useDispatch();
+  const history= useHistory();
 
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
-    dispatch({ type: "GET_NEW_ORDER"});
+    dispatch({ type: "GET_NEW_ORDER" });
   }, []);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    });
+
+    
+  return formatter.format(date);
+  }
+  //Back to the homepage function
+  function homePageClick(){
+    history.push("/splashPage")
+  }
 
   return (
     <>
@@ -125,8 +144,7 @@ export default function OrderCompleted() {
             </TableHead>
             <TableBody>
               {events.map((event) => {
-                const eventDate = new Date(event.event_date);
-                const formattedDate = eventDate.toLocaleDateString();
+                const formattedDate = formatDate(event.event_date);
 
                 return (
                   <TableRow key={event.id}>
@@ -140,6 +158,7 @@ export default function OrderCompleted() {
           </Table>
         </TableContainer>
       </Box>
+      <Button onClick={ () => homePageClick()} > Back to HomePage</Button>
     </>
   );
 }

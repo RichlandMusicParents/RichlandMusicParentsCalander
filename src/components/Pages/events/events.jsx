@@ -132,6 +132,17 @@ function Events(){
   const handleCheckout = () => {
     history.push("/customerInvoice")
   }
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+    });
+  
+    return formatter.format(date);
+  }
+  
 
   
     return (
@@ -295,7 +306,7 @@ function Events(){
             <TableBody>
               {event.map((event) => (
                 <TableRow key={event.id}>
-                  <TableCell>{event.event_date}</TableCell>
+                  <TableCell>{formatDate(event.event_date)}</TableCell>
                   <TableCell>{event.event_type}</TableCell>
                   <TableCell>{event.event_name}</TableCell>
                   <TableCell><Button onClick={() => deleteUserEvent(event.id)}

@@ -35,14 +35,14 @@ export default function Invoice() {
   const [editEventDate, setEditEventDate] = useState("");
 
   //State for order
-  const [editFirstName, setEditFirstName] = useState("");
-  const [editLastName, setEditLastName] = useState("");
-  const [editAddress, setEditAddress] = useState("");
-  const [editCity, setEditCity] = useState("");
-  const [editState, setEditState] = useState("");
-  const [editZip, setEditZip] = useState("");
-  const [editPhone, setEditPhone] = useState("");
-  const [editEmail, setEditEmail] = useState("");
+  const [editFirstName, setEditFirstName] = useState(orders.first_name);
+  const [editLastName, setEditLastName] = useState(orders.last_name);
+  const [editAddress, setEditAddress] = useState(orders.address);
+  const [editCity, setEditCity] = useState(orders.city);
+  const [editState, setEditState] = useState(orders.state);
+  const [editZip, setEditZip] = useState(orders.zip);
+  const [editPhone, setEditPhone] = useState(orders.phone);
+  const [editEmail, setEditEmail] = useState(orders.email);
 
   //contact info
   const [editingContactInfo, setEditingContactInfo] = useState(false);
@@ -102,6 +102,18 @@ export default function Invoice() {
     dispatch({ type: "EDIT_ORDER", payload: editOrderObj });
     setEditingOrderId(null);
   }
+
+  function formatDate(dateString) {
+  const date = new Date(dateString);
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+  });
+
+  return formatter.format(date);
+}
+
 
   return (
     <>
@@ -171,7 +183,22 @@ export default function Invoice() {
                 </Button>
               </>
             ) : (
-              <Button onClick={() => setEditingContactInfo(true)}>Edit</Button>
+              <Button
+              onClick={() => {
+                setEditingContactInfo(true);
+                setEditFirstName(order.first_name);
+                setEditLastName(order.last_name);
+                setEditAddress(order.address);
+                setEditCity(order.city);
+                setEditState(order.state);
+                setEditZip(order.zip);
+                setEditPhone(order.phone);
+                setEditEmail(order.email);
+              }}
+            >
+              Edit
+            </Button>
+            
             )}
           </section>
         ))}
@@ -199,7 +226,7 @@ export default function Invoice() {
                         onChange={(e) => setEditEventDate(e.target.value)}
                       />
                     ) : (
-                      event.event_date
+                      formatDate(event.event_date) 
                     )}
                   </TableCell>
                   <TableCell>
