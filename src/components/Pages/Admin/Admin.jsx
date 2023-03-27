@@ -35,16 +35,20 @@ export default function Admin() {
     history.push(`/admin-order-review/${user_id}`);
   }
 
+  function sendToEditUser() {
+    history.push(`/admin-edit-user/${userId.id}`);
+  }
+
   // console.log(orders.order_items);
 
   return (
     <>
       <h1>Hello, {user.first_name}</h1>
       <AdminEvents />
-      <h2>Create New Order For:</h2>
+      <h2>Select A User</h2>
       <Autocomplete
         sx={{
-          width: 150,
+          width: 300,
         }}
         value={userId}
         onChange={(event, newValue) => setUserId(newValue)}
@@ -70,6 +74,13 @@ export default function Admin() {
         variant="contained"
       >
         Create New Order
+      </Button>
+      <Button
+        onClick={sendToEditUser}
+        sx={{ height: 50, margin: 1 }}
+        variant="contained"
+      >
+        Edit User
       </Button>
       <Button
         onClick={sendToRegister}
