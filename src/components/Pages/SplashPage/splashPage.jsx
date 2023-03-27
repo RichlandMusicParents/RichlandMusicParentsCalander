@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import "./SplashPage.css";
+import ImageSlider from "../ImageSlider/ImageSlider";
 // This is is the for the landing page, get started button will take you to the login page.
 function SplashPage() {
   const history = useHistory();
@@ -22,6 +23,9 @@ function SplashPage() {
         </p>
         <button onClick={getStartedButton}>Get Started</button>
       </body>
+      <ImageSlider/>
+
+      
     </>
   );
 }
