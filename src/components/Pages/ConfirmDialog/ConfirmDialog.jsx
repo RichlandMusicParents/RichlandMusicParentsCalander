@@ -59,11 +59,11 @@ function ConfirmDialog() {
              <DialogTitle style={{ color: "green"}} id="alert-title"  
              alignItems="center"
              justifyContent="center"
-             > {"Thank for your order!"}</DialogTitle>
+             > {"Thank you for your order!"}</DialogTitle>
             <DialogContentText   
             justifyContent="center"
             alignItems="center" >
-            Please wait while we are processing your order!
+            Please wait while your order is being processed!
             </DialogContentText>
           </DialogContent>
         )}
