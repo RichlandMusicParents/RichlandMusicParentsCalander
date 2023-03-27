@@ -2,11 +2,13 @@ import { Autocomplete, Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function AdminSelectUserComponent() {
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_ALL_USERS" });
   }, [dispatch]);
+  const history = useHistory();
   const dispatch = useDispatch();
   const users = useSelector((store) => store.adminReducer.allUsers);
   const [userId, setUserId] = useState(users[0]);

@@ -51,23 +51,13 @@ export default function AdminAddEvents() {
   console.log("Events:", events);
   console.log("Order:", order);
 
-  const [cartTotal, setCartTotal] = useState(0);
+  /* ==== ORDER ITEMS ===== */
 
-  const [orderId, setOrderId] = useState(0);
-  const [eventType, setEventType] = useState("0");
-  const [eventDate, setEventDate] = useState("");
-  const [eventName, setEventName] = useState("");
-  const [calId, setCalId] = useState("0");
   const [quantity, setQuantity] = useState(1);
+  const [cartTotal, setCartTotal] = useState(0);
+  const [orderId, setOrderId] = useState(0);
   const [itemEditMode, setItemEditMode] = useState(false);
   const [itemEditId, setItemEditId] = useState(0);
-  const [editMode, setEditMode] = useState(false);
-  const [eventEditId, setEventEditId] = useState(0);
-  const [editEventType, setEditEventType] = useState("");
-  const [editEventDate, setEditEventDate] = useState("");
-  const [editEventName, setEditEventName] = useState("");
-  const [editCalId, setEditCalId] = useState(0);
-
   useEffect(() => {
     order[0] !== undefined && setOrderId(order[0].id);
   }, [order]);
@@ -113,23 +103,6 @@ export default function AdminAddEvents() {
     setItemEditMode(false);
   }
 
-  function editEvents(id, type, name, date, editCalId) {
-    setEventEditId(id);
-    setEditMode(true);
-    setEditEventType(type);
-    setEditEventDate(date);
-    setEditEventName(name);
-    setEditCalId(editCalId);
-  }
-
-  function deleteEvent(id) {
-    console.log(id);
-    dispatch({
-      type: "ADMIN_DELETE_EVENT",
-      payload: { id: id, user_id: userId },
-    });
-  }
-
   function updateItem(id, itemQuantity) {
     setItemEditMode(true);
     setItemEditId(id);
@@ -144,6 +117,47 @@ export default function AdminAddEvents() {
     setQuantity(1);
   }
 
+  /* ==== END ORDER ITEMS ===== */
+
+  /* ==== EVENTS ==== */
+
+  // ALL OF OUR EVENT STATES
+
+  const [eventType, setEventType] = useState("0");
+  const [eventDate, setEventDate] = useState("");
+  const [eventName, setEventName] = useState("");
+  const [calId, setCalId] = useState("0");
+  const [editMode, setEditMode] = useState(false);
+  const [eventEditId, setEventEditId] = useState(0);
+  const [editEventType, setEditEventType] = useState("");
+  const [editEventDate, setEditEventDate] = useState("");
+  const [editEventName, setEditEventName] = useState("");
+  const [editCalId, setEditCalId] = useState(0);
+
+  // FUNCTION THAT WILL ALLOW US TO EDIT OUR EVENTS BY SETTING OUR EDIT MODE TO TRUE
+  // TO CONDITIONALLY RENDER OUR EDIT VIEW
+
+  function editEvents(id, type, name, date, editCalId) {
+    setEventEditId(id);
+    setEditMode(true);
+    setEditEventType(type);
+    setEditEventDate(date);
+    setEditEventName(name);
+    setEditCalId(editCalId);
+  }
+
+  // FUNCTION TO DELETE OUR SPECIFIC EVENT
+
+  function deleteEvent(id) {
+    console.log(id);
+    dispatch({
+      type: "ADMIN_DELETE_EVENT",
+      payload: { id: id, user_id: userId },
+    });
+  }
+
+  // FUNCTION TO ADD OUR NEW EVENT
+
   function addEvent() {
     const eventObj = {
       event_type: eventType,
@@ -155,6 +169,8 @@ export default function AdminAddEvents() {
 
     dispatch({ type: "ADMIN_ADD_EVENTS", payload: eventObj });
   }
+
+  // FUNCTION TO SAVE OUR EDITED EVENT
 
   function saveEditEvent() {
     const editEventObj = {
@@ -171,10 +187,9 @@ export default function AdminAddEvents() {
     setEventEditId(false);
   }
 
-  function sendToReview() {
-    saveOrderInfo();
-    history.push(`/admin-order-review/${Number(userId.id)}`);
-  }
+  /* ==== ORDER UPDATE ==== */
+
+  // STATES FOR OUR ORDER OBJECT
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -184,11 +199,18 @@ export default function AdminAddEvents() {
   const [zip, setZip] = useState(0);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [paymentType, setPaymentType] = useState("0");
-  const [isPayed, setIsPayed] = useState(false);
-  const [isDelivered, setIsDelivered] = useState(false);
+
+  // VARIABLES THAT WON'T CHANGE ON THIS PAGE
+
+  const paymentType = "0";
+  const isPayed = false;
+  const isDelivered = false;
+
+  // USE EFFECT TO SET ALL OF OUR ORDER INFO FROM OUR STORE WHENEVER WE LOAD OR ORDER CHANGES
 
   useEffect(() => {
+    // IF OUR ORDER[0] IS NOT UNDEFINED WE WILL SET EACH STATE TO THE CORRECT OBJECT KEY AND WE WILL DO THIS ANYTIME OUR ORDER STORE CHANGES
+    // IF OUR ORDER[0] IS UNDEFINED WE WILL NOT SET ANY STATE WHICH MEANS WE WONT GET AN ERROR
     order[0] !== undefined && setFirstName(order[0].first_name);
     order[0] !== undefined && setLastName(order[0].last_name);
     order[0] !== undefined && setAddress(order[0].address);
@@ -198,6 +220,8 @@ export default function AdminAddEvents() {
     order[0] !== undefined && setEmail(order[0].email);
     order[0] !== undefined && setPhone(order[0].phone);
   }, [order]);
+
+  // THIS IS OUR FUNCTION TO UPDATE OUR ORDER WITH THE CORRECT TOTAL
 
   function saveOrderInfo() {
     const orderObj = {
@@ -217,9 +241,14 @@ export default function AdminAddEvents() {
       is_delivered: isDelivered,
     };
 
-    // console.log(orderObj);
-
     dispatch({ type: "ADMIN_EDIT_ORDER", payload: orderObj });
+  }
+
+  /* ==== END ORDER UPDATE ==== */
+
+  function sendToReview() {
+    saveOrderInfo();
+    history.push(`/admin-order-review/${Number(userId.id)}`);
   }
 
   return (
