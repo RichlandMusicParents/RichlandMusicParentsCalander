@@ -16,10 +16,6 @@ export default function AdminSelectUserComponent() {
     history.push(`/admin-order-form/${userId.id}`);
   }
 
-  function sendToRegister() {
-    history.push("/admin-register");
-  }
-
   function sendToEditUser() {
     history.push(`/admin-edit-user/${userId.id}`);
   }
@@ -61,13 +57,6 @@ export default function AdminSelectUserComponent() {
         variant="contained"
       >
         Edit User
-      </Button>
-      <Button
-        onClick={sendToRegister}
-        sx={{ height: 50, margin: 1 }}
-        variant="contained"
-      >
-        Create New User
       </Button>
     </>
   );
