@@ -1,3 +1,8 @@
+:root {
+  --clr-primary: #77afdb;
+  --clr-secondary: #ffcf5f;
+}
+
 .events-container {
   background-color: grey;
   border: 1px solid gray;
@@ -95,4 +100,23 @@ li {
 
 .update-item {
   display: flex;
+}
+
+.admin-home-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.admin-home-event-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-events-list-header {
+  font-size: 2rem;
+}
+
+.admin-search-user {
+  margin-inline: 1rem;
 }
