@@ -24,7 +24,7 @@ export default function AdminAddEvents() {
 
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
-    dispatch({ type: "GET_NEW_ORDER", payload: userId });
+    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId });
     dispatch({ type: "GET_SPECIFIC_EVENTS", payload: userId.id });
     dispatch({ type: "FETCH_PRODUCTS" });
     dispatch({
@@ -38,7 +38,7 @@ export default function AdminAddEvents() {
   const orderItems = useSelector(
     (store) => store.adminReducer.specificOrderItems
   );
-  const order = useSelector((store) => store.order.newOrder);
+  const order = useSelector((store) => store.adminReducer.specificOrder);
   const products = useSelector((store) => store.product);
 
   useEffect(() => {
@@ -52,8 +52,6 @@ export default function AdminAddEvents() {
   console.log("Order:", order);
 
   const [cartTotal, setCartTotal] = useState(0);
-
-  console.log(cartTotal);
 
   const [orderId, setOrderId] = useState(0);
   const [eventType, setEventType] = useState("0");

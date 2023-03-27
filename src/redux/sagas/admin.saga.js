@@ -205,7 +205,9 @@ function* adminDeleteOrderItem(action) {
 
 function* adminGetSpecificOrder(action) {
   try {
-    const response = yield axios.get(`/api/orders/new-order/${action.payload}`);
+    const response = yield axios.get(
+      `/api/orders/new-order/${action.payload.id}`
+    );
     yield put({ type: "ADMIN_SET_SPECIFIC_ORDER", payload: response.data });
   } catch (err) {
     console.log(
