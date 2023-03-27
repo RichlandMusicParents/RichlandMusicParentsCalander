@@ -55,6 +55,8 @@ export default function OrderCompleted() {
         justifyContent="center"
         mt={2}
       >
+
+        <h2>Your order is confirmed!</h2>
         <Typography variant="h4" component="h1" gutterBottom>
           Contact Information
         </Typography>
