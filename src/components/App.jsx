@@ -35,6 +35,7 @@ import AdminAddEvents from "./Pages/Admin/Pages/AdminAddEvents";
 import AdminOrderOverview from "./Pages/Admin/Pages/AdminOrderOverview";
 import { AdminRegisterUser } from "./Pages/Admin/Pages/AdminRegisterUser";
 import { AdminEditUser } from "./Pages/Admin/Pages/AdminEditUser";
+import AdminAddOrder from "./Pages/Admin/Pages/AdminAddOrder";
 
 function App() {
   const dispatch = useDispatch();
@@ -150,7 +151,7 @@ function App() {
 
           <Route exact path="/admin-order-form/:id">
             {user.is_admin ? (
-              <AdminOrderFrom />
+              <AdminAddOrder />
             ) : (
               <Route>
                 <h1>403</h1>
