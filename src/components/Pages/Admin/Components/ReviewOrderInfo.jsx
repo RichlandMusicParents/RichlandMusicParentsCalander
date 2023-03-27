@@ -12,7 +12,6 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import "../Admin.css";
 
 export default function ReviewOrderInfo() {
   const userId = useParams();

@@ -271,7 +271,7 @@ function* adminEditOrder(action) {
 
 function* adminSagas() {
   // EVENTS
-  yield takeLatest("GET_ALL_EVENTS", adminGetAllEvents);
+  yield takeLatest("ADMIN_GET_ALL_EVENTS", adminGetAllEvents);
   yield takeLatest("GET_SPECIFIC_EVENTS", adminGetSpecificEvents);
   yield takeLatest("ADMIN_ADD_EVENTS", adminAddEvent);
   yield takeLatest("ADMIN_EDIT_EVENTS", adminEditEvent);

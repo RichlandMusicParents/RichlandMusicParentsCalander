@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
-import "../Admin/Admin.css";
 import {
   Autocomplete,
   Table,
@@ -20,7 +19,7 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 
-export default function AdminEvents() {
+export default function AdminEventsListComponent() {
   const events = useSelector((store) => store.adminReducer.allEvents);
   const users = useSelector((store) => store.adminReducer.allUsers);
   const id = useParams();
@@ -37,10 +36,8 @@ export default function AdminEvents() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: id });
+    dispatch({ type: "ADMIN_GET_ALL_EVENTS" });
   }, [dispatch]);
-  // console.log(events);
-  // console.log(users);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
