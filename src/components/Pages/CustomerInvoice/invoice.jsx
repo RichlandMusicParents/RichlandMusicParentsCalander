@@ -93,7 +93,7 @@ export default function Invoice() {
       zip: editZip,
       phone: editPhone,
       email: editEmail,
-      total: 0,
+      total: Number(orders[0].total),
       payment_type: editOrderInfo.payment_type,
       is_payed: false,
       is_delivered: false,
