@@ -40,7 +40,7 @@ function Nav() {
           </>
         ) : (
           <>
-            <Link className="navLink" to="/user">
+            <Link className="navLink" to="/userform">
               Home
             </Link>
             <Link className="navLink" to="/info">

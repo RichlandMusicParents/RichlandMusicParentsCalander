@@ -17,13 +17,12 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 // import "./OrderCompleted.css";
 
-
 export default function OrderCompleted() {
   const user = useSelector((store) => store.user);
   const events = useSelector((store) => store.eventReducer);
   const orders = useSelector((store) => store.order.newOrder);
   const dispatch = useDispatch();
-  const history= useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
@@ -38,12 +37,11 @@ export default function OrderCompleted() {
       day: "2-digit",
     });
 
-    
-  return formatter.format(date);
+    return formatter.format(date);
   }
   //Back to the homepage function
-  function homePageClick(){
-    history.push("/splashPage")
+  function homePageClick() {
+    history.push("/splashPage");
   }
 
   return (
@@ -55,7 +53,6 @@ export default function OrderCompleted() {
         justifyContent="center"
         mt={2}
       >
-
         <h2>Your order is confirmed!</h2>
         <Typography variant="h4" component="h1" gutterBottom>
           Contact Information
@@ -160,7 +157,7 @@ export default function OrderCompleted() {
           </Table>
         </TableContainer>
       </Box>
-      <Button onClick={ () => homePageClick()} > Back to HomePage</Button>
+      <Button onClick={() => homePageClick()}> Back to HomePage</Button>
     </>
   );
 }

@@ -11,7 +11,6 @@ function* fetchProducts() {
   }
 }
 
-
 function* fetchUserProducts() {
   try {
     const response = yield axios.get("/api/products/");
@@ -34,7 +33,7 @@ function* addProduct(action) {
 }
 
 function* productSaga() {
-  yield takeLatest("FETCH_USER_PRODUCTS", fetchUserProducts)
+  yield takeLatest("FETCH_USER_PRODUCTS", fetchUserProducts);
   yield takeLatest("FETCH_PRODUCTS", fetchProducts);
   yield takeLatest("ADD_PRODUCT", addProduct);
 }

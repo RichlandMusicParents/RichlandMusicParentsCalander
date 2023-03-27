@@ -11,15 +11,11 @@ function* fetchOrderItems() {
   }
 }
 
-
 function* addOrderItems(action) {
   try {
-    
-
     const response = yield axios.post("/api/orderitems/", action.payload);
     yield put({
       type: "FETCH_ORDER_ITEMS",
-     
     });
   } catch (error) {
     console.log("Error adding order_items", error);
@@ -27,7 +23,7 @@ function* addOrderItems(action) {
 }
 
 function* orderItemsSaga() {
-  yield takeLatest("FETCH_ORDER_ITEMS", fetchOrderItems)
+  yield takeLatest("FETCH_ORDER_ITEMS", fetchOrderItems);
   yield takeLatest("ADD_ORDER_ITEMS", addOrderItems);
 }
 

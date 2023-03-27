@@ -63,10 +63,6 @@ function Events() {
     dispatch({ type: "GET_NEW_ORDER" });
   }, []);
 
-  function testbutton() {
-    console.log("this is orderid", orders[0].id);
-  }
-
   //Function to delete a event row.
   function deleteUserEvent(id) {
     dispatch({ type: "USER_DELETE_EVENT", payload: id });
