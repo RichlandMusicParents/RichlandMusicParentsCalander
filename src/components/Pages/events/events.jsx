@@ -55,6 +55,7 @@ function Events(){
      const [quantity, setQuantity] = useState(0);
      const [total, setTotal] = useState(0);
      const [name, setName] = useState(null);
+     const [sku, setSku] = useState(null);
     
     useEffect(() => {
         dispatch({ type: "GET_USER_EVENT" });
@@ -93,8 +94,8 @@ function Events(){
           payload: {
             name,
             price,
-            calendar_id: selectCalendarId,
-            quantity,
+            sku,
+            calendar_id: selectCalendarId
           }
     })
 

@@ -71,6 +71,26 @@ router.post("/add-products", rejectUnauthenticated, (req, res) => {
   }
 });
 
+router.post("/", (req, res) => {
+
+  const { name, price, sku, calendar_id } = req.body;
+  const queryText = `
+  INSERT INTO "product" ("name", "price", "sku", "calendar_id")
+  VALUES ($1, $2, $3, $4);
+      `;
+  
+    pool
+      .query(queryText, [name, price, sku, calendar_id])
+      .then((result) => {
+        res.send(result.rows[0]);
+      })
+      .catch((err) => {
+        console.error("Error making POST for products", err);
+        res.sendStatus(500);
+      });
+  });
+  
+
 router.delete("/remove-products/:id", rejectUnauthenticated, (req, res) => {
   if (!req.user.is_admin) {
     return res.sendStatus(401);
