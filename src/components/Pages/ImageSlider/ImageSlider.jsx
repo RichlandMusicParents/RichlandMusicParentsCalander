@@ -8,7 +8,6 @@ import "./ImageSlider.css"
 function ImageSlider() {
 
   
-  //Placeholder images
   const images = [
     {
       id: 1,
@@ -61,6 +60,7 @@ function ImageSlider() {
 
   
     <div className="slider-container">
+      
           <Slider {...settings}>
           {images.map((image) => (
         <div className="card">

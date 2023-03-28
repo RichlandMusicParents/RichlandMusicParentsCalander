@@ -5,8 +5,9 @@
   align-items: center;
 
   margin: 0 0 30px;
-  background-color: #00acb0;
+  background-color: #77afdb;
   overflow: hidden;
+  font-family: ;
 }
 
 .nav a {
@@ -14,6 +15,13 @@
 }
 
 .nav-title {
+  margin-bottom: 2rem;
+  background-image: url("https://richland44musicparents.square.site/uploads/b/0261a3f50b59d2b6ae3c698e34e64a45ad2d45bcdc4cabe091edfd3c5449d46a/Richland%20Music%20Parents%20Logo_1651086122.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 1;
+  
   font-size: 24px;
   font-weight: 700;
   color: #f2f2f2;
@@ -23,8 +31,9 @@
 
 .navLink {
   display: inline-block;
+  margin: 15px;
   color: #f2f2f2;
-  background-color: #00acb0;
+  background-color: #77afdb;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
@@ -35,8 +44,9 @@
   border: none;
   cursor: pointer;
   outline: 0;
+  border-radius: 50px;
 }
 
 .navLink:hover {
-  background-color: #008183;
+  background-color: #ffcf5f;
 }

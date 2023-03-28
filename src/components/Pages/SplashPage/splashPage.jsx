@@ -2,8 +2,38 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "./SplashPage.css";
 import ImageSlider from "../ImageSlider/ImageSlider";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Button } from "@mui/material";
+
 // This is is the for the landing page, get started button will take you to the login page.
 function SplashPage() {
+
+
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+
+    typography: {
+      fontFamily: "Libre Baskerville, serif",
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: 1.5,
+    },
+  });
+  
+
   const history = useHistory();
 
   function getStartedButton() {
@@ -11,21 +41,47 @@ function SplashPage() {
   }
   return (
     <>
-      <body className="splash">
-        <div className="logo"></div>
-        <h1 className="RMP">Richland Music Parents</h1>
-
-        <p className="splashPageP">
+    <ThemeProvider theme={richlandTheme}>
+    
+        
+        <div className="splash-container"> 
+        <div className="logo"> 
+          <h1>Richland Music Parents</h1> 
+        </div>
+        </div>
+        <section>
+        <p className="splash-text">
           Join the Richland Music Parents' community fundraising revolution with
           our Music Parents Community Calendar app! Easily add household
           information, pay online, and track orders. Plus, contribute to the
           community effort by adding important dates. Support students and the
           community with ease!
         </p>
-        <button onClick={getStartedButton}>Get Started</button>
-      </body>
-      <ImageSlider/>
+        </section>
+        <ImageSlider/>
+     
+        <Button  className="splash-button" 
+        color="primary"
+        variant="contained"
+        sx={{
+          backgroundColor: richlandTheme.palette.primary.main,
+          color: "white",
+          fontSize: "1.2rem",
+          fontWeight: "600",
+          padding: "1rem 2rem",
+          boxShadow: "none",
+          marginTop: "2rem",
+          borderRadius: "15px",
+          "&:hover": {
+            backgroundColor: richlandTheme.palette.primary.dark
+           },
+           display: "block"
 
+        }}
+        onClick={getStartedButton}>Get Started</Button>
+   
+    
+      </ThemeProvider>
       
     </>
   );
