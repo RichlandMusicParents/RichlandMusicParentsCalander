@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { NumericFormat } from "react-number-format";
+import "../AdminAddEvents.css";
 
 export default function AdminAddEvents() {
   const userId = useParams();
@@ -257,59 +258,72 @@ export default function AdminAddEvents() {
         <header className="add-items">
           <h2>Add Items</h2>
         </header>
-        {products.map((product) => (
-          <>
-            {!orderItems.some((item) => item.product_id === product.id) && (
-              <div key={product.id} className="items-form">
-                <h3>
-                  {product.name}: {product.price}
-                </h3>
-                <Button onClick={() => addItems(product.id, product.price)}>
-                  Add
-                </Button>
-              </div>
-            )}
-          </>
-        ))}
-        {orderItems.map((item) => (
-          <div className="items-cart">
-            {itemEditMode && item.id === itemEditId ? (
+        <div className="items">
+          {products.map((product) => (
+            <>
+              {!orderItems.some((item) => item.product_id === product.id) && (
+                <>
+                  <div key={product.id} className="item">
+                    <h3>
+                      {product.name}: {product.price}
+                    </h3>
+                    <Button onClick={() => addItems(product.id, product.price)}>
+                      Add
+                    </Button>
+                  </div>
+                </>
+              )}
+            </>
+          ))}
+
+          {orderItems.map((item) => (
+            <>
               <div key={item.id} className="item">
-                <h3>
-                  {item.name} {item.price}
-                </h3>
-                <TextField
-                  sx={{
-                    width: 50,
-                  }}
-                  label="Quantity"
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
-                <Button onClick={() => saveUpdate(item.product_id, item.price)}>
-                  Update
-                </Button>
+                {itemEditMode && item.id === itemEditId ? (
+                  <>
+                    <h3>
+                      {item.name} {item.price}
+                    </h3>
+                    <TextField
+                      sx={{
+                        width: 50,
+                      }}
+                      label="Quantity"
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                    />
+
+                    <Button
+                      onClick={() => saveUpdate(item.product_id, item.price)}
+                    >
+                      Update
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <h3>
+                      {item.name} {item.price}
+                    </h3>
+                    <TextField
+                      sx={{
+                        width: 50,
+                      }}
+                      label="Quantity"
+                      type="text"
+                      value={item.quantity}
+                      onClick={() => updateItem(item.id, item.quantity)}
+                    />
+
+                    <Button onClick={() => deleteOrderItem(item.id)}>
+                      Remove
+                    </Button>
+                  </>
+                )}
               </div>
-            ) : (
-              <div key={item.id} className="item">
-                <h3>
-                  {item.name} {item.price}
-                </h3>
-                <TextField
-                  sx={{
-                    width: 50,
-                  }}
-                  label="Quantity"
-                  type="text"
-                  value={item.quantity}
-                  onClick={() => updateItem(item.id, item.quantity)}
-                />
-                <Button onClick={() => deleteOrderItem(item.id)}>Remove</Button>
-              </div>
-            )}
-          </div>
-        ))}
+            </>
+          ))}
+        </div>
       </div>
       <div className="admin-add-event-form">
         <Select

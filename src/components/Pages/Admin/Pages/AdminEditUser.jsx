@@ -104,7 +104,6 @@ export function AdminEditUser() {
     order[0] !== undefined && setOrderId(order[0]);
   }, [order]);
 
-  console.log(orderId);
   const [orderId, setOrderId] = useState(0);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -113,7 +112,7 @@ export function AdminEditUser() {
   const [isAdmin, setIsAdmin] = useState(null);
   const [userEditMode, setUserEditMode] = useState(false);
 
-  console.log(username);
+  console.log(order);
 
   function registerUser() {
     const userObj = {
@@ -277,59 +276,77 @@ export function AdminEditUser() {
         </section>
         <section className="admin-user-orders">
           <header className="order-list-section">Orders</header>
-          <article className="user-order-card">
-            <header className="user-order-card-header">
-              <h3>Order</h3>
-            </header>
-            {order.map((item) => {
-              return (
-                <div key={item.id} className="order-info-container">
-                  <div className="order-info-section">
-                    <header className="order-info-section-header">
-                      <h3>Shipping Info</h3>
-                    </header>
-                    <p>{item.address}</p>
-                    <p>
-                      {item.city}, {item.state} {item.zip}
-                    </p>
-                  </div>
-                  <div className="order-info-section">
-                    <header className="order-info-section-header">
-                      <h3>Contact Info</h3>
-                    </header>
-                    <p>
-                      {item.first_name} {item.last_name}
-                    </p>
-                    <p>{item.email}</p>
-                    <p>{item.phone}</p>
-                  </div>
-                  <div className="order-info-section">
-                    <header className="order-info-section-header">
-                      <h3>Order Info</h3>
-                    </header>
-                    <p>Order Total: ${item.total}</p>
-                    <p>Payment Type: {item.payment_type}</p>
-                    <p>
-                      {item.is_delivered ? <>Delivered</> : <>Not Delivered</>}
-                    </p>
-                    <p> {item.is_payed ? <>Payed</> : <>Unpaid</>}</p>
-                    <p>Events: {item.order_events.length}</p>
-                    <p>
-                      Calendars:{" "}
-                      {item.order_items.map((cal) => {
-                        return (
-                          <>{cal.product_id === 1 && <>{cal.quantity}</>}</>
-                        );
-                      })}
-                    </p>
-                  </div>
+          {order.length > 0 ? (
+            <>
+              <article className="user-order-card">
+                <header className="user-order-card-header">
+                  <h3>Order</h3>
+                </header>
+                <div className="order-info-container">
+                  {order.map((item) => {
+                    return (
+                      <>
+                        <div className="order-info-section">
+                          <header className="order-info-section-header">
+                            <h3>Shipping Info</h3>
+                          </header>
+                          <p>{item.address}</p>
+                          <p>
+                            {item.city}, {item.state} {item.zip}
+                          </p>
+                        </div>
+                        <div className="order-info-section">
+                          <header className="order-info-section-header">
+                            <h3>Contact Info</h3>
+                          </header>
+                          <p>
+                            {item.first_name} {item.last_name}
+                          </p>
+                          <p>{item.email}</p>
+                          <p>{item.phone}</p>
+                        </div>
+                        <div className="order-info-section">
+                          <header className="order-info-section-header">
+                            <h3>Order Info</h3>
+                          </header>
+                          <p>Order Total: ${item.total}</p>
+                          <p>Payment Type: {item.payment_type}</p>
+                          <p>
+                            {item.is_delivered ? (
+                              <>Delivered</>
+                            ) : (
+                              <>Not Delivered</>
+                            )}
+                          </p>
+                          <p> {item.is_payed ? <>Payed</> : <>Unpaid</>}</p>
+                          <p>Events: {item.order_events.length}</p>
+                          <p>
+                            Calendars:{" "}
+                            {item.order_items.map((cal) => {
+                              return (
+                                <>
+                                  {cal.product_id === 1 && <>{cal.quantity}</>}
+                                </>
+                              );
+                            })}
+                          </p>
+                        </div>
+                      </>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </article>
+              </article>
+            </>
+          ) : (
+            <>
+              <article className="user-order-card-no-orders">
+                <h2>No Orders to Show</h2>
+              </article>
+            </>
+          )}
         </section>
 
-        <Paper sx={{ width: 1200, marginInline: "auto" }}>
+        <Paper sx={{ width: 700, marginInline: "auto" }}>
           <TableContainer component={Paper} sx={{ height: 448 }}>
             <Table>
               <TableHead>
@@ -337,8 +354,8 @@ export function AdminEditUser() {
                   <TableCell
                     sx={{
                       height: 40,
-                      width: 150,
-                      fontSize: 20,
+                      width: 125,
+                      fontSize: 15,
                       fontWeight: "bold",
                     }}
                   >
@@ -347,8 +364,8 @@ export function AdminEditUser() {
                   <TableCell
                     sx={{
                       height: 40,
-                      width: 150,
-                      fontSize: 20,
+                      width: 125,
+                      fontSize: 15,
                       fontWeight: "bold",
                     }}
                   >
@@ -357,8 +374,8 @@ export function AdminEditUser() {
                   <TableCell
                     sx={{
                       height: 40,
-                      width: 150,
-                      fontSize: 20,
+                      width: 125,
+                      fontSize: 15,
                       fontWeight: "bold",
                     }}
                   >
@@ -367,18 +384,18 @@ export function AdminEditUser() {
                   <TableCell
                     sx={{
                       height: 40,
-                      width: 150,
-                      fontSize: 20,
+                      width: 125,
+                      fontSize: 15,
                       fontWeight: "bold",
                     }}
                   >
                     Calendar
                   </TableCell>
                   <TableCell
-                    sx={{ height: 40, width: 50, fontSize: 20 }}
+                    sx={{ height: 40, width: 30, fontSize: 10 }}
                   ></TableCell>
                   <TableCell
-                    sx={{ height: 40, width: 50, fontSize: 20 }}
+                    sx={{ height: 40, width: 30, fontSize: 10 }}
                   ></TableCell>
                 </TableRow>
               </TableHead>
@@ -390,12 +407,12 @@ export function AdminEditUser() {
                       {editMode && editId === event.id ? (
                         <>
                           <TableCell
-                            sx={{ height: 40, width: 150, fontSize: 15 }}
+                            sx={{ height: 40, width: 100, fontSize: 15 }}
                           >
                             <Select
                               sx={{
                                 height: 40,
-                                width: 150,
+                                width: 100,
                                 fontSize: 15,
                                 padding: 0,
                                 margin: 0,
@@ -421,12 +438,12 @@ export function AdminEditUser() {
                             </Select>
                           </TableCell>
                           <TableCell
-                            sx={{ height: 40, width: 150, fontSize: 15 }}
+                            sx={{ height: 40, width: 100, fontSize: 15 }}
                           >
                             <TextField
                               sx={{
                                 height: 40,
-                                width: 150,
+                                width: 125,
                                 fontSize: 15,
                                 padding: 0,
                                 margin: 0,
@@ -439,12 +456,12 @@ export function AdminEditUser() {
                             />
                           </TableCell>
                           <TableCell
-                            sx={{ height: 40, width: 150, fontSize: 15 }}
+                            sx={{ height: 40, width: 100, fontSize: 15 }}
                           >
                             <TextField
                               sx={{
                                 height: 40,
-                                width: 150,
+                                width: 125,
                                 fontSize: 15,
                                 padding: 0,
                                 margin: 0,
@@ -456,27 +473,27 @@ export function AdminEditUser() {
                             />
                           </TableCell>
                           <TableCell
-                            sx={{ height: 40, width: 150, fontSize: 15 }}
+                            sx={{ height: 40, width: 100, fontSize: 15 }}
                           >
                             {event.calendar_name}
                           </TableCell>
                           <TableCell
-                            sx={{ height: 40, width: 50, fontSize: 15 }}
+                            sx={{ height: 40, width: 30, fontSize: 15 }}
                           >
                             <Button
                               onClick={saveEditEvent}
                               color="primary"
                               sx={{
-                                width: 30,
-                                height: 30,
-                                fontSize: 20,
+                                width: 20,
+                                height: 20,
+                                fontSize: 10,
                               }}
                             >
                               <FaSave />
                             </Button>
                           </TableCell>
                           <TableCell
-                            sx={{ height: 40, width: 50, fontSize: 20 }}
+                            sx={{ height: 40, width: 20, fontSize: 10 }}
                           >
                             <Button
                               sx={{
@@ -494,20 +511,20 @@ export function AdminEditUser() {
                       ) : (
                         <>
                           <TableCell
-                            sx={{ height: 40, width: 150, fontSize: 15 }}
+                            sx={{ height: 40, width: 125, fontSize: 15 }}
                           >
                             {event.event_type}
                           </TableCell>
-                          <TableCell sx={{ width: 150, fontSize: 15 }}>
+                          <TableCell sx={{ width: 125, fontSize: 15 }}>
                             {event.event_name}
                           </TableCell>
                           <TableCell
-                            sx={{ height: 40, width: 150, fontSize: 15 }}
+                            sx={{ height: 40, width: 125, fontSize: 15 }}
                           >
                             {format(new Date(event.event_date), "MM/dd/yy")}
                           </TableCell>
                           <TableCell
-                            sx={{ height: 40, width: 150, fontSize: 15 }}
+                            sx={{ height: 40, width: 125, fontSize: 15 }}
                           >
                             {event.calendar_name}
                           </TableCell>

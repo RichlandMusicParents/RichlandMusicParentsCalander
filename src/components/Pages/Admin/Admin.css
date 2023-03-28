@@ -143,6 +143,7 @@ li {
 .order-list-section {
   text-align: center;
   font-size: 30px;
+  height: 20%;
   font-weight: bold;
   padding: 0;
 }
@@ -154,7 +155,8 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid black;
+  align-items: center;
+  /* border: 1px solid black; */
 }
 
 .user-card-info {
@@ -166,6 +168,7 @@ li {
   width: 100%;
   height: 80%;
   display: flex;
+  border: 1px solid black;
 }
 
 .order-info-section {
@@ -251,6 +254,18 @@ li {
   -webkit-box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
   -moz-box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
   box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
+}
+
+.user-order-card-no-orders {
+  display: flex;
+  flex-direction: column;
+  margin-block: 2rem;
+  margin-inline: 1rem;
+  border-radius: 10px;
+  width: 50rem;
+  height: 20rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .admin-user-card-form {
