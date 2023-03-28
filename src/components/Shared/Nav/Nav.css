@@ -5,26 +5,47 @@
   align-items: center;
 
   margin: 0 0 30px;
-  background-color: #00acb0;
+  background-color: #77afdb;
   overflow: hidden;
+  
 }
 
 .nav a {
   text-decoration: none;
 }
-
+.nav-header {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
 .nav-title {
   font-size: 24px;
   font-weight: 700;
   color: #f2f2f2;
   padding-left: 10px;
+  margin-left: 10px;
   margin: 0;
+  flex-grow: 1;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo {
+  width: 40px;
+  height: 40px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 1;
+  flex-grow: 0;
 }
 
 .navLink {
   display: inline-block;
+  margin: 15px;
   color: #f2f2f2;
-  background-color: #00acb0;
+  background-color: #77afdb;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
@@ -35,8 +56,9 @@
   border: none;
   cursor: pointer;
   outline: 0;
+  border-radius: 50px;
 }
 
 .navLink:hover {
-  background-color: #008183;
+  background-color: #ffcf5f;
 }
