@@ -12,6 +12,7 @@ function SplashPage() {
   return (
     <>
       <body className="splash">
+        <div className="logo"></div>
         <h1 className="RMP">Richland Music Parents</h1>
 
         <p className="splashPageP">
