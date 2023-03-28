@@ -59,6 +59,7 @@ function* adminEditEvent(action) {
       type: "GET_SPECIFIC_EVENTS",
       payload: action.payload.user_id,
     });
+    yield put({ type: "ADMIN_GET_ALL_EVENTS" });
   } catch (err) {
     console.log("Error in PUTing event by admin", err);
   }
@@ -271,7 +272,7 @@ function* adminEditOrder(action) {
 
 function* adminSagas() {
   // EVENTS
-  yield takeLatest("GET_ALL_EVENTS", adminGetAllEvents);
+  yield takeLatest("ADMIN_GET_ALL_EVENTS", adminGetAllEvents);
   yield takeLatest("GET_SPECIFIC_EVENTS", adminGetSpecificEvents);
   yield takeLatest("ADMIN_ADD_EVENTS", adminAddEvent);
   yield takeLatest("ADMIN_EDIT_EVENTS", adminEditEvent);

@@ -27,16 +27,15 @@ import Notification from "./Pages/Notification/Notification";
 
 import "./App.css";
 import UserForm from "./UserForm/UserForm";
-import Admin from "./Pages/Admin/Admin";
-import AdminOrderFrom from "./Pages/Admin/AdminOrderForm";
-import AdminAddEvents from "./Pages/Admin/AdminAddEvents";
-
-import AdminReducer from "../redux/reducers/admin.reducer";
-import AdminOrderOverview from "./Pages/Admin/AdminOrderOverview";
 
 import OrderCompleted from "./Pages/CustomerInvoice/orderComplete";
-import { AdminRegisterUser } from "./Pages/Admin/AdminRegisterUser";
-import { AdminEditUser } from "./Pages/Admin/AdminEditUser";
+import Admin from "./Pages/Admin/Pages/AdminHome";
+import AdminOrderFrom from "./Pages/Admin/Pages/AdminOrderForm";
+import AdminAddEvents from "./Pages/Admin/Pages/AdminAddEventsAndItems";
+import AdminOrderOverview from "./Pages/Admin/Pages/AdminOrderOverview";
+import { AdminRegisterUser } from "./Pages/Admin/Pages/AdminRegisterUser";
+import { AdminEditUser } from "./Pages/Admin/Pages/AdminEditUser";
+import AdminAddOrder from "./Pages/Admin/Pages/AdminAddOrder";
 
 function App() {
   const dispatch = useDispatch();
@@ -136,7 +135,7 @@ function App() {
             <OrderCompleted />
           </Route>
 
-          <Route exact path="/admin">
+          <Route exact path="/admin-home">
             {user.is_admin ? (
               <Admin />
             ) : (
@@ -152,7 +151,7 @@ function App() {
 
           <Route exact path="/admin-order-form/:id">
             {user.is_admin ? (
-              <AdminOrderFrom />
+              <AdminAddOrder />
             ) : (
               <Route>
                 <h1>403</h1>
