@@ -111,3 +111,12 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
+
+
+
+/* EVENT COMPONENT EXTRA EVENTS/CALENDAR */
+.extra-calendar-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
