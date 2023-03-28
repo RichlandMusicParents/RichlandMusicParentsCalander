@@ -11,7 +11,7 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  Input
+  Input,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import UserPage from "../Pages/UserPage/UserPage";
@@ -20,8 +20,8 @@ function UserForm() {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
- 
-    // order details form
+
+  // order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -68,7 +68,6 @@ function UserForm() {
         phone,
         payment_type: payment,
         user_id: user.id,
-
       },
     });
     history.push("/events");
@@ -81,9 +80,7 @@ function UserForm() {
     setZip("");
     setPhone("");
     setPayment("");
-  
   };
-
 
   return (
     <div
@@ -91,16 +88,18 @@ function UserForm() {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
-      }}>
+      }}
+    >
       <Grid
         container
         spacing={3}
         justifyContent="center"
-        sx={{ marginTop: "40px", marginBottom: "-10px" }}>
-        
+        sx={{ marginTop: "40px", marginBottom: "-10px" }}
+      >
         <Grid item xs={12} md={13}>
           <Card
-            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}>
+            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}
+          >
             <h1>Richland Music Parents</h1>
             <h2>Listing Form</h2>
             <UserPage />
@@ -202,17 +201,15 @@ function UserForm() {
                 labelId="payment-select"
                 label="Payment Options"
                 value={payment}
-                onChange={(event) => setPayment(event.target.value)}>
+                onChange={(event) => setPayment(event.target.value)}
+              >
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
                 <MenuItem value={"Check"}> Check </MenuItem>
               </Select>
             </FormControl>
-            
-           
+
             <Button onClick={handleSubmit}> Continue </Button>
-
-
           </Card>
         </Grid>
       </Grid>

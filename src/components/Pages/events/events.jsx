@@ -21,6 +21,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Grid,
 } from "@mui/material";
 
 import FormLabel from "@mui/material/FormLabel";
@@ -29,6 +30,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { NumericFormat } from "react-number-format";
 
 function Events() {
   const history = useHistory();
@@ -39,6 +41,8 @@ function Events() {
   console.log("in products", products);
   const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order.newOrder);
+  //store for order items
+  const orderItems = useSelector((store) => store.orderItemsReducer);
   // event form
   //  const { order_id } = useParams();
   // console.log("IN PARAMS", order_id)
@@ -52,20 +56,46 @@ function Events() {
   const [date, setDate] = useState("");
   const [events, setEvents] = useState("");
   const [numEvents, setNumEvents] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  // const [quantity, setQuantity] = useState(0);
   const [total, setTotal] = useState(0);
   const [name, setName] = useState(null);
+
+  // ORDER ITEMS
+  const [quantity, setQuantity] = useState(1);
+  // const [cartTotal, setCartTotal] = useState(0);
+  const [orderId, setOrderId] = useState(0);
+  const [itemEditMode, setItemEditMode] = useState(false);
+  const [itemEditId, setItemEditId] = useState(0);
+
+  // state fo
+
+  // TESTING TOTAL
+  useEffect(() => {
+    orders[0] !== undefined && orders[0].id;
+  }, [orders]);
+
+  useEffect(() => {
+    addTotal();
+  }, [orderItems]);
+
+  const addTotal = () => {
+    let totalVal = 0;
+    for (let i = 0; i < orderItems.length; i++) {
+      totalVal +=
+        Number(orderItems[i].price).toFixed(2) * Number(orderItems[i].quantity);
+    }
+    setTotal(totalVal);
+  };
+
+  // END ORDER ITEMS
 
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
     dispatch({ type: "FETCH_USER_PRODUCTS" });
     dispatch({ type: "FETCH_CALENDAR" });
     dispatch({ type: "GET_NEW_ORDER" });
+    dispatch({ type: "FETCH_ORDER_ITEMS" });
   }, []);
-
-  function testbutton() {
-    console.log("this is orderid", orders[0].id);
-  }
 
   //Function to delete a event row.
   function deleteUserEvent(id) {
@@ -74,38 +104,10 @@ function Events() {
 
   // Dispatch for the events
   const eventHandleSubmit = () => {
+    checkEventLimit();
     setNumEvents(numEvents + 1);
     console.log("this is ID", orders.id);
 
-    //Update the total for orders:
-    const editOrderObj = {
-      first_name: orders[0].first_name,
-      last_name: orders[0].last_name,
-      address: orders[0].address,
-      city: orders[0].city,
-      state: orders[0].state,
-      zip: orders[0].zip,
-      phone: orders[0].phone,
-      email: orders[0].email,
-      total: Number(total),
-      payment_type: orders[0].payment_type,
-      is_payed: false,
-      is_delivered: false,
-      user_id: user.id,
-      id: orders[0].id,
-    };
-
-    dispatch({ type: "EDIT_ORDER", payload: editOrderObj });
-
-    dispatch({
-      type: "ADD_PRODUCT",
-      payload: {
-        name,
-        price,
-        calendar_id: selectCalendarId,
-        quantity,
-      },
-    });
 
     dispatch({
       type: `USER_ADD_EVENT`,
@@ -118,16 +120,7 @@ function Events() {
       },
     });
 
-    dispatch({
-      type: "ADD_ORDER_ITEMS",
-      payload: {
-        price: total,
-        product_id: selectedProductId,
-        quantity,
-        order_id: orders[0].id,
-        user_id: user.id,
-      },
-    });
+
   };
   const handleAddEvent = () => {
     setNumEvents(numEvents + 1);
@@ -141,7 +134,26 @@ function Events() {
     setTotal(total + 15);
   };
 
+  // This will update the total and push the user to the next page.
   const handleCheckout = () => {
+    const editOrderObj = {
+      first_name: orders[0].first_name,
+      last_name: orders[0].last_name,
+      address: orders[0].address,
+      city: orders[0].city,
+      state: orders[0].state,
+      zip: orders[0].zip,
+      phone: orders[0].phone,
+      email: orders[0].email,
+      total: total,
+      payment_type: orders[0].payment_type,
+      is_payed: false,
+      is_delivered: false,
+      user_id: user.id,
+      id: orders[0].id,
+    };
+
+    dispatch({ type: "EDIT_ORDER", payload: editOrderObj });
     history.push("/customerInvoice");
   };
   function formatDate(dateString) {
@@ -155,131 +167,204 @@ function Events() {
     return formatter.format(date);
   }
 
+  // DELETE CAL AND EXTRA EVENTS (orderItems)
+  function deleteOrderItem(id) {
+    dispatch({
+      type: "DELETE_ORDER_ITEMS",
+      payload: id,
+    });
+    setQuantity(1);
+  }
+  // add cal and extra events (orderItems)
+  function addItems(product_id, price) {
+    const orderItems = {
+      quantity: quantity,
+      price,
+      product_id,
+      order_id: orders[0].id,
+      user_id: Number(user.id),
+    };
+
+    dispatch({ type: "ADD_ORDER_ITEMS", payload: orderItems });
+  }
+  // UPDATE CAL AND EXTRA EVENTS (orderItems)
+  function updateItem(id, itemQuantity) {
+    setItemEditMode(true);
+    setItemEditId(id);
+    setQuantity(itemQuantity);
+  }
+  function saveUpdate(product_id, price) {
+    console.log(product_id, price);
+    const orderItems = {
+      id: itemEditId,
+      quantity: quantity,
+      price,
+      product_id,
+      order_id: Number(orders[0].id),
+      user_id: Number(user.id),
+    };
+
+    dispatch({ type: "EDIT_ORDER_ITEMS", payload: orderItems });
+    setItemEditMode(false);
+  }
+
+  // Function to alert user they ran out of free events.
+  const checkEventLimit = () => {
+    if (numEvents === 4) {
+      alert('You have reached the limit of 5 free events. You will need to purchase additional events beyond this limit.');
+    }
+  };
+
   return (
     <>
+      
+      <div className="extra-calendar-container">
+        <header className="add-items">
+          <h2>Add Items</h2>
+        </header>
+        {products.map((product) => (
+          <>
+            {!orderItems.some((item) => item.product_id === product.id) && (
+              <div key={product.id} className="items-form">
+                <h3>
+                  {product.name}: {product.price}
+                </h3>
+                <Button onClick={() => addItems(product.id, product.price)}>
+                  ADD
+                </Button>
+              </div>
+            )}
+          </>
+        ))}
+        {orderItems.map((item) => (
+          <div className="items-cart">
+            {itemEditMode && item.id === itemEditId ? (
+              <div key={item.id} className="item">
+                <h3>
+                  {item.name} {item.price}
+                </h3>
+                <TextField
+                  sx={{
+                    width: 50,
+                  }}
+                  label="Quantity"
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+                <Button onClick={() => saveUpdate(item.product_id, item.price)}>
+                  Update
+                </Button>
+              </div>
+            ) : (
+              <div key={item.id} className="item">
+                <h3>
+                  {item.name} {item.price}
+                </h3>
+                <TextField
+                  sx={{
+                    width: 50,
+                  }}
+                  label="Quantity"
+                  type="text"
+                  value={item.quantity}
+                  onClick={() => updateItem(item.id, item.quantity)}
+                />
+                <Button onClick={() => deleteOrderItem(item.id)}>Remove</Button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
       <CardContent>
-        <TextField
-          label="Event for"
-          type="text"
-          name="Event for"
-          value={eventFor}
-          required
-          onChange={(event) => setEventFor(event.target.value)}
-          sx={{ marginBottom: "10px", width: "50%" }}
-        />
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid item xs={12} sm={6} md={2}>
+            <TextField
+              label="Event for"
+              type="text"
+              name="Event for"
+              value={eventFor}
+              required
+              onChange={(event) => setEventFor(event.target.value)}
+              sx={{ marginBottom: "10px", width: "100%" }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <TextField
+              sx={{ width: "100%" }}
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <FormControl sx={{ m: 1, width: "100%" }}>
+              <InputLabel htmlFor="selectCalendarId">
+                {" "}
+                Calendar Year{" "}
+              </InputLabel>
+              <Select
+                className="calendar-dropdown"
+                name="selectedCaledarId"
+                onChange={(event) => setSelectedCalendarID(event.target.value)}
+                id="calendar"
+                value={selectCalendarId}
+              >
+                {calendars.map((calendar) => (
+                  <MenuItem value={calendar.id} key={calendar.id}>
+                    {calendar.calendar_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <FormControl sx={{ m: 1, width: "100%" }}>
+              <InputLabel id="event-label"> Event Options</InputLabel>
+              <Select
+                sx={{ width: "100%" }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Event Type" />
+                )}
+                name="event_type"
+                id="eType"
+                value={eventOption}
+                onChange={(e) => setEventOption(e.target.value)}
+              >
+                <MenuItem value="0">Select Event Type</MenuItem>
+                <MenuItem value="birthday">Birthday</MenuItem>
+                <MenuItem value="anniversary">Anniversary</MenuItem>
+                <MenuItem value="memorial">Memorial</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Button onClick={eventHandleSubmit}> Submit Event </Button>
+          </Grid>
+        </Grid>
       </CardContent>
-      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker value={date} onChange={(date) => setDate(date)} />
-            </LocalizationProvider> */}
-      <TextField
-        sx={{
-          width: 150,
-        }}
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel htmlFor="selectCalendarId"> Calendar Year </InputLabel>
-        <Select
-          className="calendar-dropdown"
-          name="selectedCaledarId"
-          onChange={(event) => setSelectedCalendarID(event.target.value)}
-          id="calendar"
-          value={selectCalendarId}
-        >
-          {calendars.map((calendar) => (
-            <MenuItem value={calendar.id} key={calendar.id}>
-              {calendar.calendar_name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel htmlFor="numCalendars">Number of Calendars</InputLabel>
-        <Input
-          id="numCalendars"
-          type="number"
-          value={numCalendars}
-          onChange={(event) => setNumCalendars(Number(event.target.value))}
-        />
-      </FormControl>
-
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="event-label"> Event Options</InputLabel>
-
-        <Select
-          sx={{
-            width: 150,
-          }}
-          renderInput={(params) => <TextField {...params} label="Event Type" />}
-          name="event_type"
-          id="eType"
-          value={eventOption}
-          onChange={(e) => setEventOption(e.target.value)}
-        >
-          <MenuItem value="0">Select Event Type</MenuItem>
-          <MenuItem value="birthday">Birthday</MenuItem>
-          <MenuItem value="anniversary">Anniversary</MenuItem>
-          <MenuItem value="memorial">Memorial</MenuItem>
-        </Select>
-      </FormControl>
-
-      <FormControl>
-        <InputLabel htmlFor="selectCalendarId">Select Item</InputLabel>
-        <Select
-          className="product-dropdown"
-          name="selectedProduct"
-          onChange={(event) => setSelectedProductId(event.target.value)}
-          id="product"
-          value={selectedProductId}
-        >
-          {products.map((product) => (
-            <MenuItem value={product.id} key={product.id}>
-              {product.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel htmlFor="numCalendars">Number of Events</InputLabel>
-        <Input
-          id="numEvents"
-          type="number"
-          value={numEvents}
-          onChange={(event) => setNumEvents(Number(event.target.value))}
-        />
-      </FormControl>
-
-      <br />
-      <br />
-
-      <Button onClick={eventHandleSubmit}> Submit Event </Button>
       <Button onClick={handleCheckout}> Check Out </Button>
-
-      <h4>Total: {total}</h4>
-      {numEvents >= 5 ? (
-        <p>
-          You've reached the maximum amount of events. An extra event will cost
-          $0.50.
-        </p>
-      ) : (
-        <p>You have {5 - numEvents} events left.</p>
-      )}
+      <h2>
+        <NumericFormat
+          className="subtotal"
+          value={total}
+          decimalScale={4}
+          prefix={"$"}
+          readOnly
+        />
+      </h2>
 
       {products.map((product) => (
         <div key={product.id}>
           {product.name === "Extra Event" && (
-            <Button onClick={handleAddEvent}>Add Event</Button>
+            <Button onClick={handleAddEvent}></Button>
           )}
           {product.name === "Calendar" && (
             <Button
               onClick={() => handleAddCalendar(product.id, product.price)}
             >
-              Add Calender
+              
             </Button>
           )}
         </div>

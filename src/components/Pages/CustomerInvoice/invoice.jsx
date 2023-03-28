@@ -12,7 +12,7 @@ import {
   Paper,
   TextField,
   MenuItem,
-  Select
+  Select,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import eventReducer from "../../../redux/reducers/event.reducer";
@@ -105,16 +105,15 @@ export default function Invoice() {
   }
 
   function formatDate(dateString) {
-  const date = new Date(dateString);
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: '2-digit',
-  });
+    const date = new Date(dateString);
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    });
 
-  return formatter.format(date);
-}
-
+    return formatter.format(date);
+  }
 
   return (
     <>
@@ -185,21 +184,20 @@ export default function Invoice() {
               </>
             ) : (
               <Button
-              onClick={() => {
-                setEditingContactInfo(true);
-                setEditFirstName(order.first_name);
-                setEditLastName(order.last_name);
-                setEditAddress(order.address);
-                setEditCity(order.city);
-                setEditState(order.state);
-                setEditZip(order.zip);
-                setEditPhone(order.phone);
-                setEditEmail(order.email);
-              }}
-            >
-              Edit
-            </Button>
-            
+                onClick={() => {
+                  setEditingContactInfo(true);
+                  setEditFirstName(order.first_name);
+                  setEditLastName(order.last_name);
+                  setEditAddress(order.address);
+                  setEditCity(order.city);
+                  setEditState(order.state);
+                  setEditZip(order.zip);
+                  setEditPhone(order.phone);
+                  setEditEmail(order.email);
+                }}
+              >
+                Edit
+              </Button>
             )}
           </section>
         ))}
@@ -227,7 +225,7 @@ export default function Invoice() {
                         onChange={(e) => setEditEventDate(e.target.value)}
                       />
                     ) : (
-                      formatDate(event.event_date) 
+                      formatDate(event.event_date)
                     )}
                   </TableCell>
                   <TableCell>
@@ -378,9 +376,8 @@ export default function Invoice() {
           ))}
         </TableBody>
 
-        <Notification/>
-        <ConfirmDialog/>
-
+        <Notification />
+        <ConfirmDialog />
       </div>
     </>
   );

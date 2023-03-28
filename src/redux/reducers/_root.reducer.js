@@ -1,4 +1,3 @@
-
 import { combineReducers } from "redux";
 import errors from "./errors.reducer";
 import user from "./user.reducer";
@@ -8,8 +7,7 @@ import product from "./product.reducer";
 import calendar from "./calendar.reducer";
 import orderItemsReducer from "./orderitems.reducer";
 
-import order from './order.reducer';
-
+import order from "./order.reducer";
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -20,7 +18,6 @@ import order from './order.reducer';
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
 
-
   adminReducer,
   user,
   order, // will have an id and username if someone is logged in
@@ -28,8 +25,6 @@ const rootReducer = combineReducers({
   product,
   calendar,
   orderItemsReducer,
-
-
 });
 
 export default rootReducer;
