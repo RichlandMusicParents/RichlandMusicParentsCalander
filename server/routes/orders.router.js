@@ -44,6 +44,32 @@ FROM
   }
 });
 
+router.get(
+  "/specific-order-items-by-order/:id",
+  rejectUnauthenticated,
+  (req, res) => {
+    const text = `SELECT
+	SELECT
+	*, 
+	(SELECT 
+	"product"."name" FROM "product" WHERE "product".id = "order_items"."product_id" )
+FROM
+	order_items
+WHERE
+	order_id = $1;
+`;
+    pool
+      .query(text, [req.params.id])
+      .then((results) => {
+        res.send(results.rows);
+      })
+      .catch((err) => {
+        console.log("Error getting specific order items", err);
+        res.sendStatus(500);
+      });
+  }
+);
+
 router.get("/specific-order-items/:id", rejectUnauthenticated, (req, res) => {
   const text = `SELECT
 	*, 
@@ -129,7 +155,7 @@ router.get("/specific-orders/:id", rejectUnauthenticated, (req, res) => {
 			json_agg("event".*) AS "order_events"
 		FROM
 			"event"
-		WHER
+		WHERE
 			"event".user_id = "orders".user_id), (
 		SELECT
 			json_agg("order_items".*) AS "order_items"

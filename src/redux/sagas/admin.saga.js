@@ -97,6 +97,9 @@ function* getAllUsers() {
 function* adminEditUser(action) {
   try {
     yield axios.put(`/api/user/admin-update-user/${action.payload.id}`, {
+      username: action.payload.username,
+      first_name: action.payload.first_name,
+      last_name: action.payload.last_name,
       is_admin: action.payload.is_admin,
     });
   } catch (err) {
@@ -165,6 +168,24 @@ function* adminGetSpecificOrderItems(action) {
   }
 }
 
+function* adminGetSpecificOrderItemsByOrder(action) {
+  try {
+    console.log(action.payload);
+    const response = yield axios.get(
+      `/api/orders/specific-order-items-by-order/${action.payload}`
+    );
+    yield put({
+      type: "ADMIN_SET_ORDER_ITEMS_BY_ORDER",
+      payload: response.data,
+    });
+  } catch (err) {
+    console.log(
+      "error in GETting the specific order items for this order",
+      err
+    );
+  }
+}
+
 function* editOrderItem(action) {
   const orderObj = {
     quantity: action.payload.quantity,
@@ -209,7 +230,7 @@ function* adminDeleteOrderItem(action) {
 function* adminGetSpecificOrder(action) {
   try {
     const response = yield axios.get(
-      `/api/orders/new-order/${action.payload.id}`
+      `/api/orders/specific-orders/${action.payload.id}`
     );
     yield put({ type: "ADMIN_SET_SPECIFIC_ORDER", payload: response.data });
   } catch (err) {
@@ -290,6 +311,10 @@ function* adminSagas() {
   yield takeLatest(
     "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
     adminGetSpecificOrderItems
+  );
+  yield takeLatest(
+    "ADMIN_GET_ORDER_ITEMS_BY_ORDER",
+    adminGetSpecificOrderItemsByOrder
   );
   yield takeLatest("ADMIN_DELETE_ORDER_ITEM", adminDeleteOrderItem);
   // USER

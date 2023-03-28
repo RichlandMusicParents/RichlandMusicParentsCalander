@@ -3,6 +3,10 @@
   --clr-secondary: #ffcf5f;
 }
 
+body {
+  box-sizing: border-box;
+}
+
 .events-container {
   background-color: grey;
   border: 1px solid gray;
@@ -119,4 +123,137 @@ li {
 
 .admin-search-user {
   margin-inline: 1rem;
+}
+
+.user-card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 240px;
+  height: 50px;
+  margin: 8px;
+}
+
+.user-card-title {
+  font-size: 15px;
+  text-decoration: 2px solid black underline;
+}
+
+.order-list-section {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 0;
+}
+
+.admin-user-orders {
+  width: 90%;
+  height: 30rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.user-card-info {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.order-info-container {
+  width: 100%;
+  height: 80%;
+  display: flex;
+}
+
+.order-info-section {
+  width: 33%;
+  height: 65%;
+  /* border: 1px solid black; */
+}
+
+.order-info-section > p {
+  font-size: 13px;
+  margin: 10px;
+}
+
+.order-info-section-header {
+  font-size: 15px;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+.order-info-section-header > * {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.user-card-text > p {
+  padding: 0;
+  margin: 0;
+}
+
+.admin-update-user-permission {
+  display: flex;
+  flex-direction: column;
+  margin-block: 2rem;
+  margin-inline: 1rem;
+  border-radius: 10px;
+  width: 50rem;
+  height: 20rem;
+  justify-content: center;
+  align-items: center;
+  -webkit-box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
+  -moz-box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
+  box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
+}
+
+.admin-update-permissions-header {
+  height: 20%;
+  background-color: #77afdb;
+  width: 100%;
+  text-align: center;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.user-order-card-header {
+  height: 20%;
+  background-color: #77afdb;
+  width: 100%;
+  text-align: center;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.update-user-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  /* align-items: center; */
+  justify-content: center;
+  width: 100%;
+  height: 80%;
+}
+
+.user-order-card {
+  display: flex;
+  flex-direction: column;
+  margin-block: 2rem;
+  margin-inline: 1rem;
+  border-radius: 10px;
+  width: 50rem;
+  height: 20rem;
+  justify-content: center;
+  align-items: center;
+  -webkit-box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
+  -moz-box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
+  box-shadow: 0px 6px 9px 2px rgba(0, 0, 0, 0.14);
+}
+
+.admin-user-card-form {
+  display: flex;
+  justify-content: center;
 }

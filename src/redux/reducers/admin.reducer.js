@@ -55,6 +55,15 @@ const specificOrderItems = (state = [], action) => {
   }
 };
 
+const specificOrderItemsByOrder = (state = [], action) => {
+  switch (action.type) {
+    case "ADMIN_SET_ORDER_ITEMS-BY_ORDER":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const specificOrder = (state = [], action) => {
   switch (action.type) {
     case "ADMIN_SET_SPECIFIC_ORDER":
@@ -72,4 +81,5 @@ export default combineReducers({
   specificUser,
   specificOrderItems,
   specificOrder,
+  specificOrderItemsByOrder,
 });

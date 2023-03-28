@@ -1,3 +1,4 @@
+const { isDate } = require("date-fns");
 const express = require("express");
 const {
   rejectUnauthenticated,
@@ -156,14 +157,15 @@ WHERE "id" = $6
 });
 
 router.put("/admin-update-user/:id", rejectUnauthenticated, (req, res) => {
+  const { username, first_name, last_name, is_admin } = req.body;
   const text = `
   UPDATE "user" 
-  SET "is_admin" = $1
-  WHERE "id"  = $2
+  SET "username" = $1, "first_name" = $2, "last_name" = $3, "is_admin" = $4
+  WHERE "id"  = $5
   `;
 
   pool
-    .query(text, [req.body.is_admin, req.params.id])
+    .query(text, [username, first_name, last_name, is_admin, req.params.id])
     .then((result) => {
       res.sendStatus(200);
     })

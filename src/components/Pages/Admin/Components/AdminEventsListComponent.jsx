@@ -20,7 +20,6 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
-import { useParams } from "react-router-dom";
 
 export default function AdminEventsListComponent() {
   const events = useSelector((store) => store.adminReducer.allEvents);
@@ -107,7 +106,7 @@ export default function AdminEventsListComponent() {
       <section className="events-list-table">
         <ThemeProvider theme={richlandTheme}>
           <Paper sx={{ width: 1200, marginInline: "auto" }}>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ height: 448 }}>
               <Table>
                 <TableHead>
                   <TableRow sx={{ height: 40 }}>
@@ -167,7 +166,7 @@ export default function AdminEventsListComponent() {
                         {editMode && editId === event.id ? (
                           <>
                             <TableCell
-                              sx={{ height: 40, width: 200, fontSize: 15 }}
+                              sx={{ height: 40, width: 150, fontSize: 15 }}
                             >
                               <Select
                                 sx={{
@@ -239,7 +238,7 @@ export default function AdminEventsListComponent() {
                               />
                             </TableCell>
                             <TableCell
-                              sx={{ height: 40, width: 200, fontSize: 15 }}
+                              sx={{ height: 40, width: 150, fontSize: 15 }}
                             >
                               <Autocomplete
                                 sx={{
