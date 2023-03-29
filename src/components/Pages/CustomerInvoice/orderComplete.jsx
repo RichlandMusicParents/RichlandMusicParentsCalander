@@ -53,8 +53,7 @@ export default function OrderCompleted() {
         justifyContent="center"
         mt={2}
       >
-
-        <h2 style={{ color: "red"}}>Your order is confirmed!</h2>
+        <h2 style={{ color: "red" }}>Your order is confirmed!</h2>
         <Typography variant="h4" component="h1" gutterBottom>
           Contact Information
         </Typography>
@@ -114,7 +113,7 @@ export default function OrderCompleted() {
                     <TableCell>{orderInfo.state}</TableCell>
                     <TableCell>{orderInfo.zip}</TableCell>
                     <TableCell>{orderInfo.payment_type}</TableCell>
-                    <TableCell>{orderInfo.total}</TableCell>
+                    <TableCell>${orderInfo.total}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

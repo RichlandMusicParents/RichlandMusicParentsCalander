@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Snackbar from "@mui/material/Snackbar";
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 import {
   Table,
@@ -13,6 +20,7 @@ import {
   TextField,
   MenuItem,
   Select,
+  Alert,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import eventReducer from "../../../redux/reducers/event.reducer";
@@ -54,6 +62,9 @@ export default function Invoice() {
   const [editingOrderId, setEditingOrderId] = useState(null);
   const [editOrderInfo, setEditOrderInfo] = useState({});
 
+  // alert state
+  const [openSnackbar, setOpenSnackbar] = useState(true);
+
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
     dispatch({ type: "GET_NEW_ORDER" });
@@ -64,9 +75,9 @@ export default function Invoice() {
     dispatch({ type: "USER_DELETE_EVENT", payload: id });
   }
   //Function that pushes user to to the order complete page.
-  function nextPage() {
-    history.push(`/Complete`);
-  }
+  // function nextPage() {
+  //   history.push(`/Complete`);
+  // }
 
   //Edit events.
   function saveEditEvent(id) {
@@ -117,7 +128,7 @@ export default function Invoice() {
 
   return (
     <>
-      <h1>Contact information</h1>
+      <h2>Contact information</h2>
       <div className="contactInfo">
         {orders.map((order) => (
           <section key={order.id}>
@@ -170,20 +181,28 @@ export default function Invoice() {
             </h2>
             {editingContactInfo ? (
               <>
-                <Button
+                <IconButton
                   onClick={() => {
                     saveEditOrder(order.id);
                     setEditingContactInfo(false);
                   }}
                 >
-                  Save
-                </Button>
-                <Button onClick={() => setEditingContactInfo(false)}>
+                  <CheckIcon color="success" fontSize="large" />
+                </IconButton>
+                <Button
+                  onClick={() => setEditingContactInfo(false)}
+                  color="error"
+                  fontSize="large"
+                  variant="contained"
+                >
                   Cancel
                 </Button>
               </>
             ) : (
               <Button
+                fontSize="large"
+                color="success"
+                variant="contained"
                 onClick={() => {
                   setEditingContactInfo(true);
                   setEditFirstName(order.first_name);
@@ -260,15 +279,23 @@ export default function Invoice() {
                   <TableCell>
                     {editingEventId === event.id ? (
                       <>
-                        <Button onClick={() => saveEditEvent(event.id)}>
-                          Save
-                        </Button>
-                        <Button onClick={() => setEditingEventId(null)}>
+                        <IconButton onClick={() => saveEditEvent(event.id)}>
+                          <CheckIcon color="success" fontSize="large" />
+                        </IconButton>
+                        <Button
+                          color="error"
+                          fontSize="large"
+                          variant="contained"
+                          onClick={() => setEditingEventId(null)}
+                        >
                           Cancel
                         </Button>
                       </>
                     ) : (
                       <Button
+                        fontSize="large"
+                        color="success"
+                        variant="contained"
                         onClick={() => {
                           setEditingEventId(event.id);
                           setEditEventType(event.event_type);
@@ -281,9 +308,12 @@ export default function Invoice() {
                     )}
                   </TableCell>
                   <TableCell>
-                    <Button onClick={() => deleteUserEvent(event.id)}>
-                      Delete
-                    </Button>
+                    <IconButton
+                      onClick={() => deleteUserEvent(event.id)}
+                      color="error"
+                    >
+                      <DeleteIcon fontSize="large" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -294,6 +324,15 @@ export default function Invoice() {
 
       <div className="orderDetails">
         <TableBody>
+          <h1>Order Information</h1>
+          <TableRow>
+            <TableCell>Address</TableCell>
+            <TableCell>City</TableCell>
+            <TableCell>State</TableCell>
+            <TableCell>Zipcode</TableCell>
+            <TableCell>Payment type</TableCell>
+            <TableCell>Total</TableCell>
+          </TableRow>
           {orders.map((orderInfo) => (
             <TableRow key={orderInfo.id}>
               {["address", "city", "state", "zip"].map((field) => (
@@ -340,19 +379,31 @@ export default function Invoice() {
                   orderInfo.payment_type
                 )}
               </TableCell>
-              <TableCell>{orderInfo.total}</TableCell>
+              <TableCell>${orderInfo.total}</TableCell>
               <TableCell>
                 {editingOrderId === orderInfo.id ? (
                   <>
-                    <Button onClick={() => saveEditOrder(orderInfo.id)}>
-                      Save
-                    </Button>
-                    <Button onClick={() => setEditingOrderId(null)}>
+                    <IconButton
+                      color="success"
+                      fontSize="large"
+                      onClick={() => saveEditOrder(orderInfo.id)}
+                    >
+                      <CheckIcon />
+                    </IconButton>
+                    <Button
+                      color="error"
+                      fontSize="large"
+                      variant="contained"
+                      onClick={() => setEditingOrderId(null)}
+                    >
                       Cancel
                     </Button>
                   </>
                 ) : (
                   <Button
+                    fontSize="large"
+                    color="success"
+                    variant="contained"
                     onClick={() => {
                       setEditingOrderId(orderInfo.id);
                       setEditFirstName(orderInfo.first_name);
@@ -379,6 +430,26 @@ export default function Invoice() {
         <Notification />
         <ConfirmDialog />
       </div>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={9000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="info"
+          sx={{
+            fontSize: "1.5rem",
+            backgroundColor: "black",
+            color: "yellow",
+            fontWeight: "bold",
+          }}
+        >
+          Please review and verify the information provided below.
+        </Alert>
+      </Snackbar>
     </>
   );
 }
