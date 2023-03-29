@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux"; 
+import { useSelector } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
-
-
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -64,9 +62,8 @@ export default function Invoice() {
   const [editingOrderId, setEditingOrderId] = useState(null);
   const [editOrderInfo, setEditOrderInfo] = useState({});
 
-  // alert state 
+  // alert state
   const [openSnackbar, setOpenSnackbar] = useState(true);
-
 
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
@@ -131,7 +128,6 @@ export default function Invoice() {
 
   return (
     <>
-
       <h2>Contact information</h2>
       <div className="contactInfo">
         {orders.map((order) => (
@@ -193,14 +189,20 @@ export default function Invoice() {
                 >
                   <CheckIcon color="success" fontSize="large" />
                 </IconButton>
-                <Button onClick={() => setEditingContactInfo(false)} color="error" fontSize="large" variant="contained">
+                <Button
+                  onClick={() => setEditingContactInfo(false)}
+                  color="error"
+                  fontSize="large"
+                  variant="contained"
+                >
                   Cancel
                 </Button>
               </>
             ) : (
-              <Button  fontSize="large"
-              color="success"
-              variant="contained"
+              <Button
+                fontSize="large"
+                color="success"
+                variant="contained"
                 onClick={() => {
                   setEditingContactInfo(true);
                   setEditFirstName(order.first_name);
@@ -278,16 +280,22 @@ export default function Invoice() {
                     {editingEventId === event.id ? (
                       <>
                         <IconButton onClick={() => saveEditEvent(event.id)}>
-                          <CheckIcon color="success" fontSize="large"/>
+                          <CheckIcon color="success" fontSize="large" />
                         </IconButton>
-                        <Button color="error" fontSize="large" variant="contained" onClick={() => setEditingEventId(null)}>
+                        <Button
+                          color="error"
+                          fontSize="large"
+                          variant="contained"
+                          onClick={() => setEditingEventId(null)}
+                        >
                           Cancel
                         </Button>
                       </>
                     ) : (
-                      <Button fontSize="large"
-                      color="success"
-                      variant="contained"
+                      <Button
+                        fontSize="large"
+                        color="success"
+                        variant="contained"
                         onClick={() => {
                           setEditingEventId(event.id);
                           setEditEventType(event.event_type);
@@ -300,12 +308,10 @@ export default function Invoice() {
                     )}
                   </TableCell>
                   <TableCell>
-                    <IconButton 
+                    <IconButton
                       onClick={() => deleteUserEvent(event.id)}
                       color="error"
-                      
                     >
-                      
                       <DeleteIcon fontSize="large" />
                     </IconButton>
                   </TableCell>
@@ -373,21 +379,31 @@ export default function Invoice() {
                   orderInfo.payment_type
                 )}
               </TableCell>
-              <TableCell>{orderInfo.total}</TableCell>
+              <TableCell>${orderInfo.total}</TableCell>
               <TableCell>
                 {editingOrderId === orderInfo.id ? (
                   <>
-                    <IconButton color="success" fontSize="large" onClick={() => saveEditOrder(orderInfo.id)}>
-                      <CheckIcon/>
+                    <IconButton
+                      color="success"
+                      fontSize="large"
+                      onClick={() => saveEditOrder(orderInfo.id)}
+                    >
+                      <CheckIcon />
                     </IconButton>
-                    <Button color="error" fontSize="large" variant="contained" onClick={() => setEditingOrderId(null)}>
+                    <Button
+                      color="error"
+                      fontSize="large"
+                      variant="contained"
+                      onClick={() => setEditingOrderId(null)}
+                    >
                       Cancel
                     </Button>
                   </>
                 ) : (
-                  <Button fontSize="large"
-                  color="success"
-                  variant="contained"
+                  <Button
+                    fontSize="large"
+                    color="success"
+                    variant="contained"
                     onClick={() => {
                       setEditingOrderId(orderInfo.id);
                       setEditFirstName(orderInfo.first_name);
@@ -403,7 +419,7 @@ export default function Invoice() {
                       });
                     }}
                   >
-                      Edit
+                    Edit
                   </Button>
                 )}
               </TableCell>
@@ -416,26 +432,24 @@ export default function Invoice() {
       </div>
 
       <Snackbar
-  open={openSnackbar}
-  autoHideDuration={9000}
-  onClose={() => setOpenSnackbar(false)}
-  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
->
-  <Alert
-    onClose={() => setOpenSnackbar(false)}
-    severity="info"
-    sx={{
-      fontSize: "1.5rem",
-      backgroundColor: "black",
-      color: "yellow",
-      fontWeight: "bold",
-    }}
-  >
-    Please review and verify the information provided below.
-  </Alert>
-</Snackbar>
-
-
+        open={openSnackbar}
+        autoHideDuration={9000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="info"
+          sx={{
+            fontSize: "1.5rem",
+            backgroundColor: "black",
+            color: "yellow",
+            fontWeight: "bold",
+          }}
+        >
+          Please review and verify the information provided below.
+        </Alert>
+      </Snackbar>
     </>
   );
 }
