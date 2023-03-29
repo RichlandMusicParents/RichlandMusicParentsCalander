@@ -13,16 +13,29 @@
   margin-bottom: 2rem;
 }
 
+
 .logo h1 {
   color: #77afdb;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 700;
+  text-shadow:
+  -2px -2px 0 #000,
+  2px -2px 0 #000,
+  -2px 2px 0 #000,
+  2px 2px 0 #000;
+
+}
+.logo:hover {
+  color: #ffcf5f;
+
 }
 
 .splash-text {
   font-size: 1.2rem;
   margin-bottom: 2rem;
 }
+
+
 
 @media (min-width: 768px) {
   .splash-container {
