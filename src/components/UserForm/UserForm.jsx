@@ -15,6 +15,7 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 import UserPage from "../Pages/UserPage/UserPage";
+import "./UserForm.css"
 
 function UserForm() {
   const history = useHistory();
@@ -92,21 +93,29 @@ function UserForm() {
     
     <form
     noValidate autoComplete="off"
+    className="form-container"
     
     >
           <ThemeProvider theme={richlandTheme}>
-
+<Card
+className="form-card"
+ sx={{
+  marginBottom:"50px",
+  borderRadius:"25px"
+}}>
 
       <Grid container spacing={3}>
         <Grid item xs={12}>
-            <h1>Richland Music Parents</h1>
+            <h1 className="form-title">Richland Music Parents</h1>
             <UserPage />
-            <h2>Add your information</h2>
+            <h2>Personal Information</h2>
+            <hr />
          
             </Grid>
             <Grid item xs={6}>
             <CardContent>
               <TextField
+              className="form-input"
                 label="First Name"
                 type="text"
                 name="firstname"
@@ -123,6 +132,7 @@ function UserForm() {
             <Grid item xs={6}> 
             <CardContent>
               <TextField
+              className="form-input"
                 label="Last Name"
                 type="text"
                 name="lastname"
@@ -135,11 +145,18 @@ function UserForm() {
               />
             </CardContent>
             </Grid >
+
+            
           
             <Grid item xs={12} > 
             <CardContent>
+            <h2>Order Information</h2>
+            <hr/>
+            <br />
+            <br />
           
               <TextField
+              className="form-input"
                 label="Address"
                 type="text"
                 name="address"
@@ -154,7 +171,9 @@ function UserForm() {
             </Grid > 
             <Grid item xs={6} > 
             <CardContent>
+              
               <TextField
+              className="form-input"
                 label="City"
                 type="text"
                 name="city"
@@ -169,6 +188,7 @@ function UserForm() {
             <Grid item xs={6} > 
             <CardContent>
               <TextField
+              className="form-input"
                 label="State"
                 type="text"
                 name="state"
@@ -183,6 +203,7 @@ function UserForm() {
             <Grid item xs={6} > 
             <CardContent>
               <TextField
+              className="form-input"
                 label="Zip Code"
                 type="number"
                 name="zip"
@@ -197,6 +218,7 @@ function UserForm() {
             <Grid item xs={6} > 
             <CardContent>
               <TextField
+              className="form-input"
                 label="Phone Number"
                 type="text"
                 name="phone"
@@ -211,6 +233,7 @@ function UserForm() {
             <Grid item xs={6} > 
             <CardContent>
               <TextField
+              className="form-input"
                 label="Email"
                 type="text"
                 name="email"
@@ -224,7 +247,9 @@ function UserForm() {
               </CardContent>
             </Grid> 
             <Grid item xs={6} > 
-            <FormControl sx={{ m: 1, width: "100%" }}>
+            <FormControl 
+            className="form-input"
+            sx={{ m: 1, width: "100%" }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
               <Select
@@ -244,7 +269,8 @@ function UserForm() {
             color="primary"
             variant="contained"
             sx={{
-              width:"60%",
+              marginBottom:"50px",
+              width:"25%",
               backgroundColor: richlandTheme.palette.primary.main,
               color: "white",
               fontSize: "1.2rem",
@@ -267,6 +293,7 @@ function UserForm() {
            
     
       </Grid>
+      </Card>
       </ThemeProvider>
 
     </form>
