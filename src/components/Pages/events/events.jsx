@@ -108,7 +108,6 @@ function Events() {
     setNumEvents(numEvents + 1);
     console.log("this is ID", orders.id);
 
-
     dispatch({
       type: `USER_ADD_EVENT`,
       payload: {
@@ -119,23 +118,24 @@ function Events() {
         calendar_id: selectCalendarId,
       },
     });
+
     setEventFor("");
     setDate("");
     setEventOption("0");
-    
-
 
   };
   const handleAddEvent = () => {
     setNumEvents(numEvents + 1);
     setQuantity(quantity + 1);
     setTotal(total + (numEvents > 4 ? 0.5 : 0));
+    setQuantity(1);
   };
 
   const handleAddCalendar = () => {
     setNumCalendars(numCalendars + 1);
     setQuantity(quantity + 1);
     setTotal(total + 15);
+    setQuantity(1);
   };
 
   // This will update the total and push the user to the next page.
@@ -210,18 +210,20 @@ function Events() {
 
     dispatch({ type: "EDIT_ORDER_ITEMS", payload: orderItems });
     setItemEditMode(false);
+    setQuantity(1);
   }
 
   // Function to alert user they ran out of free events.
   const checkEventLimit = () => {
     if (numEvents === 4) {
-      alert('You have reached the limit of 5 free events. You will need to purchase additional events beyond this limit.');
+      alert(
+        "You have reached the limit of 5 free events. You will need to purchase additional events beyond this limit."
+      );
     }
   };
 
   return (
     <>
-      
       <div className="extra-calendar-container">
         <header className="add-items">
           <h2>Add Items</h2>
@@ -367,9 +369,7 @@ function Events() {
           {product.name === "Calendar" && (
             <Button
               onClick={() => handleAddCalendar(product.id, product.price)}
-            >
-              
-            </Button>
+            ></Button>
           )}
         </div>
       ))}
