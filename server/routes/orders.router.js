@@ -78,7 +78,10 @@ router.get("/specific-order-items/:id", rejectUnauthenticated, (req, res) => {
 FROM
 	order_items
 WHERE
-	user_id = $1;
+	user_id = $1
+ORDER BY
+  "order_items"."product_id"
+ASC;
 `;
   pool
     .query(text, [req.params.id])

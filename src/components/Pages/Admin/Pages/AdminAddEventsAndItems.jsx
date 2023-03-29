@@ -16,6 +16,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { NumericFormat } from "react-number-format";
+
+import { GoPlus, GoDash } from "react-icons/go";
+import {
+  BsCartCheckFill,
+  BsXSquareFill,
+  BsCheck2,
+  BsCart2,
+} from "react-icons/bs";
 import "../AdminAddEvents.css";
 
 export default function AdminAddEvents() {
@@ -99,15 +107,31 @@ export default function AdminAddEvents() {
       order_id: Number(orderId),
       user_id: Number(userId.id),
     };
-
-    dispatch({ type: "ADMIN_EDIT_ORDER_ITEMS", payload: orderItems });
-    setItemEditMode(false);
+    if (quantity <= 0) {
+      deleteOrderItem(itemEditId);
+      setItemEditMode(false);
+      setQuantity(1);
+    } else {
+      dispatch({ type: "ADMIN_EDIT_ORDER_ITEMS", payload: orderItems });
+      setItemEditMode(false);
+      setQuantity(1);
+    }
   }
 
-  function updateItem(id, itemQuantity) {
+  function updateItemAdd(id, itemQuantity) {
     setItemEditMode(true);
     setItemEditId(id);
-    setQuantity(itemQuantity);
+    setQuantity(itemQuantity + 1);
+  }
+
+  function updateItemMinus(id, itemQuantity) {
+    setItemEditMode(true);
+    setItemEditId(id);
+    if (itemQuantity === 1) {
+      deleteOrderItem(id);
+    } else {
+      setQuantity(itemQuantity - 1);
+    }
   }
 
   function deleteOrderItem(id) {
@@ -252,83 +276,159 @@ export default function AdminAddEvents() {
     history.push(`/admin-order-review/${Number(userId.id)}`);
   }
 
+  const [viewCart, setViewCart] = useState(false);
+
   return (
     <>
-      <div className="add-items-container">
-        <header className="add-items">
-          <h2>Add Items</h2>
-        </header>
-        <div className="items">
-          {products.map((product) => (
-            <>
-              {!orderItems.some((item) => item.product_id === product.id) && (
-                <>
-                  <div key={product.id} className="item">
-                    <h3>
-                      {product.name}: {product.price}
-                    </h3>
-                    <Button onClick={() => addItems(product.id, product.price)}>
-                      Add
-                    </Button>
-                  </div>
-                </>
-              )}
-            </>
-          ))}
-
-          {orderItems.map((item) => (
-            <>
-              <div key={item.id} className="item">
-                {itemEditMode && item.id === itemEditId ? (
+      <div className="admin-add-products-top">
+        <section className="add-items-container">
+          <header className="add-items">
+            <h2>Products</h2>
+          </header>
+          <article className="items">
+            {products.map((product) => (
+              <>
+                {!orderItems.some((item) => item.product_id === product.id) ? (
                   <>
-                    <h3>
-                      {item.name} {item.price}
-                    </h3>
-                    <TextField
-                      sx={{
-                        width: 50,
-                      }}
-                      label="Quantity"
-                      type="number"
-                      value={quantity}
-                      onChange={(e) => setQuantity(e.target.value)}
-                    />
-
-                    <Button
-                      onClick={() => saveUpdate(item.product_id, item.price)}
-                    >
-                      Update
-                    </Button>
+                    <div key={product.id} className="product-item">
+                      <h3>
+                        {product.name}: ${product.price}
+                      </h3>
+                      <GoPlus
+                        className="product-cart-icon cart-plus"
+                        onClick={() => addItems(product.id, product.price)}
+                      />
+                    </div>
                   </>
                 ) : (
                   <>
-                    <h3>
-                      {item.name} {item.price}
-                    </h3>
-                    <TextField
-                      sx={{
-                        width: 50,
-                      }}
-                      label="Quantity"
-                      type="text"
-                      value={item.quantity}
-                      onClick={() => updateItem(item.id, item.quantity)}
-                    />
-
-                    <Button onClick={() => deleteOrderItem(item.id)}>
-                      Remove
-                    </Button>
+                    <div key={product.id} className="product-item">
+                      <h3>
+                        {product.name}: ${product.price}
+                      </h3>
+                      <BsCartCheckFill className="product-cart-icon" />
+                    </div>
                   </>
                 )}
+              </>
+            ))}
+          </article>
+        </section>
+        {viewCart ? (
+          <>
+            {orderItems.length > 0 ? (
+              <>
+                <section className="admin-cart-true">
+                  <header className="cart-header">
+                    <h2>Cart Items</h2>
+                    <div
+                      className="cart-icon-container"
+                      onClick={() => setViewCart(false)}
+                    >
+                      <BsCart2 className="cart-icon-false" />
+                      <p className="cart-indicator">{orderItems.length}</p>
+                    </div>
+                  </header>
+                  {orderItems.map((item) => (
+                    <>
+                      <div key={item.id} className="cart-item">
+                        {itemEditMode && item.id === itemEditId ? (
+                          <>
+                            <h3>
+                              {item.name}: {item.price}
+                            </h3>
+                            <div className="item-inputs">
+                              <GoDash
+                                className="subtract-icon"
+                                onClick={() => setQuantity(quantity - 1)}
+                              />
+                              <p className="cart-item-quantity">{quantity}</p>
+                              <GoPlus
+                                className="add-subtract-icon"
+                                onClick={() => setQuantity(quantity + 1)}
+                              />
+                              <BsCheck2
+                                className="cart-check-mark"
+                                onClick={() =>
+                                  saveUpdate(item.product_id, item.price)
+                                }
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <h3>
+                              {item.name}: {item.price}
+                            </h3>
+                            <div className="item-inputs">
+                              <GoDash
+                                className="subtract-icon"
+                                onClick={() =>
+                                  updateItemMinus(item.id, item.quantity)
+                                }
+                              />
+                              <p className="cart-item-quantity">
+                                {item.quantity}
+                              </p>
+                              <GoPlus
+                                className="add-subtract-icon"
+                                onClick={() =>
+                                  updateItemAdd(item.id, item.quantity)
+                                }
+                              />
+
+                              <BsXSquareFill
+                                onClick={() => deleteOrderItem(item.id)}
+                                className="remove-from-cart-icon"
+                              />
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </>
+                  ))}
+                  <h2 className="cart-total">Total: ${cartTotal}</h2>
+                </section>
+              </>
+            ) : (
+              <>
+                <section className="admin-cart-true">
+                  <header className="cart-header">
+                    <h2>Cart Items</h2>
+                    <div
+                      className="cart-icon-container"
+                      onClick={() => setViewCart(false)}
+                    >
+                      <BsCart2 className="cart-icon-false" />
+                      <p className="cart-indicator">{orderItems.length}</p>
+                    </div>
+                  </header>
+                  <article className="no-cart-item-message">
+                    <h3>Cart is empty</h3>
+                  </article>
+                </section>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <section
+              className="admin-cart-false"
+              onClick={() => setViewCart(true)}
+            >
+              <div>
+                <BsCart2 className="cart-icon-false" />
+                <p className="cart-indicator">{orderItems.length}</p>
               </div>
-            </>
-          ))}
-        </div>
+            </section>
+          </>
+        )}
       </div>
       <div className="admin-add-event-form">
         <Select
           sx={{
-            width: 150,
+            width: 200,
+            marginInline: 1,
           }}
           renderInput={(params) => <TextField {...params} label="Event Type" />}
           name="event_type"
@@ -343,7 +443,8 @@ export default function AdminAddEvents() {
         </Select>
         <TextField
           sx={{
-            width: 150,
+            width: 200,
+            marginInline: 1,
           }}
           label="Event Name"
           type="text"
@@ -352,7 +453,8 @@ export default function AdminAddEvents() {
         />
         <TextField
           sx={{
-            width: 150,
+            width: 200,
+            marginInline: 1,
           }}
           type="date"
           value={eventDate}
@@ -361,7 +463,8 @@ export default function AdminAddEvents() {
 
         <Select
           sx={{
-            width: 150,
+            width: 200,
+            marginInline: 1,
           }}
           name="calendar"
           id="eType"
@@ -374,7 +477,8 @@ export default function AdminAddEvents() {
         </Select>
         <Button
           sx={{
-            width: 150,
+            width: 200,
+            marginInline: 1,
             height: 50,
           }}
           variant="contained"
@@ -510,15 +614,6 @@ export default function AdminAddEvents() {
             </Table>
           </TableContainer>
         </Paper>
-        <h2>
-          <NumericFormat
-            className="subtotal"
-            value={cartTotal}
-            decimalScale={4}
-            prefix={"$"}
-            readOnly
-          />
-        </h2>
         <Button onClick={sendToReview} variant="contained">
           Review
         </Button>
