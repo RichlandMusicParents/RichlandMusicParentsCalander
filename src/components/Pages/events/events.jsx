@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "./Event.css"
+import {Card} from "@mui/material";
 
 import {
   CardContent,
@@ -215,33 +218,58 @@ function Events() {
 
   // Function to alert user they ran out of free events.
   const checkEventLimit = () => {
-    if (numEvents === 4) {
+    if (numEvents === 4 ) {
       alert(
         "You have reached the limit of 5 free events. You will need to purchase additional events beyond this limit."
       );
     }
   };
 
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+
+    typography: {
+      fontFamily: "Libre Baskerville, serif",
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: 1.5,
+    },
+  });
+
+
   return (
-    <>
+    <form
+    noValidate autoComplete="off"
+    className="form-container"
+    
+    >
+    <ThemeProvider theme={richlandTheme}>
+            <h1 className="form-title">Richland Music Parents</h1>
+      <Card
+      className="form-card"
+      sx={{
+       marginBottom:"50px",
+       borderRadius:"25px" }}
+      >
+
+    
+  
       <div className="extra-calendar-container">
-        <header className="add-items">
-          <h2>Add Items</h2>
-        </header>
-        {products.map((product) => (
-          <>
-            {!orderItems.some((item) => item.product_id === product.id) && (
-              <div key={product.id} className="items-form">
-                <h3>
-                  {product.name}: {product.price}
-                </h3>
-                <Button onClick={() => addItems(product.id, product.price)}>
-                  ADD
-                </Button>
-              </div>
-            )}
-          </>
-        ))}
+
+       
         {orderItems.map((item) => (
           <div className="items-cart">
             {itemEditMode && item.id === itemEditId ? (
@@ -282,7 +310,30 @@ function Events() {
           </div>
         ))}
       </div>
-
+      <Grid item xs={12} sm={6} md={2}>
+            <FormControl 
+            fullWidth
+            sx={{ m: 1, width: "100%" }}>
+              <InputLabel htmlFor="selectCalendarId">
+                {" "}
+                Calendar Year{" "}
+              </InputLabel>
+              <Select
+              fullWidth
+                className="calendar-dropdown"
+                name="selectedCaledarId"
+                onChange={(event) => setSelectedCalendarID(event.target.value)}
+                id="calendar"
+                value={selectCalendarId}
+              >
+                {calendars.map((calendar) => (
+                  <MenuItem value={calendar.id} key={calendar.id}>
+                    {calendar.calendar_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
       <CardContent>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item xs={12} sm={6} md={2}>
@@ -304,27 +355,7 @@ function Events() {
               onChange={(e) => setDate(e.target.value)}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <FormControl sx={{ m: 1, width: "100%" }}>
-              <InputLabel htmlFor="selectCalendarId">
-                {" "}
-                Calendar Year{" "}
-              </InputLabel>
-              <Select
-                className="calendar-dropdown"
-                name="selectedCaledarId"
-                onChange={(event) => setSelectedCalendarID(event.target.value)}
-                id="calendar"
-                value={selectCalendarId}
-              >
-                {calendars.map((calendar) => (
-                  <MenuItem value={calendar.id} key={calendar.id}>
-                    {calendar.calendar_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
+         
           <Grid item xs={12} sm={6} md={2}>
             <FormControl sx={{ m: 1, width: "100%" }}>
               <InputLabel id="event-label"> Event Options</InputLabel>
@@ -345,6 +376,21 @@ function Events() {
               </Select>
             </FormControl>
           </Grid>
+          
+        {products.map((product) => (
+          <>
+            {!orderItems.some((item) => item.product_id === product.id) && (
+              <div key={product.id} className="items-form">
+                <h3>
+                  {product.name}: {product.price}
+                </h3>
+                <Button onClick={() => addItems(product.id, product.price)}>
+                  ADD
+                </Button>
+              </div>
+            )}
+          </>
+        ))}
           <Grid item xs={12} sm={6} md={2}>
             <Button onClick={eventHandleSubmit}> Submit Event </Button>
           </Grid>
@@ -403,7 +449,10 @@ function Events() {
           </Table>
         </TableContainer>
       </div>
-    </>
+
+      </Card>
+      </ThemeProvider>
+      </form>
   );
 }
 
