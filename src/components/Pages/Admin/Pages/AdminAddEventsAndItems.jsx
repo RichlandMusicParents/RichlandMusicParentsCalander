@@ -75,6 +75,16 @@ export default function AdminAddEvents() {
     total();
   }, [orderItems]);
 
+  // Create our number formatter.
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  });
+
   const total = () => {
     let totalVal = 0;
     for (let i = 0; i < orderItems.length; i++) {
@@ -387,7 +397,9 @@ export default function AdminAddEvents() {
                       </div>
                     </>
                   ))}
-                  <h2 className="cart-total">Total: ${cartTotal}</h2>
+                  <h2 className="cart-total">
+                    Total: {formatter.format(cartTotal)}
+                  </h2>
                 </section>
               </>
             ) : (
@@ -406,6 +418,9 @@ export default function AdminAddEvents() {
                   <article className="no-cart-item-message">
                     <h3>Cart is empty</h3>
                   </article>
+                  <h2 className="cart-total">
+                    Total: {formatter.format(cartTotal)}
+                  </h2>
                 </section>
               </>
             )}
@@ -424,200 +439,238 @@ export default function AdminAddEvents() {
           </>
         )}
       </div>
-      <div className="admin-add-event-form">
-        <Select
-          sx={{
-            width: 200,
-            marginInline: 1,
-          }}
-          renderInput={(params) => <TextField {...params} label="Event Type" />}
-          name="event_type"
-          id="eType"
-          value={eventType}
-          onChange={(e) => setEventType(e.target.value)}
-        >
-          <MenuItem value="0">Select Event Type</MenuItem>
-          <MenuItem value="birthday">Birthday</MenuItem>
-          <MenuItem value="anniversary">Anniversary</MenuItem>
-          <MenuItem value="memorial">Memorial</MenuItem>
-        </Select>
-        <TextField
-          sx={{
-            width: 200,
-            marginInline: 1,
-          }}
-          label="Event Name"
-          type="text"
-          value={eventName}
-          onChange={(e) => setEventName(e.target.value)}
-        />
-        <TextField
-          sx={{
-            width: 200,
-            marginInline: 1,
-          }}
-          type="date"
-          value={eventDate}
-          onChange={(e) => setEventDate(e.target.value)}
-        />
-
-        <Select
-          sx={{
-            width: 200,
-            marginInline: 1,
-          }}
-          name="calendar"
-          id="eType"
-          renderInput={(params) => <TextField {...params} label="Calendar" />}
-          value={calId}
-          onChange={(e) => setCalId(e.target.value)}
-        >
-          <MenuItem value="0">Select Calendar</MenuItem>
-          <MenuItem value="1">2023</MenuItem>
-        </Select>
-        <Button
-          sx={{
-            width: 200,
-            marginInline: 1,
-            height: 50,
-          }}
-          variant="contained"
-          onClick={addEvent}
-        >
-          Add Event
-        </Button>
-      </div>
-      <div className="admin-events-view">
-        <Paper>
-          <h2>Created Events</h2>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow
-                  sx={{
-                    width: 100,
-                    height: 50,
-                    margin: 0,
-                  }}
-                >
-                  <TableCell>Event Type</TableCell>
-                  <TableCell>Event Name</TableCell>
-                  <TableCell>Event Date</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {events.map((event) => (
-                  <TableRow
-                    sx={{
-                      width: 100,
-                      height: 50,
-                      margin: 0,
-                    }}
-                    key={event.id}
-                  >
-                    {editMode && eventEditId === event.id ? (
-                      <>
-                        <TableCell>
-                          <Select
-                            variant="outlined"
-                            sx={{
-                              width: 150,
-                              height: 50,
-                              margin: 0,
-                            }}
-                            renderInput={(params) => (
-                              <TextField {...params} label="Event Type" />
-                            )}
-                            name="event_type"
-                            id="eType"
-                            value={editEventType}
-                            onChange={(e) => setEditEventType(e.target.value)}
-                          >
-                            <MenuItem value="0">Select Event Type</MenuItem>
-                            <MenuItem value="birthday">Birthday</MenuItem>
-                            <MenuItem value="anniversary">Anniversary</MenuItem>
-                            <MenuItem value="memorial">Memorial</MenuItem>
-                          </Select>
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            sx={{
-                              width: 150,
-                            }}
-                            label="Event Name"
-                            type="text"
-                            value={editEventName}
-                            onChange={(e) => setEditEventName(e.target.value)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            sx={{
-                              width: 150,
-                            }}
-                            label="Event Date"
-                            type="date"
-                            value={editEventDate}
-                            onChange={(e) => setEditEventDate(e.target.value)}
-                          />
-                        </TableCell>
-                        <TableCell></TableCell>
-                        <TableCell>
-                          <Button onClick={saveEditEvent}>Save</Button>
-                        </TableCell>
-                        <TableCell>
-                          <Button onClick={() => setEditMode(false)}>
-                            Cancel
-                          </Button>
-                        </TableCell>
-                      </>
-                    ) : (
-                      <>
-                        <TableCell>{event.event_type}</TableCell>
-                        <TableCell>{event.event_name}</TableCell>
-                        <TableCell>
-                          {format(new Date(event.event_date), "MM/dd/yy")}
-                        </TableCell>
-                        <TableCell>
-                          {event.first_name} {event.last_name}
-                        </TableCell>
-                        <TableCell>
-                          <Button
-                            onClick={() =>
-                              editEvents(
-                                event.id,
-                                event.event_type,
-                                event.event_name,
-                                event.event_date,
-                                event.calendar_id
-                              )
-                            }
-                          >
-                            Edit
-                          </Button>
-                        </TableCell>
-                        <TableCell>
-                          <Button
-                            onClick={() => deleteEvent(event.id)}
-                            variant="contained"
-                          >
-                            Delete
-                          </Button>
-                        </TableCell>
-                      </>
-                    )}
+      <section className="events-section">
+        <div className="admin-add-event-form-container">
+          <header className="event-form-header">
+            <h2>Add Events</h2>
+          </header>
+          <div className="admin-add-event-form">
+            <Select
+              sx={{
+                width: 200,
+                margin: 1,
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Event Type" />
+              )}
+              name="event_type"
+              id="eType"
+              value={eventType}
+              onChange={(e) => setEventType(e.target.value)}
+            >
+              <MenuItem value="0">Select Event Type</MenuItem>
+              <MenuItem value="birthday">Birthday</MenuItem>
+              <MenuItem value="anniversary">Anniversary</MenuItem>
+              <MenuItem value="memorial">Memorial</MenuItem>
+            </Select>
+            <TextField
+              sx={{
+                width: 200,
+                margin: 1,
+              }}
+              label="Event Name"
+              type="text"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+            />
+            <TextField
+              sx={{
+                width: 200,
+                margin: 1,
+              }}
+              type="date"
+              value={eventDate}
+              onChange={(e) => setEventDate(e.target.value)}
+            />
+            <Select
+              sx={{
+                width: 200,
+                margin: 1,
+              }}
+              name="calendar"
+              id="eType"
+              renderInput={(params) => (
+                <TextField {...params} label="Calendar" />
+              )}
+              value={calId}
+              onChange={(e) => setCalId(e.target.value)}
+            >
+              <MenuItem value="0">Select Calendar</MenuItem>
+              <MenuItem value="1">2023</MenuItem>
+            </Select>
+            <Button
+              sx={{
+                width: 200,
+                margin: 1,
+                height: 50,
+              }}
+              variant="contained"
+              onClick={addEvent}
+            >
+              Add Event
+            </Button>
+          </div>
+        </div>
+        <div className="admin-events-view">
+          <Paper sx={{ width: 800 }}>
+            <h2>Created Events</h2>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      sx={{
+                        width: 150,
+                        height: 50,
+                        margin: 0,
+                      }}
+                    >
+                      Event Type
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        width: 150,
+                        height: 50,
+                        margin: 0,
+                      }}
+                    >
+                      Event Name
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        width: 150,
+                        height: 50,
+                        margin: 0,
+                      }}
+                    >
+                      Event Date
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        width: 25,
+                        height: 50,
+                        margin: 0,
+                      }}
+                    ></TableCell>
+                    <TableCell
+                      sx={{
+                        width: 25,
+                        height: 50,
+                        margin: 0,
+                      }}
+                    ></TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-        <Button onClick={sendToReview} variant="contained">
-          Review
-        </Button>
-      </div>
+                </TableHead>
+                <TableBody>
+                  {events.map((event) => (
+                    <TableRow
+                      sx={{
+                        width: 100,
+                        height: 50,
+                        margin: 0,
+                      }}
+                      key={event.id}
+                    >
+                      {editMode && eventEditId === event.id ? (
+                        <>
+                          <TableCell>
+                            <Select
+                              variant="outlined"
+                              sx={{
+                                width: 150,
+                                height: 50,
+                                margin: 0,
+                              }}
+                              renderInput={(params) => (
+                                <TextField {...params} label="Event Type" />
+                              )}
+                              name="event_type"
+                              id="eType"
+                              value={editEventType}
+                              onChange={(e) => setEditEventType(e.target.value)}
+                            >
+                              <MenuItem value="0">Select Event Type</MenuItem>
+                              <MenuItem value="birthday">Birthday</MenuItem>
+                              <MenuItem value="anniversary">
+                                Anniversary
+                              </MenuItem>
+                              <MenuItem value="memorial">Memorial</MenuItem>
+                            </Select>
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              sx={{
+                                width: 150,
+                              }}
+                              label="Event Name"
+                              type="text"
+                              value={editEventName}
+                              onChange={(e) => setEditEventName(e.target.value)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              sx={{
+                                width: 150,
+                              }}
+                              label="Event Date"
+                              type="date"
+                              value={editEventDate}
+                              onChange={(e) => setEditEventDate(e.target.value)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Button onClick={saveEditEvent}>Save</Button>
+                          </TableCell>
+                          <TableCell>
+                            <Button onClick={() => setEditMode(false)}>
+                              Cancel
+                            </Button>
+                          </TableCell>
+                        </>
+                      ) : (
+                        <>
+                          <TableCell>{event.event_type}</TableCell>
+                          <TableCell>{event.event_name}</TableCell>
+                          <TableCell>
+                            {format(new Date(event.event_date), "MM/dd/yy")}
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              onClick={() =>
+                                editEvents(
+                                  event.id,
+                                  event.event_type,
+                                  event.event_name,
+                                  event.event_date,
+                                  event.calendar_id
+                                )
+                              }
+                            >
+                              Edit
+                            </Button>
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              onClick={() => deleteEvent(event.id)}
+                              variant="contained"
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </>
+                      )}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+          <Button onClick={sendToReview} variant="contained">
+            Review
+          </Button>
+        </div>
+      </section>
     </>
   );
 }
