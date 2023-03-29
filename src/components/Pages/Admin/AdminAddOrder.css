@@ -1,0 +1,17 @@
+.admin-add-order-form {
+  width: 50rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-inline: auto;
+  -webkit-box-shadow: 0px 6px 28px -1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 6px 28px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 6px 28px -1px rgba(0, 0, 0, 0.3);
+  background: radial-gradient(
+    circle,
+    rgba(254, 254, 254, 1) 0%,
+    rgba(250, 250, 250, 1) 100%
+  );
+}

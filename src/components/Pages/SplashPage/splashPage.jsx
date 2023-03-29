@@ -46,7 +46,7 @@ function SplashPage() {
         
         <div className="splash-container"> 
         <div className="logo"> 
-          <h1>Richland Music Parents</h1> 
+          <h1 className="form-title" >Richland Music Parents</h1> 
         </div>
         </div>
         <section>
