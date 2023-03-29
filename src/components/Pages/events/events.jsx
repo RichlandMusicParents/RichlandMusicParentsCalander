@@ -119,6 +119,10 @@ function Events() {
         calendar_id: selectCalendarId,
       },
     });
+    setEventFor("");
+    setDate("");
+    setEventOption("0");
+    
 
 
   };
