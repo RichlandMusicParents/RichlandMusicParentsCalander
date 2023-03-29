@@ -122,18 +122,18 @@ function App() {
             <SplashPage />
           </Route>
 
-          <Route path="/userform">
+          <ProtectedRoute path="/userform">
             <UserForm />
-          </Route>
+            </ProtectedRoute>
 
-          <Route path="/events">
+          <ProtectedRoute path="/events">
             <Events />
-          </Route>
+            </ProtectedRoute>
 
           {/* This is the final final page the user sees that thanks them for ordering and to view their orders. */}
-          <Route path="/Complete">
+          <ProtectedRoute path="/Complete">
             <OrderCompleted />
-          </Route>
+            </ProtectedRoute>
 
           <Route exact path="/admin-home">
             {user.is_admin ? (
