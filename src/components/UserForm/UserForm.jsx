@@ -33,8 +33,8 @@ function UserForm() {
   const [email, setEmail] = useState("");
   const [isDelivered, setIsDelivered] = useState(false);
   const [isPayed, setIsPayed] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState(user.first_name);
+  const [lastName, setLastName] = useState(user.last_name);
 
   const richlandTheme = createTheme({
     palette: {

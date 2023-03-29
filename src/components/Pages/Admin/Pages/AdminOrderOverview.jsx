@@ -185,7 +185,7 @@ export default function AdminOrderOverview() {
 
   function sendToAdmin() {
     saveOrderInfo();
-    history.push("/admin");
+    history.push("/admin-home");
   }
   return (
     <>
