@@ -10,9 +10,9 @@ import {
   Select,
   InputLabel,
   MenuItem,
-  FormControl,
-  Input,
+  FormControl
 } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 import UserPage from "../Pages/UserPage/UserPage";
 
@@ -35,24 +35,30 @@ function UserForm() {
   const [firstName, setFirstName] = useState(user.first_name);
   const [lastName, setLastName] = useState(user.last_name);
 
-  // useEffect(() => {
-  //   dispatch({ type: "FETCH_ORDER" });
-  // }, []);
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
 
-  // Dispatch for the events
-
-  // const eventHandleSubmit = () => {
-  //   dispatch({
-  //     type: `USER_ADD_EVENT`,
-  //     payload: {
-  //       event_type: eventOption,
-  //       event_date: date,
-  //       event_name: eventFor,
-  //       user_id: user.id,
-  //       calendar_id: selectCalendarId,
-  //     },
-  //   });
-  // };
+    typography: {
+      fontFamily: "Libre Baskerville, serif",
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: 1.5,
+    },
+  });
+  
 
   const handleSubmit = () => {
     dispatch({
@@ -83,73 +89,70 @@ function UserForm() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-      }}
+    
+    <form
+    noValidate autoComplete="off"
+    
     >
-      <Grid
-        container
-        spacing={3}
-        justifyContent="center"
-        sx={{ marginTop: "40px", marginBottom: "-10px" }}
-      >
-        <Grid item xs={12} md={13}>
-          <Card
-            sx={{ borderRadius: "25px", width: "400px", marginLeft: "175px" }}
-          >
+          <ThemeProvider theme={richlandTheme}>
+
+
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
             <h1>Richland Music Parents</h1>
-            <h2>Listing Form</h2>
             <UserPage />
+            <h2>Add your information</h2>
+         
+            </Grid>
+            <Grid item xs={6}>
             <CardContent>
               <TextField
                 label="First Name"
                 type="text"
                 name="firstname"
+                variant="outlined"
                 value={firstName}
                 required
+                fullWidth
                 onChange={(event) => setFirstName(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
+                sx={{ width: "100%" }}
               />
-            </CardContent>
+               </CardContent>
+            </Grid>
 
+            <Grid item xs={6}> 
             <CardContent>
               <TextField
                 label="Last Name"
                 type="text"
                 name="lastname"
+                variant="outlined"
                 value={lastName}
                 required
+                fullWidth
                 onChange={(event) => setLastName(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
+                sx={{ width: "100%" }}
               />
             </CardContent>
+            </Grid >
+          
+            <Grid item xs={12} > 
             <CardContent>
-              <TextField
-                label="Email"
-                type="text"
-                name="email"
-                value={email}
-                required
-                onChange={(event) => setEmail(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
-              />
-            </CardContent>
-
-            <CardContent>
+          
               <TextField
                 label="Address"
                 type="text"
                 name="address"
                 value={address}
                 required
+                fullWidth
                 onChange={(event) => setAddress(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
+                sx={{ width: "100%" }}
               />
-            </CardContent>
-
+              </CardContent>
+         
+            </Grid > 
+            <Grid item xs={6} > 
             <CardContent>
               <TextField
                 label="City"
@@ -157,10 +160,13 @@ function UserForm() {
                 name="city"
                 value={city}
                 required
+                fullWidth
                 onChange={(event) => setCity(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
+                sx={{ width: "100%" }}
               />
             </CardContent>
+            </Grid > 
+            <Grid item xs={6} > 
             <CardContent>
               <TextField
                 label="State"
@@ -168,10 +174,13 @@ function UserForm() {
                 name="state"
                 value={state}
                 required
+                fullWidth
                 onChange={(event) => setState(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
+                sx={{ width: "100%" }}
               />
             </CardContent>
+            </Grid > 
+            <Grid item xs={6} > 
             <CardContent>
               <TextField
                 label="Zip Code"
@@ -179,10 +188,13 @@ function UserForm() {
                 name="zip"
                 value={zip}
                 required
+                fullWidth
                 onChange={(event) => setZip(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
+                sx={{ width: "100%" }}
               />
             </CardContent>
+            </Grid > 
+            <Grid item xs={6} > 
             <CardContent>
               <TextField
                 label="Phone Number"
@@ -191,10 +203,28 @@ function UserForm() {
                 value={phone}
                 required
                 onChange={(event) => setPhone(event.target.value)}
-                sx={{ marginBottom: "10px", width: "50%" }}
+                sx={{ width: "100%" }}
               />
             </CardContent>
-            <FormControl sx={{ m: 1, width: 300 }}>
+            </Grid > 
+              
+            <Grid item xs={6} > 
+            <CardContent>
+              <TextField
+                label="Email"
+                type="text"
+                name="email"
+                variant="outlined"
+                value={email}
+                required
+                fullWidth
+                onChange={(event) => setEmail(event.target.value)}
+                sx={{ width: "100%" }}
+              />
+              </CardContent>
+            </Grid> 
+            <Grid item xs={6} > 
+            <FormControl sx={{ m: 1, width: "100%" }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
               <Select
@@ -208,12 +238,38 @@ function UserForm() {
                 <MenuItem value={"Check"}> Check </MenuItem>
               </Select>
             </FormControl>
+            </Grid> 
+            <Grid item xs={12}>
+            <Button
+            color="primary"
+            variant="contained"
+            sx={{
+              width:"60%",
+              backgroundColor: richlandTheme.palette.primary.main,
+              color: "white",
+              fontSize: "1.2rem",
+              fontWeight: "600",
+              padding: "1rem 2rem",
+              boxShadow: "none",
+              marginTop: "2rem",
+              borderRadius: "15px",
+              "&:hover": {
+                backgroundColor: richlandTheme.palette.primary.dark
+               },
+              
+    
+            }}
+            
+             onClick={handleSubmit}> Continue </Button>
+     
+  </Grid>
 
-            <Button onClick={handleSubmit}> Continue </Button>
-          </Card>
-        </Grid>
+           
+    
       </Grid>
-    </div>
+      </ThemeProvider>
+
+    </form>
   );
 }
 
