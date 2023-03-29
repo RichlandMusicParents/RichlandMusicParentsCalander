@@ -286,8 +286,6 @@ export default function AdminAddEvents() {
     history.push(`/admin-order-review/${Number(userId.id)}`);
   }
 
-  const [viewCart, setViewCart] = useState(false);
-
   return (
     <>
       <div className="admin-add-products-top">
@@ -324,122 +322,6 @@ export default function AdminAddEvents() {
             ))}
           </article>
         </section>
-        {viewCart ? (
-          <>
-            {orderItems.length > 0 ? (
-              <>
-                <section className="admin-cart-true">
-                  <header className="cart-header">
-                    <h2>Cart Items</h2>
-                    <div
-                      className="cart-icon-container"
-                      onClick={() => setViewCart(false)}
-                    >
-                      <BsCart2 className="cart-icon-false" />
-                      <p className="cart-indicator">{orderItems.length}</p>
-                    </div>
-                  </header>
-                  {orderItems.map((item) => (
-                    <>
-                      <div key={item.id} className="cart-item">
-                        {itemEditMode && item.id === itemEditId ? (
-                          <>
-                            <h3>
-                              {item.name}: {item.price}
-                            </h3>
-                            <div className="item-inputs">
-                              <GoDash
-                                className="subtract-icon"
-                                onClick={() => setQuantity(quantity - 1)}
-                              />
-                              <p className="cart-item-quantity">{quantity}</p>
-                              <GoPlus
-                                className="add-subtract-icon"
-                                onClick={() => setQuantity(quantity + 1)}
-                              />
-                              <BsCheck2
-                                className="cart-check-mark"
-                                onClick={() =>
-                                  saveUpdate(item.product_id, item.price)
-                                }
-                              />
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <h3>
-                              {item.name}: {item.price}
-                            </h3>
-                            <div className="item-inputs">
-                              <GoDash
-                                className="subtract-icon"
-                                onClick={() =>
-                                  updateItemMinus(item.id, item.quantity)
-                                }
-                              />
-                              <p className="cart-item-quantity">
-                                {item.quantity}
-                              </p>
-                              <GoPlus
-                                className="add-subtract-icon"
-                                onClick={() =>
-                                  updateItemAdd(item.id, item.quantity)
-                                }
-                              />
-
-                              <BsXSquareFill
-                                onClick={() => deleteOrderItem(item.id)}
-                                className="remove-from-cart-icon"
-                              />
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    </>
-                  ))}
-                  <h2 className="cart-total">
-                    Total: {formatter.format(cartTotal)}
-                  </h2>
-                </section>
-              </>
-            ) : (
-              <>
-                <section className="admin-cart-true">
-                  <header className="cart-header">
-                    <h2>Cart Items</h2>
-                    <div
-                      className="cart-icon-container"
-                      onClick={() => setViewCart(false)}
-                    >
-                      <BsCart2 className="cart-icon-false" />
-                      <p className="cart-indicator">{orderItems.length}</p>
-                    </div>
-                  </header>
-                  <article className="no-cart-item-message">
-                    <h3>Cart is empty</h3>
-                  </article>
-                  <h2 className="cart-total">
-                    Total: {formatter.format(cartTotal)}
-                  </h2>
-                </section>
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            <section
-              className="admin-cart-false"
-              onClick={() => setViewCart(true)}
-            >
-              <div>
-                <BsCart2 className="cart-icon-false" />
-                <p className="cart-indicator">{orderItems.length}</p>
-              </div>
-            </section>
-          </>
-        )}
-      </div>
-      <section className="events-section">
         <div className="admin-add-event-form-container">
           <header className="event-form-header">
             <h2>Add Events</h2>
@@ -511,165 +393,260 @@ export default function AdminAddEvents() {
             </Button>
           </div>
         </div>
-        <div className="admin-events-view">
-          <Paper sx={{ width: 800 }}>
-            <h2>Created Events</h2>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      sx={{
-                        width: 150,
-                        height: 50,
-                        margin: 0,
-                      }}
-                    >
-                      Event Type
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        width: 150,
-                        height: 50,
-                        margin: 0,
-                      }}
-                    >
-                      Event Name
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        width: 150,
-                        height: 50,
-                        margin: 0,
-                      }}
-                    >
-                      Event Date
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        width: 25,
-                        height: 50,
-                        margin: 0,
-                      }}
-                    ></TableCell>
-                    <TableCell
-                      sx={{
-                        width: 25,
-                        height: 50,
-                        margin: 0,
-                      }}
-                    ></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {events.map((event) => (
-                    <TableRow
-                      sx={{
-                        width: 100,
-                        height: 50,
-                        margin: 0,
-                      }}
-                      key={event.id}
-                    >
-                      {editMode && eventEditId === event.id ? (
+
+        {orderItems.length > 0 ? (
+          <>
+            <section className="admin-cart-true">
+              <header className="cart-header">
+                <h2>Cart Items</h2>
+                <div className="cart-icon-container">
+                  <BsCart2 className="cart-icon-false" />
+                  <div className="cart-indicator">
+                    <p className="cart-number">{orderItems.length}</p>
+                  </div>
+                </div>
+              </header>
+              <article className="cart-body">
+                {orderItems.map((item) => (
+                  <>
+                    <div key={item.id} className="cart-item">
+                      {itemEditMode && item.id === itemEditId ? (
                         <>
-                          <TableCell>
-                            <Select
-                              variant="outlined"
-                              sx={{
-                                width: 150,
-                                height: 50,
-                                margin: 0,
-                              }}
-                              renderInput={(params) => (
-                                <TextField {...params} label="Event Type" />
-                              )}
-                              name="event_type"
-                              id="eType"
-                              value={editEventType}
-                              onChange={(e) => setEditEventType(e.target.value)}
-                            >
-                              <MenuItem value="0">Select Event Type</MenuItem>
-                              <MenuItem value="birthday">Birthday</MenuItem>
-                              <MenuItem value="anniversary">
-                                Anniversary
-                              </MenuItem>
-                              <MenuItem value="memorial">Memorial</MenuItem>
-                            </Select>
-                          </TableCell>
-                          <TableCell>
-                            <TextField
-                              sx={{
-                                width: 150,
-                              }}
-                              label="Event Name"
-                              type="text"
-                              value={editEventName}
-                              onChange={(e) => setEditEventName(e.target.value)}
+                          <h3>
+                            {item.name}: ${item.price}
+                          </h3>
+                          <div className="item-inputs">
+                            <GoDash
+                              className="subtract-icon"
+                              onClick={() => setQuantity(quantity - 1)}
                             />
-                          </TableCell>
-                          <TableCell>
-                            <TextField
-                              sx={{
-                                width: 150,
-                              }}
-                              label="Event Date"
-                              type="date"
-                              value={editEventDate}
-                              onChange={(e) => setEditEventDate(e.target.value)}
+                            <p className="cart-item-quantity">{quantity}</p>
+                            <GoPlus
+                              className="add-subtract-icon"
+                              onClick={() => setQuantity(quantity + 1)}
                             />
-                          </TableCell>
-                          <TableCell>
-                            <Button onClick={saveEditEvent}>Save</Button>
-                          </TableCell>
-                          <TableCell>
-                            <Button onClick={() => setEditMode(false)}>
-                              Cancel
-                            </Button>
-                          </TableCell>
+                            <BsCheck2
+                              className="cart-check-mark"
+                              onClick={() =>
+                                saveUpdate(item.product_id, item.price)
+                              }
+                            />
+                          </div>
                         </>
                       ) : (
                         <>
-                          <TableCell>{event.event_type}</TableCell>
-                          <TableCell>{event.event_name}</TableCell>
-                          <TableCell>
-                            {format(new Date(event.event_date), "MM/dd/yy")}
-                          </TableCell>
-                          <TableCell>
-                            <Button
+                          <h3>
+                            {item.name}: ${item.price}
+                          </h3>
+                          <div className="item-inputs">
+                            <GoDash
+                              className="subtract-icon"
                               onClick={() =>
-                                editEvents(
-                                  event.id,
-                                  event.event_type,
-                                  event.event_name,
-                                  event.event_date,
-                                  event.calendar_id
-                                )
+                                updateItemMinus(item.id, item.quantity)
                               }
-                            >
-                              Edit
-                            </Button>
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              onClick={() => deleteEvent(event.id)}
-                              variant="contained"
-                            >
-                              Delete
-                            </Button>
-                          </TableCell>
+                            />
+                            <p className="cart-item-quantity">
+                              {item.quantity}
+                            </p>
+                            <GoPlus
+                              className="add-subtract-icon"
+                              onClick={() =>
+                                updateItemAdd(item.id, item.quantity)
+                              }
+                            />
+
+                            <BsXSquareFill
+                              onClick={() => deleteOrderItem(item.id)}
+                              className="remove-from-cart-icon"
+                            />
+                          </div>
                         </>
                       )}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-          <Button onClick={sendToReview} variant="contained">
-            Review
-          </Button>
-        </div>
+                    </div>
+                  </>
+                ))}
+              </article>
+              <div className="cart-total">
+                <h2>Total: {formatter.format(cartTotal)}</h2>
+                <Button onClick={sendToReview}>Checkout</Button>
+              </div>
+            </section>
+          </>
+        ) : (
+          <>
+            <section className="admin-cart-true">
+              <header className="cart-header">
+                <h2>Cart Items</h2>
+                <div className="cart-icon-container">
+                  <BsCart2 className="cart-icon-false" />
+                  <div className="cart-indicator">
+                    <p className="cart-number">{orderItems.length}</p>
+                  </div>
+                </div>
+              </header>
+              <article className="cart-body">
+                <h2>Cart is empty</h2>
+              </article>
+              <article className="cart-total">
+                <h2>Total: {formatter.format(cartTotal)}</h2>
+              </article>
+            </section>
+          </>
+        )}
+      </div>
+      <section className="events-section">
+        <Paper sx={{ width: 1000 }}>
+          <h2>Created Events</h2>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      width: 150,
+                      height: 50,
+                      margin: 0,
+                    }}
+                  >
+                    Event Type
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      width: 150,
+                      height: 50,
+                      margin: 0,
+                    }}
+                  >
+                    Event Name
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      width: 150,
+                      height: 50,
+                      margin: 0,
+                    }}
+                  >
+                    Event Date
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      width: 25,
+                      height: 50,
+                      margin: 0,
+                    }}
+                  ></TableCell>
+                  <TableCell
+                    sx={{
+                      width: 25,
+                      height: 50,
+                      margin: 0,
+                    }}
+                  ></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {events.map((event) => (
+                  <TableRow
+                    sx={{
+                      width: 100,
+                      height: 50,
+                      margin: 0,
+                    }}
+                    key={event.id}
+                  >
+                    {editMode && eventEditId === event.id ? (
+                      <>
+                        <TableCell>
+                          <Select
+                            variant="outlined"
+                            sx={{
+                              width: 150,
+                              height: 50,
+                              margin: 0,
+                            }}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Event Type" />
+                            )}
+                            name="event_type"
+                            id="eType"
+                            value={editEventType}
+                            onChange={(e) => setEditEventType(e.target.value)}
+                          >
+                            <MenuItem value="0">Select Event Type</MenuItem>
+                            <MenuItem value="birthday">Birthday</MenuItem>
+                            <MenuItem value="anniversary">Anniversary</MenuItem>
+                            <MenuItem value="memorial">Memorial</MenuItem>
+                          </Select>
+                        </TableCell>
+                        <TableCell>
+                          <TextField
+                            sx={{
+                              width: 150,
+                            }}
+                            label="Event Name"
+                            type="text"
+                            value={editEventName}
+                            onChange={(e) => setEditEventName(e.target.value)}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <TextField
+                            sx={{
+                              width: 150,
+                            }}
+                            label="Event Date"
+                            type="date"
+                            value={editEventDate}
+                            onChange={(e) => setEditEventDate(e.target.value)}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button onClick={saveEditEvent}>Save</Button>
+                        </TableCell>
+                        <TableCell>
+                          <Button onClick={() => setEditMode(false)}>
+                            Cancel
+                          </Button>
+                        </TableCell>
+                      </>
+                    ) : (
+                      <>
+                        <TableCell>{event.event_type}</TableCell>
+                        <TableCell>{event.event_name}</TableCell>
+                        <TableCell>
+                          {format(new Date(event.event_date), "MM/dd/yy")}
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            onClick={() =>
+                              editEvents(
+                                event.id,
+                                event.event_type,
+                                event.event_name,
+                                event.event_date,
+                                event.calendar_id
+                              )
+                            }
+                          >
+                            Edit
+                          </Button>
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            onClick={() => deleteEvent(event.id)}
+                            variant="contained"
+                          >
+                            Delete
+                          </Button>
+                        </TableCell>
+                      </>
+                    )}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       </section>
     </>
   );
