@@ -9,10 +9,10 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { set } from "date-fns";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import "../AdminRegisterUser.css";
 
 export function AdminRegisterUser() {
   const history = useHistory();
@@ -33,15 +33,20 @@ export function AdminRegisterUser() {
     };
 
     dispatch({ type: "ADMIN_REGISTER_USER", payload: userObj });
-    history.push("/admin");
+    history.push("/admin-home");
   }
 
   return (
     <>
       <form className="admin-register-form">
+        <header>
+          <h2>Register New User</h2>
+        </header>
         <TextField
           sx={{
-            width: 150,
+            width: 300,
+            margin: 1,
+            marginTop: 3,
           }}
           label="Username"
           type="text"
@@ -50,7 +55,8 @@ export function AdminRegisterUser() {
         />
         <TextField
           sx={{
-            width: 150,
+            width: 300,
+            margin: 1,
           }}
           label="Password"
           type="password"
@@ -59,7 +65,8 @@ export function AdminRegisterUser() {
         />
         <TextField
           sx={{
-            width: 150,
+            width: 300,
+            margin: 1,
           }}
           label="First Name"
           type="text"
@@ -68,7 +75,8 @@ export function AdminRegisterUser() {
         />
         <TextField
           sx={{
-            width: 150,
+            width: 300,
+            margin: 1,
           }}
           label="Last Name"
           type="text"
@@ -77,7 +85,8 @@ export function AdminRegisterUser() {
         />
         <Select
           sx={{
-            width: 150,
+            width: 300,
+            margin: 1,
           }}
           name="event_type"
           id="eType"
@@ -88,7 +97,16 @@ export function AdminRegisterUser() {
           <MenuItem value={true}>Admin</MenuItem>
           <MenuItem value={false}>Not Admin</MenuItem>
         </Select>
-        <Button variant="contained" onClick={registerUser}>
+        <Button
+          sx={{
+            width: 300,
+            margin: 1,
+            marginBottom: 5,
+            height: 50,
+          }}
+          variant="contained"
+          onClick={registerUser}
+        >
           Create Account
         </Button>
       </form>

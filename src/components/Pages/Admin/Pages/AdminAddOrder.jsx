@@ -1,8 +1,8 @@
 import { Button, TextField } from "@mui/material";
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import "../AdminAddOrder.css";
 
 export default function AdminAddOrder() {
   const history = useHistory();
@@ -62,88 +62,114 @@ export default function AdminAddOrder() {
   return (
     <>
       <div className="admin-add-order">
-        <header className="admin-add-order-header">
-          <h2>
-            Add Info for {userFirst} {userLast}'s Order
-          </h2>
-        </header>
-        <div className="admin-add-order-form">
+        <form className="admin-add-order-form">
+          <header className="admin-add-order-header">
+            <h2>
+              Info for {userFirst} {userLast}'s Order
+            </h2>
+          </header>
           <TextField
             sx={{
-              width: 150,
+              marginTop: 5,
+              width: 300,
+              margin: 1,
             }}
             label="First Name"
+            placeholder="Eg. John"
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
           <TextField
             sx={{
-              width: 150,
+              width: 300,
+              margin: 1,
             }}
             label="Last Name"
+            placeholder="Eg. Appleseed"
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
           <TextField
             sx={{
-              width: 150,
+              width: 300,
+              margin: 1,
             }}
             label="Street Address"
+            placeholder="Eg. 123 Main St S"
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
           <TextField
             sx={{
-              width: 150,
+              width: 300,
+              margin: 1,
             }}
             label="City"
+            placeholder="Eg. Fargo"
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
           <TextField
             sx={{
-              width: 150,
+              width: 300,
+              margin: 1,
             }}
             label="State"
+            placeholder="Eg. ND"
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
           />
           <TextField
             sx={{
-              width: 150,
+              margin: 1,
+              width: 300,
             }}
             label="Zip Code"
+            placeholder="Eg. 58123"
             type="text"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
           />
           <TextField
             sx={{
-              width: 150,
+              width: 300,
+              margin: 1,
             }}
             label="Email"
+            placeholder="Eg. user@email.com"
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             sx={{
-              width: 150,
+              width: 300,
+              margin: 1,
             }}
             label="Phone"
+            placeholder="Eg. 1234567890"
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-          <Button variant="contained" onClick={addInfo}>
+          <Button
+            sx={{
+              width: 300,
+              height: 50,
+              margin: 1,
+              marginBottom: 5,
+            }}
+            variant="contained"
+            onClick={addInfo}
+          >
             Next
           </Button>
-        </div>
+        </form>
       </div>
     </>
   );

@@ -10,22 +10,17 @@ export default function Admin() {
   const history = useHistory();
   const user = useSelector((store) => store.user);
 
-  function sendToRegister() {
-    history.push("/admin-register");
-  }
-
   return (
     <>
-      <h1>Hello, {user.first_name}</h1>
-      <AdminEventsListComponent />
-      <AdminSelectUserComponent />
-      <Button
-        onClick={sendToRegister}
-        sx={{ height: 50, margin: 1 }}
-        variant="contained"
-      >
-        Create New User
-      </Button>
+      <header className="admin-home-header">
+        <h1>Hello, {user.first_name}</h1>
+        <section className="admin-search-user">
+          <AdminSelectUserComponent />
+        </section>
+      </header>
+      <container className="admin-home-event-list-container">
+        <AdminEventsListComponent />
+      </container>
       <AdminOrderListComponent />
     </>
   );

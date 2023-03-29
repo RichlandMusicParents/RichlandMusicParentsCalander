@@ -48,12 +48,16 @@ router.get("/specific-user-events/:id", rejectUnauthenticated, (req, res) => {
 
   const text = `
   SELECT
-	*
+	*,
+	(SELECT 
+	"user".first_name FROM "user" WHERE "user".id = "event".user_id ),
+		(SELECT 
+	"user".last_name FROM "user" WHERE "user".id = "event".user_id ),
+		(SELECT 
+	"calendar".calendar_name FROM "calendar" WHERE "calendar".id = "event".calendar_id )
 FROM
 	"event"
-WHERE
-	"user_id" = $1
-ORDER BY "id" ASC;
+WHERE "event"."user_id" = $1;
     `;
   if (req.user.is_admin === true) {
     pool
@@ -199,10 +203,8 @@ router.get("/user-events/:id", (req, res) => {
     });
 });
 
-
-//delete event for user 
+//delete event for user
 router.delete("/delete-events/:id", (req, res) => {
- 
   const QUERYTEXT = `DELETE FROM "event" WHERE id = $1;`;
   pool
     .query(QUERYTEXT, [req.params.id])
@@ -215,15 +217,25 @@ router.delete("/delete-events/:id", (req, res) => {
 });
 
 //Edit event for user
-router.put("/user-edit-event/:id", (req,res) =>{
+router.put("/user-edit-event/:id", (req, res) => {
   const { event_type, event_date, event_name, user_id, calendar_id } = req.body;
-  const QUERYTEXT=`UPDATE "event" SET "event_type" = $1, "event_date" = $2,
+  const QUERYTEXT = `UPDATE "event" SET "event_type" = $1, "event_date" = $2,
   "event_name" = $3, "user_id" = $4, "calendar_id" = $5 WHERE "id" = $6;`;
-  pool.query(QUERYTEXT, [event_type, event_date, event_name,user_id,calendar_id, req.params.id]).then((response) =>{
-    res.sendStatus(204);
-  }).catch((error) =>{
-    console.log("error in updating event", error);
-  });
+  pool
+    .query(QUERYTEXT, [
+      event_type,
+      event_date,
+      event_name,
+      user_id,
+      calendar_id,
+      req.params.id,
+    ])
+    .then((response) => {
+      res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.log("error in updating event", error);
+    });
 });
 
 module.exports = router;
