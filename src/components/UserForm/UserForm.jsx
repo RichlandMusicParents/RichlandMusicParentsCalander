@@ -239,11 +239,12 @@ function UserForm() {
               </Select>
             </FormControl>
             </Grid> 
-
+            <Grid item xs={12}>
             <Button
             color="primary"
             variant="contained"
             sx={{
+              width:"60%",
               backgroundColor: richlandTheme.palette.primary.main,
               color: "white",
               fontSize: "1.2rem",
@@ -255,12 +256,15 @@ function UserForm() {
               "&:hover": {
                 backgroundColor: richlandTheme.palette.primary.dark
                },
-               display: "block"
+              
     
             }}
             
              onClick={handleSubmit}> Continue </Button>
      
+  </Grid>
+
+           
     
       </Grid>
       </ThemeProvider>
