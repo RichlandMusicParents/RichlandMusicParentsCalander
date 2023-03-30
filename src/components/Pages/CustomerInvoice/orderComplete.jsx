@@ -157,7 +157,9 @@ export default function OrderCompleted() {
           </Table>
         </TableContainer>
       </Box>
-      <Button onClick={() => homePageClick()}> Back to HomePage</Button>
+      <Button 
+      
+      onClick={() => homePageClick()}> Back to HomePage</Button>
     </>
   );
 }

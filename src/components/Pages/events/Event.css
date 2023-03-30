@@ -7,3 +7,22 @@
     text-align: center;
     background-color: #f9f9f9;
 }
+
+.extra-calendar-container {
+    margin-left: 40px;
+}
+
+.item {
+     margin-left: 40px;
+}
+
+.orderDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    text-align: center;
+ 
+
+}
