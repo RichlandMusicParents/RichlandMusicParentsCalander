@@ -2,21 +2,18 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./Event.css"
-import {Card} from "@mui/material";
+import "./Event.css";
+import { Card } from "@mui/material";
 
 import {
   CardContent,
-  CardActions,
   TextField,
   Button,
   Select,
   InputLabel,
   MenuItem,
   FormControl,
-  Input,
   TableContainer,
   Paper,
   Table,
@@ -26,13 +23,6 @@ import {
   TableBody,
   Grid,
 } from "@mui/material";
-
-import FormLabel from "@mui/material/FormLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
 import { NumericFormat } from "react-number-format";
 
 function Events() {
@@ -44,11 +34,9 @@ function Events() {
   console.log("in products", products);
   const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order.newOrder);
-  //store for order items
   const orderItems = useSelector((store) => store.orderItemsReducer);
+
   // event form
-  //  const { order_id } = useParams();
-  // console.log("IN PARAMS", order_id)
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(0);
   const [selectCalendarId, setSelectedCalendarID] = useState(0);
@@ -125,7 +113,6 @@ function Events() {
     setEventFor("");
     setDate("");
     setEventOption("0");
-
   };
   const handleAddEvent = () => {
     setNumEvents(numEvents + 1);
@@ -218,7 +205,7 @@ function Events() {
 
   // Function to alert user they ran out of free events.
   const checkEventLimit = () => {
-    if (numEvents === 4 ) {
+    if (numEvents === 4) {
       alert(
         "You have reached the limit of 5 free events. You will need to purchase additional events beyond this limit."
       );
@@ -249,210 +236,297 @@ function Events() {
     },
   });
 
-
   return (
-    <form
-    noValidate autoComplete="off"
-    className="form-container"
-    
-    >
-    <ThemeProvider theme={richlandTheme}>
-            <h1 className="form-title">Richland Music Parents</h1>
-      <Card
-      className="form-card"
-      sx={{
-       marginBottom:"50px",
-       borderRadius:"25px" }}
-      >
+    <form noValidate autoComplete="off" className="event-container">
+      <ThemeProvider theme={richlandTheme}>
+        <h1 className="form-title">Richland Music Parents</h1>
+        <Card
+          className="form-card"
+          sx={{
+            marginBottom: "50px",
+            borderRadius: "25px",
+          }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <h2>Event Form</h2>
+              <hr />
+              <br />
+              <br />
+            </Grid>
 
-    
-  
-      <div className="extra-calendar-container">
+            <Grid item xs={6}>
+              <CardContent>
+                <FormControl fullWidth sx={{ width: "100%" }}>
+                  <InputLabel htmlFor="selectCalendarId">
+                    {" "}
+                    Calendar Year{" "}
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    className="calendar-dropdown"
+                    name="selectedCaledarId"
+                    onChange={(event) =>
+                      setSelectedCalendarID(event.target.value)
+                    }
+                    id="calendar"
+                    value={selectCalendarId}>
+                    {calendars.map((calendar) => (
+                      <MenuItem value={calendar.id} key={calendar.id}>
+                        {calendar.calendar_name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </CardContent>
+            </Grid>
 
-       
-        {orderItems.map((item) => (
-          <div className="items-cart">
-            {itemEditMode && item.id === itemEditId ? (
-              <div key={item.id} className="item">
-                <h3>
-                  {item.name} {item.price}
-                </h3>
+            <Grid item xs={6}>
+              <CardContent>
                 <TextField
-                  sx={{
-                    width: 50,
-                  }}
-                  label="Quantity"
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
-                <Button onClick={() => saveUpdate(item.product_id, item.price)}>
-                  Update
-                </Button>
-              </div>
-            ) : (
-              <div key={item.id} className="item">
-                <h3>
-                  {item.name} {item.price}
-                </h3>
-                <TextField
-                  sx={{
-                    width: 50,
-                  }}
-                  label="Quantity"
+                  sx={{ width: "100%" }}
+                  fullWidth
+                  label="Event for"
                   type="text"
-                  value={item.quantity}
-                  onClick={() => updateItem(item.id, item.quantity)}
+                  name="Event for"
+                  value={eventFor}
+                  required
+                  onChange={(event) => setEventFor(event.target.value)}
                 />
-                <Button onClick={() => deleteOrderItem(item.id)}>Remove</Button>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-      <Grid item xs={12} sm={6} md={2}>
-            <FormControl 
-            fullWidth
-            sx={{ m: 1, width: "100%" }}>
-              <InputLabel htmlFor="selectCalendarId">
-                {" "}
-                Calendar Year{" "}
-              </InputLabel>
-              <Select
-              fullWidth
-                className="calendar-dropdown"
-                name="selectedCaledarId"
-                onChange={(event) => setSelectedCalendarID(event.target.value)}
-                id="calendar"
-                value={selectCalendarId}
-              >
-                {calendars.map((calendar) => (
-                  <MenuItem value={calendar.id} key={calendar.id}>
-                    {calendar.calendar_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-      <CardContent>
-        <Grid container justifyContent="space-between" alignItems="center">
-          <Grid item xs={12} sm={6} md={2}>
-            <TextField
-              label="Event for"
-              type="text"
-              name="Event for"
-              value={eventFor}
-              required
-              onChange={(event) => setEventFor(event.target.value)}
-              sx={{ marginBottom: "10px", width: "100%" }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <TextField
-              sx={{ width: "100%" }}
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </Grid>
-         
-          <Grid item xs={12} sm={6} md={2}>
-            <FormControl sx={{ m: 1, width: "100%" }}>
-              <InputLabel id="event-label"> Event Options</InputLabel>
-              <Select
-                sx={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Event Type" />
-                )}
-                name="event_type"
-                id="eType"
-                value={eventOption}
-                onChange={(e) => setEventOption(e.target.value)}
-              >
-                <MenuItem value="0">Select Event Type</MenuItem>
-                <MenuItem value="birthday">Birthday</MenuItem>
-                <MenuItem value="anniversary">Anniversary</MenuItem>
-                <MenuItem value="memorial">Memorial</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          
-        {products.map((product) => (
-          <>
-            {!orderItems.some((item) => item.product_id === product.id) && (
-              <div key={product.id} className="items-form">
-                <h3>
-                  {product.name}: {product.price}
-                </h3>
-                <Button onClick={() => addItems(product.id, product.price)}>
-                  ADD
-                </Button>
-              </div>
-            )}
-          </>
-        ))}
-          <Grid item xs={12} sm={6} md={2}>
-            <Button onClick={eventHandleSubmit}> Submit Event </Button>
-          </Grid>
-        </Grid>
-      </CardContent>
-      <Button onClick={handleCheckout}> Check Out </Button>
-      <h2>
-        <NumericFormat
-          className="subtotal"
-          value={total}
-          decimalScale={4}
-          prefix={"$"}
-          readOnly
-        />
-      </h2>
+              </CardContent>
+            </Grid>
 
-      {products.map((product) => (
-        <div key={product.id}>
-          {product.name === "Extra Event" && (
-            <Button onClick={handleAddEvent}></Button>
-          )}
-          {product.name === "Calendar" && (
-            <Button
-              onClick={() => handleAddCalendar(product.id, product.price)}
-            ></Button>
-          )}
-        </div>
-      ))}
+            <Grid item xs={6}>
+              <CardContent>
+                <TextField
+                  sx={{ width: "100%" }}
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </CardContent>
+            </Grid>
 
-      <div></div>
-      <div className="orderDetails">
-        <h1>Event Details</h1>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Event Type</TableCell>
-                <TableCell>Name</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {event.map((event) => (
-                <TableRow key={event.id}>
-                  <TableCell>{formatDate(event.event_date)}</TableCell>
-                  <TableCell>{event.event_type}</TableCell>
-                  <TableCell>{event.event_name}</TableCell>
-                  <TableCell>
-                    <Button onClick={() => deleteUserEvent(event.id)}>
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
+            <Grid item xs={6}>
+              <CardContent>
+                <FormControl sx={{ width: "100%" }}>
+                  <InputLabel id="event-label"> Event Options</InputLabel>
+                  <Select
+                    sx={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Event Type" />
+                    )}
+                    name="event_type"
+                    id="eType"
+                    value={eventOption}
+                    onChange={(e) => setEventOption(e.target.value)}>
+                    <MenuItem value="0">Select Event Type</MenuItem>
+                    <MenuItem value="birthday">Birthday</MenuItem>
+                    <MenuItem value="anniversary">Anniversary</MenuItem>
+                    <MenuItem value="memorial">Memorial</MenuItem>
+                  </Select>
+                </FormControl>
+              </CardContent>
+            </Grid>
+            <Grid>
+              {products.map((product) => (
+                <>
+                  {!orderItems.some(
+                    (item) => item.product_id === product.id
+                  ) && (
+                    <div key={product.id} className="items-form">
+                      <h3>
+                        {product.name}: {product.price}
+                      </h3>
+                      <Button
+                        sx={{
+                          backgroundColor: "#77afdb",
+                          color: "white",
+                          fontSize: "1.2rem",
+                          height: "100%",
+                          fontWeight: "600",
+                          boxShadow: "none",
+                          marginTop: "2rem",
+                          borderRadius: "25px",
+                          "&:hover": {
+                            backgroundColor: "#77afdb",
+                          },
+                        }}
+                        onClick={() => addItems(product.id, product.price)}>
+                        ADD
+                      </Button>
+                    </div>
+                  )}
+                </>
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
 
-      </Card>
+              <CardContent></CardContent>
+              <div className="extra-calendar-container">
+                {orderItems.map((item) => (
+                  <div>
+                    {itemEditMode && item.id === itemEditId ? (
+                      <div key={item.id} className="item">
+                        <h3>
+                          {item.name} {item.price}
+                        </h3>
+                        <TextField
+                          sx={{
+                            width: "100%",
+                          }}
+                          label="Quantity"
+                          type="number"
+                          value={quantity}
+                          onChange={(e) => setQuantity(e.target.value)}
+                        />
+                        <Button
+                          onClick={() =>
+                            saveUpdate(item.product_id, item.price)
+                          }>
+                          Update
+                        </Button>
+                      </div>
+                    ) : (
+                      <div key={item.id} className="item">
+                        <h3>
+                          {item.name} {item.price}
+                        </h3>
+                        <TextField
+                          sx={{
+                            width: "100%",
+                          }}
+                          label="Quantity"
+                          type="text"
+                          value={item.quantity}
+                          onClick={() => updateItem(item.id, item.quantity)}
+                        />
+                        <Button
+                          sx={{
+                            backgroundColor: "#b80000",
+
+                            color: "white",
+                            fontSize: "1.2rem",
+                            height: "100%",
+                            fontWeight: "600",
+                            boxShadow: "none",
+                            marginTop: "2rem",
+                            borderRadius: "25px",
+                            "&:hover": {
+                              backgroundColor: "#bf4040",
+                            },
+                          }}
+                          onClick={() => deleteOrderItem(item.id)}>
+                          Remove
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <br />
+              <Grid item xs={12} sm={6} md={2}>
+                <Button
+                  sx={{
+                    backgroundColor: "#4caf50",
+                    color: "white",
+                    fontSize: "1.2rem",
+                    height: "100%",
+                    fontWeight: "600",
+                    boxShadow: "none",
+                    marginTop: "2rem",
+                    borderRadius: "25px",
+                    "&:hover": {
+                      backgroundColor: "#4caf50",
+                    },
+                  }}
+                  onClick={eventHandleSubmit}>
+                  {" "}
+                  Submit Event{" "}
+                </Button>
+              </Grid>
+            </Grid>
+            <br />
+            <Button
+              color="primary"
+              variant="contained"
+              sx={{
+                backgroundColor: "#4caf50",
+                color: "white",
+                height: "65px",
+                fontSize: "1.2rem",
+                fontWeight: "600",
+                boxShadow: "none",
+                marginTop: "2rem",
+                borderRadius: "25px",
+                "&:hover": {
+                  backgroundColor: "#4caf50",
+                },
+              }}
+              onClick={handleCheckout}>
+              {" "}
+              Check Out{" "}
+            </Button>
+            <h2>
+              <NumericFormat
+                className="subtotal"
+                value={total}
+                decimalScale={4}
+                prefix={"$"}
+                readOnly
+              />
+            </h2>
+
+            <div></div>
+            <div className="orderDetails">
+              <h1>Event Details</h1>
+              <hr />
+
+              <TableContainer component={Paper}>
+                <CardContent>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Date</TableCell>
+                        <TableCell>Event Type</TableCell>
+                        <TableCell>Name</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {event.map((event) => (
+                        <TableRow key={event.id}>
+                          <TableCell>{formatDate(event.event_date)}</TableCell>
+                          <TableCell>{event.event_type}</TableCell>
+                          <TableCell>{event.event_name}</TableCell>
+                          <TableCell>
+                            <Button
+                              color="primary"
+                              variant="contained"
+                              sx={{
+                                backgroundColor: "#b80000",
+                                color: "white",
+                                fontSize: "1.2rem",
+                                fontWeight: "600",
+                                padding: "1rem 2rem",
+                                boxShadow: "none",
+                                marginTop: "2rem",
+                                borderRadius: "25px",
+                                "&:hover": {
+                                  backgroundColor: "#bf4040",
+                                },
+                              }}
+                              onClick={() => deleteUserEvent(event.id)}>
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </TableContainer>
+            </div>
+          </Grid>
+        </Card>
       </ThemeProvider>
-      </form>
+    </form>
   );
 }
 
