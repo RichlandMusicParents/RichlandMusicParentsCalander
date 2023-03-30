@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import "./orderComplete.css";
 import {
   Table,
   TableBody,
@@ -54,18 +55,16 @@ export default function OrderCompleted() {
         mt={2}
       >
         <h2 style={{ color: "red" }}>Your order is confirmed!</h2>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Contact Information
-        </Typography>
+        <Typography>Contact Information</Typography>
         <div className="contactInfo">
           {orders.map((order) => (
             <section key={order.id}>
-              <Typography variant="h6">
+              <Typography>
                 Name: {order.first_name} {order.last_name}
               </Typography>
-              <Typography variant="h6">Address: {order.address}</Typography>
-              <Typography variant="h6">Phone: {order.phone}</Typography>
-              <Typography variant="h6">Email: {order.email}</Typography>
+              <Typography>Address: {order.address}</Typography>
+              <Typography>Phone: {order.phone}</Typography>
+              <Typography>Email: {order.email}</Typography>
             </section>
           ))}
         </div>
@@ -85,10 +84,10 @@ export default function OrderCompleted() {
             overflowX: "auto",
             borderRadius: "4px",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backgroundColor: "white",
+            backgroundColor: "#FFFF00",
           }}
         >
-          <Toolbar>
+          <Toolbar style={{ backgroundColor: "white", color: "black" }}>
             <Typography variant="h4" component="div">
               Order Information
             </Typography>
@@ -97,23 +96,47 @@ export default function OrderCompleted() {
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell>Address</TableCell>
-                  <TableCell>City</TableCell>
-                  <TableCell>State</TableCell>
-                  <TableCell>ZipCode</TableCell>
-                  <TableCell>Payment Type</TableCell>
-                  <TableCell>Total</TableCell>
+                  <TableCell
+                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                  >
+                    Address
+                  </TableCell>
+                  <TableCell
+                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                  >
+                    City
+                  </TableCell>
+                  <TableCell
+                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px", fontFamily: "bold"  }}
+                  >
+                    State
+                  </TableCell>
+                  <TableCell
+                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                  >
+                    ZipCode
+                  </TableCell>
+                  <TableCell
+                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                  >
+                    Payment Type
+                  </TableCell>
+                  <TableCell
+                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                  >
+                    Total
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {orders.map((orderInfo) => (
                   <TableRow key={orderInfo.id}>
-                    <TableCell>{orderInfo.address}</TableCell>
-                    <TableCell>{orderInfo.city}</TableCell>
-                    <TableCell>{orderInfo.state}</TableCell>
-                    <TableCell>{orderInfo.zip}</TableCell>
-                    <TableCell>{orderInfo.payment_type}</TableCell>
-                    <TableCell>${orderInfo.total}</TableCell>
+                    <TableCell  style={{  fontSize: "18px" }} >{orderInfo.address}</TableCell>
+                    <TableCell  style={{  fontSize: "18px" }} >{orderInfo.city}</TableCell>
+                    <TableCell  style={{  fontSize: "18px" }} >{orderInfo.state}</TableCell>
+                    <TableCell  style={{  fontSize: "18px" }} >{orderInfo.zip}</TableCell>
+                    <TableCell  style={{  fontSize: "18px" }} >{orderInfo.payment_type}</TableCell>
+                    <TableCell  style={{  fontSize: "18px" }} >${orderInfo.total}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -135,10 +158,18 @@ export default function OrderCompleted() {
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Event Type</TableCell>
-                <TableCell>Name</TableCell>
+              <TableRow
+                style={{ backgroundColor: "#1E90FF", color: "#FFFF00" }}
+              >
+                <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                  Date
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                  Event Type
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
+                  Name
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -146,10 +177,12 @@ export default function OrderCompleted() {
                 const formattedDate = formatDate(event.event_date);
 
                 return (
-                  <TableRow key={event.id}>
-                    <TableCell>{formattedDate}</TableCell>
-                    <TableCell>{event.event_type}</TableCell>
-                    <TableCell>{event.event_name}</TableCell>
+                  <TableRow
+                    style={{ backgroundColor: "#FFFF00", color: "#FFFF00" }}
+                  >
+                    <TableCell style={{  fontSize: "18px" }} >{formattedDate}</TableCell>
+                    <TableCell style={{  fontSize: "18px" }} >{event.event_type}</TableCell>
+                    <TableCell style={{  fontSize: "18px" }} >{event.event_name}</TableCell>
                   </TableRow>
                 );
               })}
