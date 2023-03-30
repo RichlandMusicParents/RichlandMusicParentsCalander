@@ -1,10 +1,18 @@
 .add-items {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 15%;
+}
+
+.add-items > h2 {
+  padding: 0;
+  margin: 0;
 }
 
 .items {
   height: 80%;
+  border-top: 1.5px solid rgb(219, 219, 219);
   overflow-y: scroll;
 }
 
@@ -13,7 +21,6 @@
   width: 30%;
   height: 20rem;
   padding: 1rem;
-  margin: 0 0 5rem 2rem;
   -webkit-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
   box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
@@ -37,34 +44,29 @@
 }
 
 .cart-icon {
-  scale: 300%;
+  scale: 250%;
   margin-right: 2rem;
-}
-
-.cart-icon-false {
-  scale: 300%;
-  position: relative;
-  top: 2rem;
-  left: 0.25rem;
   z-index: 0;
+  position: relative;
+  top: 1.5rem;
+  left: 0.5rem;
 }
 
 .cart-icon-container {
   position: relative;
   top: -0.75rem;
-  right: 1.6rem;
 }
 
 .cart-number {
-  padding-top: 0.25rem;
+  font-size: 10px;
 }
 
 .cart-indicator {
   position: relative;
-  bottom: 1rem;
-  left: 1rem;
-  height: 1.5rem;
-  width: 1.5rem;
+  bottom: 0.75rem;
+  left: 1.2rem;
+  height: 1rem;
+  width: 1rem;
   display: flex;
   background-color: red;
   color: white;
@@ -77,9 +79,9 @@
 
 .admin-add-products-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: center;
   margin-bottom: 1rem;
-  height: 30rem;
 }
 
 .add-subtract-icon {
@@ -128,6 +130,7 @@
 .cart-body {
   height: 70%;
   overflow-y: scroll;
+  border-top: 1.5px solid rgb(219, 219, 219);
   display: flex;
   flex-direction: column;
 }
@@ -163,7 +166,7 @@
 }
 
 .admin-cart-true {
-  width: 35rem;
+  width: 30%;
   height: 20rem;
   border-radius: 10px;
   padding: 1rem;

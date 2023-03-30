@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import "../AdminReview.css";
 
 export default function ReviewOrderInfo() {
   const userId = useParams();
@@ -105,176 +106,180 @@ export default function ReviewOrderInfo() {
   }
   return (
     <>
-      <container>
-        <header className="order-review-header">
-          <h1>Review Order</h1>
-        </header>
+      <div className="admin-review-container">
         <section>
-          <header>
+          <header className="customer-info-header">
             <h2>Customer Details</h2>
           </header>
           {specificOrder.map((orderInfo) => (
-            <article key={orderInfo.id}>
+            <article className="customer-info-body" key={orderInfo.id}>
               {orderInfoEditMode ? (
                 <>
                   <form className="edit-order-info-form">
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="First Name"
-                      type="text"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                    />
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="Last Name"
-                      type="text"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                    />
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="Street Address"
-                      type="text"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                    />
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="State"
-                      type="text"
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                    />
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="City"
-                      type="text"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                    />
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="Zip"
-                      type="text"
-                      value={zip}
-                      onChange={(e) => setZip(e.target.value)}
-                    />
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="Email"
-                      type="text"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="Phone"
-                      type="text"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
-                    <TextField
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      label="Phone"
-                      type="text"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
-                    <FormControl>
-                      <FormLabel id="demo-radio-buttons-group-label">
-                        Payed?
-                      </FormLabel>
-                      <RadioGroup
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue={isPayed}
-                        name="radio-buttons-group"
+                    <div className="edit-order-inputs">
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="First Name"
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="Last Name"
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="Street Address"
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="State"
+                        type="text"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                      />
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="City"
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                      />
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="Zip"
+                        type="text"
+                        value={zip}
+                        onChange={(e) => setZip(e.target.value)}
+                      />
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="Email"
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="Phone"
+                        type="text"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                      <TextField
+                        sx={{
+                          width: 150,
+                          margin: 1,
+                        }}
+                        label="Phone"
+                        type="text"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                    <div className="edit-order-radios">
+                      <FormControl>
+                        <FormLabel id="demo-radio-buttons-group-label">
+                          Payed?
+                        </FormLabel>
+                        <RadioGroup
+                          aria-labelledby="demo-radio-buttons-group-label"
+                          defaultValue={isPayed}
+                          name="radio-buttons-group"
+                        >
+                          <FormControlLabel
+                            value={true}
+                            control={<Radio />}
+                            label="Yes"
+                            onChange={(e) => setIsPayed(e.target.value)}
+                          />
+                          <FormControlLabel
+                            value={false}
+                            control={<Radio />}
+                            label="No"
+                            onChange={(e) => setIsPayed(e.target.value)}
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                      <FormControl>
+                        <FormLabel id="demo-radio-buttons-group-label">
+                          Delivered?
+                        </FormLabel>
+                        <RadioGroup
+                          aria-labelledby="demo-radio-buttons-group-label"
+                          defaultValue={isDelivered}
+                          name="radio-buttons-group"
+                        >
+                          <FormControlLabel
+                            value={true}
+                            control={<Radio />}
+                            label="Yes"
+                            onChange={(e) => setIsDelivered(e.target.value)}
+                          />
+                          <FormControlLabel
+                            value={false}
+                            control={<Radio />}
+                            label="No"
+                            onChange={(e) => setIsDelivered(e.target.value)}
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </div>
+
+                    <div className="edit-order-buttons">
+                      <Button
+                        sx={{
+                          width: 150,
+                          marginBlock: 1,
+                        }}
+                        variant="contained"
+                        onClick={saveOrderInfo}
                       >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="Yes"
-                          onChange={(e) => setIsPayed(e.target.value)}
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="No"
-                          onChange={(e) => setIsPayed(e.target.value)}
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel id="demo-radio-buttons-group-label">
-                        Delivered?
-                      </FormLabel>
-                      <RadioGroup
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue={isDelivered}
-                        name="radio-buttons-group"
+                        Save
+                      </Button>
+                      <Button
+                        sx={{
+                          width: 150,
+                          marginBlock: 1,
+                        }}
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => setOrderInfoEditMode(false)}
                       >
-                        <FormControlLabel
-                          value={true}
-                          control={<Radio />}
-                          label="Yes"
-                          onChange={(e) => setIsDelivered(e.target.value)}
-                        />
-                        <FormControlLabel
-                          value={false}
-                          control={<Radio />}
-                          label="No"
-                          onChange={(e) => setIsDelivered(e.target.value)}
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                    <Button
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      variant="contained"
-                      onClick={saveOrderInfo}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      sx={{
-                        width: 150,
-                        marginBlock: 1,
-                      }}
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => setOrderInfoEditMode(false)}
-                    >
-                      Cancel
-                    </Button>
+                        Cancel
+                      </Button>
+                    </div>
                   </form>
                 </>
               ) : (
@@ -321,7 +326,7 @@ export default function ReviewOrderInfo() {
             </article>
           ))}
         </section>
-      </container>
+      </div>
     </>
   );
 }

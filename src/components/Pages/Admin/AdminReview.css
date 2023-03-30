@@ -1,0 +1,45 @@
+.admin-review-container {
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.admin-review-top {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.customer-info-header {
+  padding-block: 1rem;
+}
+
+.customer-info-header h2 {
+  padding: 0;
+  margin: 0;
+}
+
+.customer-info-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  /* background-color: red; */
+}
+
+.edit-order-info-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: red;
+}
+
+.order-review-top-container {
+  display: flex;
+  width: 100%;
+}

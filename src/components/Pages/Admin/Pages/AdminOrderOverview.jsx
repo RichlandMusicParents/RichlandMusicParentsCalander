@@ -18,6 +18,7 @@ import {
 import { format } from "date-fns";
 import { NumericFormat } from "react-number-format";
 import ReviewOrderInfo from "../Components/ReviewOrderInfo";
+import CartComponent from "../Components/Cart";
 
 export default function AdminOrderOverview() {
   const userId = useParams();
@@ -29,12 +30,6 @@ export default function AdminOrderOverview() {
     dispatch({ type: "GET_SPECIFIC_EVENTS", payload: userId.id });
     dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId.id });
   }, []);
-
-  const [itemEditId, setItemEditId] = useState(0);
-  const [itemEditMode, setItemEditMode] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const [orderId, setOrderId] = useState(0);
-  const [orderTotal, setOrderTotal] = useState(0);
 
   const [editMode, setEditMode] = useState(false);
   const [eventEditId, setEventEditId] = useState(0);
@@ -53,16 +48,7 @@ export default function AdminOrderOverview() {
     (store) => store.adminReducer.specificOrder
   );
 
-  console.log("Order ID", orderId);
-  console.log(orderTotal);
-
-  useEffect(() => {
-    specificOrder[0] !== undefined && setOrderId(specificOrder[0].id);
-  }, [specificOrder]);
-
-  useEffect(() => {
-    specificOrder[0] !== undefined && setOrderTotal(specificOrder[0].total);
-  }, [specificOrder]);
+  // console.log(orderTotal);
 
   function deleteOrderItem(id) {
     dispatch({
@@ -103,24 +89,6 @@ export default function AdminOrderOverview() {
       payload: { id: id, user_id: userId },
     });
   }
-
-  function updateItem(id, itemQuantity) {
-    setItemEditMode(true);
-    setItemEditId(id);
-    setQuantity(itemQuantity);
-  }
-
-  useEffect(() => {
-    total();
-  }, [orderItems]);
-
-  const total = () => {
-    let totalVal = 0;
-    for (let i = 0; i < orderItems.length; i++) {
-      totalVal += Number(orderItems[i].price) * orderItems[i].quantity;
-    }
-    setOrderTotal(totalVal);
-  };
 
   function saveUpdate(product_id, price) {
     console.log(product_id, price);
@@ -189,7 +157,13 @@ export default function AdminOrderOverview() {
   }
   return (
     <>
-      <ReviewOrderInfo />
+      <header className="order-review-header">
+        <h1>Review Order</h1>
+      </header>
+      <div className="admin-review-top">
+        <ReviewOrderInfo />
+        <CartComponent />
+      </div>
       <section className="order-methods">
         <Select
           sx={{
@@ -210,47 +184,7 @@ export default function AdminOrderOverview() {
           <MenuItem value="Card">Card</MenuItem>
         </Select>
       </section>
-      <div className="order-items-area">
-        {orderItems.map((item) => (
-          <div className="items-cart">
-            {itemEditMode && item.id === itemEditId ? (
-              <div key={item.id} className="item">
-                <h3>
-                  {item.name} {item.price}
-                </h3>
-                <TextField
-                  sx={{
-                    width: 50,
-                  }}
-                  label="Quantity"
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
-                <Button onClick={() => saveUpdate(item.product_id, item.price)}>
-                  Update
-                </Button>
-              </div>
-            ) : (
-              <div key={item.id} className="item">
-                <h3>
-                  {item.name} {item.price}
-                </h3>
-                <TextField
-                  sx={{
-                    width: 50,
-                  }}
-                  label="Quantity"
-                  type="text"
-                  value={item.quantity}
-                  onClick={() => updateItem(item.id, item.quantity)}
-                />
-                <Button onClick={() => deleteOrderItem(item.id)}>Remove</Button>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+
       <div className="admin-events-view">
         <Paper>
           <h2>Created Events</h2>
@@ -379,7 +313,7 @@ export default function AdminOrderOverview() {
           </TableContainer>
         </Paper>
       </div>
-      <h1>
+      {/* <h1>
         SubTotal
         <NumericFormat
           className="subtotal"
@@ -388,7 +322,7 @@ export default function AdminOrderOverview() {
           prefix={"$"}
           readOnly
         />
-      </h1>
+      </h1> */}
       <Button variant="contained" onClick={sendToAdmin}>
         Complete Order
       </Button>
