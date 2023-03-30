@@ -63,7 +63,7 @@ function ImageSlider() {
       
           <Slider {...settings}>
           {images.map((image) => (
-        <div className="card">
+        <div className="card" key={image.id} >
           <div className="card-top">
             <img src={image.link}/> 
           </div>

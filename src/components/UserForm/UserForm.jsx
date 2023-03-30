@@ -247,9 +247,10 @@ className="form-card"
               </CardContent>
             </Grid> 
             <Grid item xs={6} > 
+            <CardContent>
             <FormControl 
             className="form-input"
-            sx={{ m: 1, width: "100%" }}>
+            sx={{ width: "100%" }}>
               <InputLabel id="event-label"> Payment Options</InputLabel>
 
               <Select
@@ -263,6 +264,7 @@ className="form-card"
                 <MenuItem value={"Check"}> Check </MenuItem>
               </Select>
             </FormControl>
+            </CardContent>
             </Grid> 
             <Grid item xs={12}>
             <Button
