@@ -88,7 +88,7 @@ export default function OrderCompleted() {
           }}
         >
           <Toolbar style={{ backgroundColor: "white", color: "black" }}>
-            <Typography variant="h4" component="div">
+            <Typography  variant="h4" component="h1" gutterBottom>
               Order Information
             </Typography>
           </Toolbar>

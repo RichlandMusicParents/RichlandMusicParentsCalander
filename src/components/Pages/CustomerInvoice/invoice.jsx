@@ -441,9 +441,6 @@ export default function Invoice() {
           onClose={() => setOpenSnackbar(false)}
           severity="info"
           sx={{
-            fontSize: "1.5rem",
-            backgroundColor: "black",
-            color: "yellow",
             fontWeight: "bold",
           }}
         >
