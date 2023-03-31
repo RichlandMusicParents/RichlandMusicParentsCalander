@@ -16,6 +16,8 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 // import "./OrderCompleted.css";
 
 export default function OrderCompleted() {
@@ -45,8 +47,34 @@ export default function OrderCompleted() {
     history.push("/splashPage");
   }
 
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+
+    typography: {
+      fontFamily: "Libre Baskerville, serif",
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: 1.5,
+    },
+  });
+
+
   return (
     <>
+       <ThemeProvider theme={richlandTheme}>
       <Box
         display="flex"
         flexDirection="column"
@@ -193,6 +221,7 @@ export default function OrderCompleted() {
       <Button 
       
       onClick={() => homePageClick()}> Back to HomePage</Button>
+      </ThemeProvider>
     </>
   );
 }

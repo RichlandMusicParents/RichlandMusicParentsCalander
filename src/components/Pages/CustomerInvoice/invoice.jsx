@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import {
   Table,
@@ -125,9 +126,34 @@ export default function Invoice() {
 
     return formatter.format(date);
   }
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+
+    typography: {
+      fontFamily: "Libre Baskerville, serif",
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: 1.5,
+    },
+  });
+
 
   return (
     <>
+      <ThemeProvider theme={richlandTheme}>
       <h2>Contact information</h2>
       <div className="contactInfo">
         {orders.map((order) => (
@@ -447,6 +473,7 @@ export default function Invoice() {
           Please review and verify the information provided below.
         </Alert>
       </Snackbar>
+      </ThemeProvider>
     </>
   );
 }
