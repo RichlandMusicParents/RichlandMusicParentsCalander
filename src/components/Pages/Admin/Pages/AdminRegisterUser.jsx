@@ -1,5 +1,7 @@
 import {
   Button,
+  createTheme,
+  ThemeProvider,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -36,80 +38,100 @@ export function AdminRegisterUser() {
     history.push("/admin-home");
   }
 
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+  });
+
   return (
     <>
-      <form className="admin-register-form">
-        <header>
-          <h2>Register New User</h2>
-        </header>
-        <TextField
-          sx={{
-            width: 300,
-            margin: 1,
-            marginTop: 3,
-          }}
-          label="Username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <TextField
-          sx={{
-            width: 300,
-            margin: 1,
-          }}
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <TextField
-          sx={{
-            width: 300,
-            margin: 1,
-          }}
-          label="First Name"
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        <TextField
-          sx={{
-            width: 300,
-            margin: 1,
-          }}
-          label="Last Name"
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        <Select
-          sx={{
-            width: 300,
-            margin: 1,
-          }}
-          name="event_type"
-          id="eType"
-          value={isAdmin}
-          onChange={(e) => setIsAdmin(e.target.value)}
-        >
-          <MenuItem value={0}>Select User Type</MenuItem>
-          <MenuItem value={true}>Admin</MenuItem>
-          <MenuItem value={false}>Not Admin</MenuItem>
-        </Select>
-        <Button
-          sx={{
-            width: 300,
-            margin: 1,
-            marginBottom: 5,
-            height: 50,
-          }}
-          variant="contained"
-          onClick={registerUser}
-        >
-          Create Account
-        </Button>
-      </form>
+      <ThemeProvider theme={richlandTheme}>
+        <form className="admin-register-form">
+          <header>
+            <h2>Register New User</h2>
+          </header>
+          <TextField
+            sx={{
+              width: 300,
+              margin: 1,
+              marginTop: 3,
+            }}
+            label="Username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            sx={{
+              width: 300,
+              margin: 1,
+            }}
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <TextField
+            sx={{
+              width: 300,
+              margin: 1,
+            }}
+            label="First Name"
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <TextField
+            sx={{
+              width: 300,
+              margin: 1,
+            }}
+            label="Last Name"
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <Select
+            sx={{
+              width: 300,
+              margin: 1,
+            }}
+            name="event_type"
+            id="eType"
+            value={isAdmin}
+            onChange={(e) => setIsAdmin(e.target.value)}
+          >
+            <MenuItem value={0}>Select User Type</MenuItem>
+            <MenuItem value={true}>Admin</MenuItem>
+            <MenuItem value={false}>Not Admin</MenuItem>
+          </Select>
+          <Button
+            sx={{
+              width: 300,
+              margin: 1,
+              marginBottom: 5,
+              height: 50,
+              fontSize: 15,
+            }}
+            variant="contained"
+            onClick={registerUser}
+          >
+            Create Account
+          </Button>
+        </form>
+      </ThemeProvider>
     </>
   );
 }

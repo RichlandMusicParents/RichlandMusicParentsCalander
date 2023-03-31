@@ -1,192 +1,56 @@
 .add-items {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15%;
+}
+
+.add-items > h2 {
+  padding: 0;
+  margin: 0;
+}
+
+.items {
+  height: 80%;
+  border-top: 1.5px solid rgb(219, 219, 219);
+  overflow-y: scroll;
 }
 
 .add-items-container {
   border-radius: 1rem;
-  width: fit-content;
-  height: fit-content;
+  width: 30%;
+  height: 20rem;
   padding: 1rem;
-  margin: 0 0 5rem 2rem;
   -webkit-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
   box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
 }
 
-.no-cart-item-message {
+.event-form-header {
+  height: 15%;
   display: flex;
-  height: 10rem;
-  justify-content: center;
-  align-items: center;
-  color: #cfcfcf;
-}
-
-.cart-header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
-.cart-header > h2 {
-  margin-left: 1rem;
-}
 
-.cart-icon {
-  scale: 300%;
-  margin-right: 2rem;
-}
-
-.cart-icon-false {
-  scale: 300%;
-  position: relative;
-  top: 2rem;
-  left: 0.25rem;
-  z-index: 0;
-}
-
-.cart-icon-container {
-  position: relative;
-  right: 1.6rem;
-}
-
-.cart-icon-false:hover {
-  cursor: pointer;
-}
-
-.cart-indicator {
-  position: relative;
-  bottom: 1.5rem;
-  left: 1rem;
-  height: 1.5rem;
-  width: 1.5rem;
-  display: flex;
-  background-color: red;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid black;
-  border-radius: 100%;
-  z-index: 1;
-}
-
-.cart-indicator:hover {
-  cursor: pointer;
-}
 
 .admin-add-products-top {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  height: 30rem;
-}
-
-.admin-cart-false:hover {
-  cursor: pointer;
-}
-
-.add-subtract-icon {
-  scale: 150%;
-  margin-inline: 1rem;
-}
-
-.subtract-icon {
-  scale: 200%;
-  margin-inline: 1rem;
-}
-
-.cart-item-quantity {
-  font-size: 1.2rem;
-  /* font-weight: bold; */
-  display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  border: 1px solid black;
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 0.5rem;
-}
-
-.cart-check-mark {
-  scale: 200%;
-  color: green;
-  margin-inline: 2rem;
-}
-
-.remove-from-cart-icon {
-  scale: 150%;
-  margin-inline: 2rem;
-  color: red;
-}
-
-.cart-total {
-  position: absolute;
-  top: 27rem;
-  left: 78rem;
-}
-
-.remove-from-cart-icon:hover,
-.cart-check-mark:hover,
-.add-subtract-icon:hover,
-.cart-plus:hover,
-.subtract-icon:hover {
-  cursor: pointer;
-}
-
-.product-cart-icon {
-  /* border: 1px solid black; */
-  color: green;
-  scale: 200%;
-  margin: 0 2rem 0 0;
+  margin-bottom: 1rem;
 }
 
 .item-inputs {
-  width: fit-content;
-  height: fit-content;
   display: flex;
   align-items: center;
-}
-
-.admin-cart-true {
-  width: 40rem;
-  height: 22rem;
-  border-radius: 10px;
-  padding: 1rem;
-  margin: 0 2rem 5rem 0;
-  -webkit-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
-  -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
-  box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
-}
-
-.admin-cart-false {
-  width: 5rem;
-  height: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  padding: 1rem;
-  margin: 0 2rem 5rem 0;
-  -webkit-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
-  -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
-  box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
-}
-.cart-item {
-  display: flex;
-  border-radius: 10px;
-  padding-inline: 1rem;
-  margin: 1rem;
-  justify-content: space-between;
-  align-items: center;
-  -webkit-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
-  -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
-  box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
 }
 
 .product-item {
   display: flex;
   border-radius: 10px;
   padding: 0.5rem;
-  width: 30rem;
+  width: 90%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -204,8 +68,8 @@
 
 .events-section {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 }
 
 .admin-add-event-form {
@@ -217,9 +81,9 @@
 }
 
 .admin-add-event-form-container {
-  margin-left: 2rem;
   border-radius: 10px;
-  width: 40rem;
+  height: 20rem;
+  width: 30%;
   padding: 1rem;
   display: flex;
   flex-direction: column;

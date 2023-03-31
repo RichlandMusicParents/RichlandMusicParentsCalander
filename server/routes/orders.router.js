@@ -175,7 +175,7 @@ WHERE "orders"."user_id" = $1;
     .query(text, [req.params.id])
     .then((results) => res.send(results.rows))
     .catch((error) => {
-      console.log("Error making SELECT for items:", error);
+      console.log("Error making GET for order:", error);
       res.sendStatus(500);
     });
 });
