@@ -57,6 +57,7 @@ function ConfirmDialog() {
 
   return (
     <>
+
        <ThemeProvider theme={richlandTheme}>
 
       <Button 
@@ -75,7 +76,9 @@ function ConfirmDialog() {
            backgroundColor: richlandTheme.palette.primary.dark,
          },
        }}
-      onClick={handleClickOpen}> Complete Order</Button>
+  
+      <Button variant="contained" onClick={handleClickOpen}> Complete Order</Button>
+
       <Dialog
       sx={{textAlign:"center"}}
         open={open}
