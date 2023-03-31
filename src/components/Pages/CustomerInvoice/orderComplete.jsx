@@ -112,7 +112,7 @@ export default function OrderCompleted() {
             overflowX: "auto",
             borderRadius: "4px",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backgroundColor: "#FFFF00",
+            backgroundColor: "white",
           }}
         >
           <Toolbar style={{ backgroundColor: "white", color: "black" }}>
@@ -125,32 +125,32 @@ export default function OrderCompleted() {
               <TableHead>
                 <TableRow>
                   <TableCell
-                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                    style={{ backgroundColor: "#6095c2", color: "white",fontSize: "25px",fontFamily: "bold"  }}
                   >
                     Address
                   </TableCell>
                   <TableCell
-                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                    style={{ backgroundColor: "#6095c2", color: "white",fontSize: "25px",fontFamily: "bold"  }}
                   >
                     City
                   </TableCell>
                   <TableCell
-                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px", fontFamily: "bold"  }}
+                    style={{ backgroundColor: "#6095c2", color: "white",fontSize: "25px", fontFamily: "bold"  }}
                   >
                     State
                   </TableCell>
                   <TableCell
-                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                    style={{ backgroundColor: "#6095c2", color: "white",fontSize: "25px",fontFamily: "bold"  }}
                   >
                     ZipCode
                   </TableCell>
                   <TableCell
-                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                    style={{ backgroundColor: "#6095c2", color: "white",fontSize: "25px",fontFamily: "bold"  }}
                   >
                     Payment Type
                   </TableCell>
                   <TableCell
-                    style={{ backgroundColor: "#1E90FF", color: "#FFFF00",fontSize: "25px",fontFamily: "bold"  }}
+                    style={{ backgroundColor: "#6095c2", color: "white",fontSize: "25px",fontFamily: "bold"  }}
                   >
                     Total
                   </TableCell>
@@ -187,7 +187,7 @@ export default function OrderCompleted() {
           <Table>
             <TableHead>
               <TableRow
-                style={{ backgroundColor: "#1E90FF", color: "#FFFF00" }}
+                style={{ backgroundColor: "#6095c2", color: "white" }}
               >
                 <TableCell style={{ fontWeight: "bold", fontSize: "large" }}>
                   Date
@@ -206,7 +206,7 @@ export default function OrderCompleted() {
 
                 return (
                   <TableRow
-                    style={{ backgroundColor: "#FFFF00", color: "#FFFF00" }}
+                    style={{ backgroundColor: "white", color: "white" }}
                   >
                     <TableCell style={{  fontSize: "18px" }} >{formattedDate}</TableCell>
                     <TableCell style={{  fontSize: "18px" }} >{event.event_type}</TableCell>
