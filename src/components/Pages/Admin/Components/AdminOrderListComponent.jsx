@@ -1,12 +1,14 @@
 import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function AdminOrderListComponent() {
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_ALL_ORDERS" });
   }, [dispatch]);
   const dispatch = useDispatch();
+  const history = useHistory();
   const orders = useSelector((store) => store.adminReducer.allOrders);
   function editOrder(id, user_id) {
     history.push(`/admin-order-review/${user_id}`);

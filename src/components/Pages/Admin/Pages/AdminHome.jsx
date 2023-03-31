@@ -21,7 +21,9 @@ export default function Admin() {
       <container className="admin-home-event-list-container">
         <AdminEventsListComponent />
       </container>
-      <AdminOrderListComponent />
+      <section className="admin-order-list-section">
+        <AdminOrderListComponent />
+      </section>
     </>
   );
 }
