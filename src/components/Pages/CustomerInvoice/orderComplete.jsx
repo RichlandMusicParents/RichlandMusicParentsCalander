@@ -17,6 +17,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "./orderComplete.css"
 
 // import "./OrderCompleted.css";
 
@@ -124,7 +125,7 @@ export default function OrderCompleted() {
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell
+                  <TableCell 
                     style={{ backgroundColor: "#6095c2", color: "white",fontSize: "25px",fontFamily: "bold"  }}
                   >
                     Address
