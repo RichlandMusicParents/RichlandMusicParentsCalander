@@ -22,6 +22,7 @@ import {
   MenuItem,
   Select,
   Alert,
+  Grid,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import eventReducer from "../../../redux/reducers/event.reducer";
@@ -150,169 +151,185 @@ export default function Invoice() {
     },
   });
 
-
   return (
     <>
       <ThemeProvider theme={richlandTheme}>
-      <h2>Contact information</h2>
-      <div className="contactInfo">
-        {orders.map((order) => (
-          <section key={order.id}>
-            <h2>
-              Name:{" "}
+      <Grid container spacing={1}>
+    <Grid item xs={6} md={6}>
+      <Paper elevation={6}>
+        <h2>Contact information</h2>
+        <div className="contactInfo">
+          {orders.map((order) => (
+            <section key={order.id}>
+              <h2>
+                Name:{" "}
+                {editingContactInfo ? (
+                  <TextField
+                    defaultValue={`${order.first_name} ${order.last_name}`}
+                    onChange={(e) => {
+                      setEditFirstName(e.target.value.split(" ")[0]);
+                      setEditLastName(e.target.value.split(" ")[1]);
+                    }}
+                  />
+                ) : (
+                  `${order.first_name} ${order.last_name}`
+                )}
+              </h2>
+              <h2>
+                Address:{" "}
+                {editingContactInfo ? (
+                  <TextField
+                    defaultValue={order.address}
+                    onChange={(e) => setEditAddress(e.target.value)}
+                  />
+                ) : (
+                  order.address
+                )}
+              </h2>
+              <h2>
+                Phone:{" "}
+                {editingContactInfo ? (
+                  <TextField
+                    defaultValue={order.phone}
+                    onChange={(e) => setEditPhone(e.target.value)}
+                  />
+                ) : (
+                  order.phone
+                )}
+              </h2>
+              <h2>
+                Email:{" "}
+                {editingContactInfo ? (
+                  <TextField
+                    defaultValue={order.email}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                  />
+                ) : (
+                  order.email
+                )}
+              </h2>
               {editingContactInfo ? (
-                <TextField
-                  defaultValue={`${order.first_name} ${order.last_name}`}
-                  onChange={(e) => {
-                    setEditFirstName(e.target.value.split(" ")[0]);
-                    setEditLastName(e.target.value.split(" ")[1]);
-                  }}
-                />
+                <>
+                  <IconButton
+                    onClick={() => {
+                      saveEditOrder(order.id);
+                      setEditingContactInfo(false);
+                    }}
+                  >
+                    <CheckIcon color="success" fontSize="large" />
+                  </IconButton>
+                  <Button
+                    onClick={() => setEditingContactInfo(false)}
+                    color="error"
+                    fontSize="large"
+                    variant="contained"
+                  >
+                    Cancel
+                  </Button>
+                </>
               ) : (
-                `${order.first_name} ${order.last_name}`
-              )}
-            </h2>
-            <h2>
-              Address:{" "}
-              {editingContactInfo ? (
-                <TextField
-                  defaultValue={order.address}
-                  onChange={(e) => setEditAddress(e.target.value)}
-                />
-              ) : (
-                order.address
-              )}
-            </h2>
-            <h2>
-              Phone:{" "}
-              {editingContactInfo ? (
-                <TextField
-                  defaultValue={order.phone}
-                  onChange={(e) => setEditPhone(e.target.value)}
-                />
-              ) : (
-                order.phone
-              )}
-            </h2>
-            <h2>
-              Email:{" "}
-              {editingContactInfo ? (
-                <TextField
-                  defaultValue={order.email}
-                  onChange={(e) => setEditEmail(e.target.value)}
-                />
-              ) : (
-                order.email
-              )}
-            </h2>
-            {editingContactInfo ? (
-              <>
-                <IconButton
-                  onClick={() => {
-                    saveEditOrder(order.id);
-                    setEditingContactInfo(false);
-                  }}
-                >
-                  <CheckIcon color="success" fontSize="large" />
-                </IconButton>
                 <Button
-                  onClick={() => setEditingContactInfo(false)}
-                  color="error"
                   fontSize="large"
+                  color="success"
                   variant="contained"
+                  onClick={() => {
+                    setEditingContactInfo(true);
+                    setEditFirstName(order.first_name);
+                    setEditLastName(order.last_name);
+                    setEditAddress(order.address);
+                    setEditCity(order.city);
+                    setEditState(order.state);
+                    setEditZip(order.zip);
+                    setEditPhone(order.phone);
+                    setEditEmail(order.email);
+                  }}
                 >
-                  Cancel
+                  Edit
                 </Button>
-              </>
-            ) : (
-              <Button
-                fontSize="large"
-                color="success"
-                variant="contained"
-                onClick={() => {
-                  setEditingContactInfo(true);
-                  setEditFirstName(order.first_name);
-                  setEditLastName(order.last_name);
-                  setEditAddress(order.address);
-                  setEditCity(order.city);
-                  setEditState(order.state);
-                  setEditZip(order.zip);
-                  setEditPhone(order.phone);
-                  setEditEmail(order.email);
-                }}
-              >
-                Edit
-              </Button>
-            )}
-          </section>
-        ))}
-      </div>
-
-      <div className="eventDetails">
-        <h1>Event Details</h1>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Event Type</TableCell>
-                <TableCell>Name</TableCell>
-              </TableRow>
-            </TableHead>
+              )}
+            </section>
+          ))}
+        </div>
+        </Paper>
+        </Grid>
+        <Grid item xs={6} md={6}>
+      <Paper elevation={6}>
+        <section className="contact_order">
+          <div className="orderDetails">
             <TableBody>
-              {events.map((event) => (
-                <TableRow key={event.id}>
+              <h1>Order Information</h1>
+              <TableRow>
+                <TableCell>Address</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell>State</TableCell>
+                <TableCell>Zipcode</TableCell>
+                <TableCell>Payment type</TableCell>
+                <TableCell>Total</TableCell>
+              </TableRow>
+              {orders.map((orderInfo) => (
+                <TableRow key={orderInfo.id}>
+                  {["address", "city", "state", "zip"].map((field) => (
+                    <TableCell key={field}>
+                      {editingOrderId === orderInfo.id ? (
+                        <TextField
+                          defaultValue={orderInfo[field]}
+                          onChange={(e) => {
+                            if (field === "address") {
+                              setEditAddress(e.target.value);
+                            } else if (field === "city") {
+                              setEditCity(e.target.value);
+                            } else if (field === "state") {
+                              setEditState(e.target.value);
+                            } else if (field === "zip") {
+                              setEditZip(e.target.value);
+                            }
+                          }}
+                        />
+                      ) : (
+                        orderInfo[field]
+                      )}
+                    </TableCell>
+                  ))}
                   <TableCell>
-                    {editingEventId === event.id ? (
-                      <TextField
-                        type="date"
-                        defaultValue={event.event_date}
-                        onChange={(e) => setEditEventDate(e.target.value)}
-                      />
-                    ) : (
-                      formatDate(event.event_date)
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {editingEventId === event.id ? (
+                    {editingOrderId === orderInfo.id ? (
                       <Select
-                        value={editEventType}
-                        onChange={(e) => setEditEventType(e.target.value)}
+                        value={
+                          editOrderInfo.payment_type || orderInfo.payment_type
+                        }
+                        onChange={(e) =>
+                          setEditOrderInfo({
+                            ...editOrderInfo,
+                            payment_type: e.target.value,
+                          })
+                        }
                         displayEmpty
                       >
-                        <MenuItem value={event.event_type}>
-                          <em>{event.event_type}</em>
+                        <MenuItem value={orderInfo.payment_type}>
+                          <em>{orderInfo.payment_type}</em>
                         </MenuItem>
-                        <MenuItem value="Birthday">Birthday</MenuItem>
-                        <MenuItem value="Anniversary">Anniversary</MenuItem>
-                        <MenuItem value="Memorial">Memorial</MenuItem>
+                        <MenuItem value="Cash">Cash</MenuItem>
+                        <MenuItem value="Check">Check</MenuItem>
                       </Select>
                     ) : (
-                      event.event_type
+                      orderInfo.payment_type
                     )}
                   </TableCell>
-
+                  <TableCell>${orderInfo.total}</TableCell>
                   <TableCell>
-                    {editingEventId === event.id ? (
-                      <TextField
-                        defaultValue={event.event_name}
-                        onChange={(e) => setEditEventName(e.target.value)}
-                      />
-                    ) : (
-                      event.event_name
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {editingEventId === event.id ? (
+                    {editingOrderId === orderInfo.id ? (
                       <>
-                        <IconButton onClick={() => saveEditEvent(event.id)}>
-                          <CheckIcon color="success" fontSize="large" />
+                        <IconButton
+                          color="success"
+                          fontSize="large"
+                          onClick={() => saveEditOrder(orderInfo.id)}
+                        >
+                          <CheckIcon />
                         </IconButton>
                         <Button
                           color="error"
                           fontSize="large"
                           variant="contained"
-                          onClick={() => setEditingEventId(null)}
+                          onClick={() => setEditingOrderId(null)}
                         >
                           Cancel
                         </Button>
@@ -323,157 +340,154 @@ export default function Invoice() {
                         color="success"
                         variant="contained"
                         onClick={() => {
-                          setEditingEventId(event.id);
-                          setEditEventType(event.event_type);
-                          setEditEventName(event.event_name);
-                          setEditEventDate(event.event_date);
+                          setEditingOrderId(orderInfo.id);
+                          setEditFirstName(orderInfo.first_name);
+                          setEditLastName(orderInfo.last_name);
+                          setEditAddress(orderInfo.address);
+                          setEditCity(orderInfo.city);
+                          setEditState(orderInfo.state);
+                          setEditZip(orderInfo.zip);
+                          setEditPhone(orderInfo.phone);
+                          setEditEmail(orderInfo.email);
+                          setEditOrderInfo({
+                            payment_type: orderInfo.payment_type,
+                          });
                         }}
                       >
                         Edit
                       </Button>
                     )}
                   </TableCell>
-                  <TableCell>
-                    <IconButton
-                      onClick={() => deleteUserEvent(event.id)}
-                      color="error"
-                    >
-                      <DeleteIcon fontSize="large" />
-                    </IconButton>
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+          </div>
+        </section>
+        </Paper>
+        </Grid>
+        </Grid>
+        </ThemeProvider>
 
-      <div className="orderDetails">
-        <TableBody>
-          <h1>Order Information</h1>
-          <TableRow>
-            <TableCell>Address</TableCell>
-            <TableCell>City</TableCell>
-            <TableCell>State</TableCell>
-            <TableCell>Zipcode</TableCell>
-            <TableCell>Payment type</TableCell>
-            <TableCell>Total</TableCell>
-          </TableRow>
-          {orders.map((orderInfo) => (
-            <TableRow key={orderInfo.id}>
-              {["address", "city", "state", "zip"].map((field) => (
-                <TableCell key={field}>
-                  {editingOrderId === orderInfo.id ? (
-                    <TextField
-                      defaultValue={orderInfo[field]}
-                      onChange={(e) => {
-                        if (field === "address") {
-                          setEditAddress(e.target.value);
-                        } else if (field === "city") {
-                          setEditCity(e.target.value);
-                        } else if (field === "state") {
-                          setEditState(e.target.value);
-                        } else if (field === "zip") {
-                          setEditZip(e.target.value);
-                        }
-                      }}
-                    />
-                  ) : (
-                    orderInfo[field]
-                  )}
-                </TableCell>
-              ))}
-              <TableCell>
-                {editingOrderId === orderInfo.id ? (
-                  <Select
-                    value={editOrderInfo.payment_type || orderInfo.payment_type}
-                    onChange={(e) =>
-                      setEditOrderInfo({
-                        ...editOrderInfo,
-                        payment_type: e.target.value,
-                      })
-                    }
-                    displayEmpty
-                  >
-                    <MenuItem value={orderInfo.payment_type}>
-                      <em>{orderInfo.payment_type}</em>
-                    </MenuItem>
-                    <MenuItem value="Cash">Cash</MenuItem>
-                    <MenuItem value="Check">Check</MenuItem>
-                  </Select>
-                ) : (
-                  orderInfo.payment_type
-                )}
-              </TableCell>
-              <TableCell>${orderInfo.total}</TableCell>
-              <TableCell>
-                {editingOrderId === orderInfo.id ? (
-                  <>
-                    <IconButton
-                      color="success"
-                      fontSize="large"
-                      onClick={() => saveEditOrder(orderInfo.id)}
-                    >
-                      <CheckIcon />
-                    </IconButton>
-                    <Button
-                      color="error"
-                      fontSize="large"
-                      variant="contained"
-                      onClick={() => setEditingOrderId(null)}
-                    >
-                      Cancel
-                    </Button>
-                  </>
-                ) : (
-                  <Button
-                    fontSize="large"
-                    color="success"
-                    variant="contained"
-                    onClick={() => {
-                      setEditingOrderId(orderInfo.id);
-                      setEditFirstName(orderInfo.first_name);
-                      setEditLastName(orderInfo.last_name);
-                      setEditAddress(orderInfo.address);
-                      setEditCity(orderInfo.city);
-                      setEditState(orderInfo.state);
-                      setEditZip(orderInfo.zip);
-                      setEditPhone(orderInfo.phone);
-                      setEditEmail(orderInfo.email);
-                      setEditOrderInfo({
-                        payment_type: orderInfo.payment_type,
-                      });
-                    }}
-                  >
-                    Edit
-                  </Button>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        <div className="eventDetails">
+          <h1>Event Details</h1>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Event Type</TableCell>
+                  <TableCell>Name</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {events.map((event) => (
+                  <TableRow key={event.id}>
+                    <TableCell>
+                      {editingEventId === event.id ? (
+                        <TextField
+                          type="date"
+                          defaultValue={event.event_date}
+                          onChange={(e) => setEditEventDate(e.target.value)}
+                        />
+                      ) : (
+                        formatDate(event.event_date)
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {editingEventId === event.id ? (
+                        <Select
+                          value={editEventType}
+                          onChange={(e) => setEditEventType(e.target.value)}
+                          displayEmpty
+                        >
+                          <MenuItem value={event.event_type}>
+                            <em>{event.event_type}</em>
+                          </MenuItem>
+                          <MenuItem value="Birthday">Birthday</MenuItem>
+                          <MenuItem value="Anniversary">Anniversary</MenuItem>
+                          <MenuItem value="Memorial">Memorial</MenuItem>
+                        </Select>
+                      ) : (
+                        event.event_type
+                      )}
+                    </TableCell>
+
+                    <TableCell>
+                      {editingEventId === event.id ? (
+                        <TextField
+                          defaultValue={event.event_name}
+                          onChange={(e) => setEditEventName(e.target.value)}
+                        />
+                      ) : (
+                        event.event_name
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {editingEventId === event.id ? (
+                        <>
+                          <IconButton onClick={() => saveEditEvent(event.id)}>
+                            <CheckIcon color="success" fontSize="large" />
+                          </IconButton>
+                          <Button
+                            color="error"
+                            fontSize="large"
+                            variant="contained"
+                            onClick={() => setEditingEventId(null)}
+                          >
+                            Cancel
+                          </Button>
+                        </>
+                      ) : (
+                        <Button
+                          fontSize="large"
+                          color="success"
+                          variant="contained"
+                          onClick={() => {
+                            setEditingEventId(event.id);
+                            setEditEventType(event.event_type);
+                            setEditEventName(event.event_name);
+                            setEditEventDate(event.event_date);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <IconButton
+                        onClick={() => deleteUserEvent(event.id)}
+                        color="error"
+                      >
+                        <DeleteIcon fontSize="large" />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
 
         <Notification />
         <ConfirmDialog />
-      </div>
 
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={9000}
-        onClose={() => setOpenSnackbar(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={9000}
           onClose={() => setOpenSnackbar(false)}
-          severity="info"
-          sx={{
-            fontWeight: "bold",
-          }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
-          Please review and verify the information provided below.
-        </Alert>
-      </Snackbar>
-      </ThemeProvider>
+          <Alert
+            onClose={() => setOpenSnackbar(false)}
+            severity="info"
+            sx={{
+              fontWeight: "bold",
+            }}
+          >
+            Please review and verify the information provided below.
+          </Alert>
+        </Snackbar>
+      
     </>
   );
 }
