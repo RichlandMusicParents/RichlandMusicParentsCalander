@@ -26,7 +26,7 @@ export function AdminEditUser() {
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
     dispatch({ type: "GET_SPECIFIC_EVENTS", payload: userId.id });
-    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId });
+    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId.id });
   }, [dispatch]);
 
   const richlandTheme = createTheme({
@@ -124,6 +124,7 @@ export function AdminEditUser() {
     };
 
     dispatch({ type: "ADMIN_EDIT_USER", payload: userObj });
+    setUserEditMode(false);
     // console.log(userObj);
     // history.push("/admin");
   }

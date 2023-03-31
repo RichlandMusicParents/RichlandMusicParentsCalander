@@ -19,7 +19,7 @@ import { format } from "date-fns";
 import { GoPlus } from "react-icons/go";
 import { BsCartCheckFill } from "react-icons/bs";
 import "../AdminAddEvents.css";
-import CartComponent from "../Components/Cart";
+import CartComponent from "../Components/Cart/Cart";
 
 export default function AdminAddEvents() {
   const userId = useParams();
@@ -65,7 +65,7 @@ export default function AdminAddEvents() {
 
   function addItems(product_id, price) {
     const orderItems = {
-      quantity: quantity,
+      quantity: 1,
       price,
       product_id,
       order_id: Number(orderId),
@@ -152,37 +152,29 @@ export default function AdminAddEvents() {
 
   // VARIABLES THAT WON'T CHANGE ON THIS PAGE
 
-  const paymentType = "0";
-  const isPayed = false;
-  const isDelivered = false;
-
   // USE EFFECT TO SET ALL OF OUR ORDER INFO FROM OUR STORE WHENEVER WE LOAD OR ORDER CHANGES
 
-  useEffect(() => {
-    // IF OUR ORDER[0] IS NOT UNDEFINED WE WILL SET EACH STATE TO THE CORRECT OBJECT KEY AND WE WILL DO THIS ANYTIME OUR ORDER STORE CHANGES
-    // IF OUR ORDER[0] IS UNDEFINED WE WILL NOT SET ANY STATE WHICH MEANS WE WONT GET AN ERROR
-    order[0] !== undefined && setFirstName(order[0].first_name);
-    order[0] !== undefined && setLastName(order[0].last_name);
-    order[0] !== undefined && setAddress(order[0].address);
-    order[0] !== undefined && setCity(order[0].city);
-    order[0] !== undefined && setZip(order[0].zip);
-    order[0] !== undefined && setState(order[0].state);
-    order[0] !== undefined && setEmail(order[0].email);
-    order[0] !== undefined && setPhone(order[0].phone);
-  }, [order]);
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState(0);
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  // useEffect(() => {
+  //   // IF OUR ORDER[0] IS NOT UNDEFINED WE WILL SET EACH STATE TO THE CORRECT OBJECT KEY AND WE WILL DO THIS ANYTIME OUR ORDER STORE CHANGES
+  //   // IF OUR ORDER[0] IS UNDEFINED WE WILL NOT SET ANY STATE WHICH MEANS WE WONT GET AN ERROR
+  //   order[0] !== undefined && setFirstName(order[0].first_name);
+  //   order[0] !== undefined && setLastName(order[0].last_name);
+  //   order[0] !== undefined && setAddress(order[0].address);
+  //   order[0] !== undefined && setCity(order[0].city);
+  //   order[0] !== undefined && setZip(order[0].zip);
+  //   order[0] !== undefined && setState(order[0].state);
+  //   order[0] !== undefined && setEmail(order[0].email);
+  //   order[0] !== undefined && setPhone(order[0].phone);
+  // }, [order]);
 
   // THIS IS OUR FUNCTION TO UPDATE OUR ORDER WITH THE CORRECT TOTAL
 
   /* ==== END ORDER UPDATE ==== */
+
+  function sendToReview() {
+    saveOrderInfo();
+    history.push(`/admin-order-review/${Number(userId.id)}`);
+  }
 
   return (
     <>
@@ -468,6 +460,7 @@ export default function AdminAddEvents() {
             </Table>
           </TableContainer>
         </Paper>
+        <Button onClick={sendToReview}>Checkout</Button>
       </section>
     </>
   );

@@ -3,12 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { GoPlus, GoDash } from "react-icons/go";
 import { BsXSquareFill, BsCheck2, BsCart2 } from "react-icons/bs";
-import { Button } from "@mui/material";
+import { Button, createTheme, ThemeProvider } from "@mui/material";
+import "./Cart.css";
 
 export default function CartComponent() {
   const userId = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+  });
   useEffect(() => {
     // IF OUR ORDER[0] IS NOT UNDEFINED WE WILL SET EACH STATE TO THE CORRECT OBJECT KEY AND WE WILL DO THIS ANYTIME OUR ORDER STORE CHANGES
     // IF OUR ORDER[0] IS UNDEFINED WE WILL NOT SET ANY STATE WHICH MEANS WE WONT GET AN ERROR
@@ -140,110 +158,108 @@ export default function CartComponent() {
     setCartTotal(totalVal);
   };
 
-  function sendToReview() {
-    saveOrderInfo();
-    history.push(`/admin-order-review/${Number(userId.id)}`);
-  }
   return (
     <>
-      {" "}
-      {orderItems.length > 0 ? (
-        <>
-          <section className="admin-cart-true">
-            <header className="cart-header">
-              <h2>Cart Items</h2>
-              <div className="cart-icon-container">
-                <BsCart2 className="cart-icon" />
-                <div className="cart-indicator">
-                  <p className="cart-number">{orderItems.length}</p>
-                </div>
-              </div>
-            </header>
-            <article className="cart-body">
-              {orderItems.map((item) => (
-                <>
-                  <div key={item.id} className="cart-item">
-                    {itemEditMode && item.id === itemEditId ? (
-                      <>
-                        <h3>
-                          {item.name}: ${item.price}
-                        </h3>
-                        <div className="item-inputs">
-                          <GoDash
-                            className="subtract-icon"
-                            onClick={() => setQuantity(quantity - 1)}
-                          />
-                          <p className="cart-item-quantity">{quantity}</p>
-                          <GoPlus
-                            className="add-subtract-icon"
-                            onClick={() => setQuantity(quantity + 1)}
-                          />
-                          <BsCheck2
-                            className="cart-check-mark"
-                            onClick={() =>
-                              saveUpdate(item.product_id, item.price)
-                            }
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <h3>
-                          {item.name}: ${item.price}
-                        </h3>
-                        <div className="item-inputs">
-                          <GoDash
-                            className="subtract-icon"
-                            onClick={() =>
-                              updateItemMinus(item.id, item.quantity)
-                            }
-                          />
-                          <p className="cart-item-quantity">{item.quantity}</p>
-                          <GoPlus
-                            className="add-subtract-icon"
-                            onClick={() =>
-                              updateItemAdd(item.id, item.quantity)
-                            }
-                          />
-
-                          <BsXSquareFill
-                            onClick={() => deleteOrderItem(item.id)}
-                            className="remove-from-cart-icon"
-                          />
-                        </div>
-                      </>
-                    )}
+      <ThemeProvider theme={richlandTheme}>
+        {orderItems.length > 0 ? (
+          <>
+            <section className="admin-cart-true">
+              <header className="cart-header">
+                <h2>Cart Items</h2>
+                <div className="cart-icon-container">
+                  <BsCart2 className="cart-icon" />
+                  <div className="cart-indicator">
+                    <p className="cart-number">{orderItems.length}</p>
                   </div>
-                </>
-              ))}
-            </article>
-            <div className="cart-total">
-              <h2>Total: {formatter.format(cartTotal)}</h2>
-              <Button onClick={sendToReview}>Checkout</Button>
-            </div>
-          </section>
-        </>
-      ) : (
-        <>
-          <section className="admin-cart-true">
-            <header className="cart-header">
-              <h2>Cart Items</h2>
-              <div className="cart-icon-container">
-                <BsCart2 className="cart-icon" />
-                <div className="cart-indicator">
-                  <p className="cart-number">{orderItems.length}</p>
                 </div>
+              </header>
+              <article className="cart-body">
+                {orderItems.map((item) => (
+                  <>
+                    <div key={item.id} className="cart-item">
+                      {itemEditMode && item.id === itemEditId ? (
+                        <>
+                          <h3>
+                            {item.name}: ${item.price}
+                          </h3>
+                          <div className="item-inputs">
+                            <GoDash
+                              className="subtract-icon"
+                              onClick={() => setQuantity(quantity - 1)}
+                            />
+                            <p className="cart-item-quantity">{quantity}</p>
+                            <GoPlus
+                              className="add-subtract-icon"
+                              onClick={() => setQuantity(quantity + 1)}
+                            />
+                            <BsCheck2
+                              className="cart-check-mark"
+                              onClick={() =>
+                                saveUpdate(item.product_id, item.price)
+                              }
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <h3>
+                            {item.name}: ${item.price}
+                          </h3>
+                          <div className="item-inputs">
+                            <GoDash
+                              className="subtract-icon"
+                              onClick={() =>
+                                updateItemMinus(item.id, item.quantity)
+                              }
+                            />
+                            <p className="cart-item-quantity">
+                              {item.quantity}
+                            </p>
+                            <GoPlus
+                              className="add-subtract-icon"
+                              onClick={() =>
+                                updateItemAdd(item.id, item.quantity)
+                              }
+                            />
+
+                            <BsXSquareFill
+                              onClick={() => deleteOrderItem(item.id)}
+                              className="remove-from-cart-icon"
+                            />
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </>
+                ))}
+              </article>
+              <div className="cart-total">
+                <h2>Total: {formatter.format(cartTotal)}</h2>
               </div>
-            </header>
-            <article className="cart-body">
-              <h2>Cart is empty</h2>
-            </article>
-            <article className="cart-total">
-              <h2>Total: {formatter.format(cartTotal)}</h2>
-            </article>
-          </section>
-        </>
-      )}
+            </section>
+          </>
+        ) : (
+          <>
+            <section className="admin-cart-true">
+              <header className="cart-header">
+                <h2>Cart Items</h2>
+                <div className="cart-icon-container">
+                  <BsCart2 className="cart-icon" />
+                  <div className="cart-indicator">
+                    <p className="cart-number">{orderItems.length}</p>
+                  </div>
+                </div>
+              </header>
+              <article className="cart-body">
+                <h2>Cart is empty</h2>
+              </article>
+              <article className="cart-total">
+                <h2>Total: {formatter.format(cartTotal)}</h2>
+              </article>
+            </section>
+          </>
+        )}
+      </ThemeProvider>
     </>
   );
 }
