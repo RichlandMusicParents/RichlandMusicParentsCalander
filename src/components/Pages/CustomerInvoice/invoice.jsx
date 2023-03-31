@@ -157,62 +157,7 @@ export default function Invoice() {
   });
 
   return (
-
-    <div className="invoice-container">
-      <ThemeProvider  theme={richlandTheme}>
-        <Card className="card-container">
-        <h1 className="event-title" >Event Form</h1>
-     
-      <div className="contactInfo">
-
-        <Box sx={{ width: 600}}>
-        <Paper elevation={6} 
-        sx={{ padding: "50px",
-        marginRight: "25px"}}>
-
-      <u> 
-        <h2 className="h2-container">Contact information</h2></u> 
-        {orders.map((order) => (
-          <section key={order.id}>
-            <h2 className="h2-container">
-              Name:{" "}
-              {editingContactInfo ? (
-                <TextField
-                  defaultValue={`${order.first_name} ${order.last_name}`}
-                  onChange={(e) => {
-                    setEditFirstName(e.target.value.split(" ")[0]);
-                    setEditLastName(e.target.value.split(" ")[1]);
-                  }}
-                />
-              ) : (
-                `${order.first_name} ${order.last_name}`
-              )}
-            </h2>
-            <h2 className="h2-container">
-              Address:{" "}
-              {editingContactInfo ? (
-                <TextField
-                  defaultValue={order.address}
-                  onChange={(e) => setEditAddress(e.target.value)}
-                />
-              ) : (
-                order.address
-              )}
-            </h2>
-            <h2 className="h2-container">
-              Phone:{" "}
-              {editingContactInfo ? (
-                <TextField
-                  defaultValue={order.phone}
-                  onChange={(e) => setEditPhone(e.target.value)}
-                />
-              ) : (
-                order.phone
-              )}
-            </h2>
-            <h2 className="h2-container">
-              Email:{" "}
-
+    <>
       <ThemeProvider theme={richlandTheme}>
       <Grid container spacing={1}>
     <Grid item xs={6} md={6}>
@@ -268,7 +213,6 @@ export default function Invoice() {
                   order.email
                 )}
               </h2>
-
               {editingContactInfo ? (
                 <>
                   <IconButton
@@ -307,72 +251,6 @@ export default function Invoice() {
                 >
                   Edit
                 </Button>
-
-              </>
-            ) : (
-              <Button
-                fontSize="large"
-                color="success"
-                variant="contained"
-                onClick={() => {
-                  setEditingContactInfo(true);
-                  setEditFirstName(order.first_name);
-                  setEditLastName(order.last_name);
-                  setEditAddress(order.address);
-                  setEditCity(order.city);
-                  setEditState(order.state);
-                  setEditZip(order.zip);
-                  setEditPhone(order.phone);
-                  setEditEmail(order.email);
-                }}
-              >
-                Edit
-              </Button>
-            )}
-          </section>
-        ))}
-        
-        </Paper>
-        </Box>
-      </div>
-
-      <div className="eventDetails">
-       <u> <h1>Event Details</h1></u> 
-        <TableContainer component={Paper}>
-          <Table >
-            <TableHead
-            className="table-head"
-            style={{ 
-              backgroundColor: "#77afdb", 
-              color: "white",
-              fontSize: "25px",
-              fontFamily: "bold" 
-               }}>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Event Type</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell 
-                style={{ 
-              backgroundColor: "#77afdb", 
-              color: "white",
-              fontSize: "25px",
-              fontFamily: "bold" 
-               }}></TableCell>
-               <TableCell 
-               style={{ 
-              backgroundColor: "#77afdb", 
-              color: "white",
-              fontSize: "25px",
-              fontFamily: "bold" 
-               }}></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody
-            >
-              {events.map((event) => (
-                <TableRow key={event.id}>
-
               )}
             </section>
           ))}
@@ -417,7 +295,6 @@ export default function Invoice() {
                       )}
                     </TableCell>
                   ))}
-
                   <TableCell>
                     {editingOrderId === orderInfo.id ? (
                       <Select
@@ -439,22 +316,7 @@ export default function Invoice() {
                         <MenuItem value="Check">Check</MenuItem>
                       </Select>
                     ) : (
-
-                      event.event_type
-                    )}
-                  </TableCell>
-
-                  <TableCell >
-                    {editingEventId === event.id ? (
-                      <TextField
-                        defaultValue={event.event_name}
-                        onChange={(e) => setEditEventName(e.target.value)}
-                      />
-                    ) : (
-                      event.event_name
-
                       orderInfo.payment_type
-
                     )}
                   </TableCell>
                   <TableCell>${orderInfo.total}</TableCell>
@@ -503,120 +365,7 @@ export default function Invoice() {
                   </TableCell>
                 </TableRow>
               ))}
-
-          </Table>
-        </TableContainer>
-      </div>
-<Paper elevation={4}>
-      <div className="orderDetails">
-        <TableBody >
-         <u> <h1>Order Information</h1></u>
-          <TableRow>
-            <TableCell>Address</TableCell>
-            <TableCell>City</TableCell>
-            <TableCell>State</TableCell>
-            <TableCell>Zipcode</TableCell>
-            <TableCell>Payment type</TableCell>
-            <TableCell>Total</TableCell>
-          </TableRow>
-          {orders.map((orderInfo) => (
-            <TableRow key={orderInfo.id}>
-              {["address", "city", "state", "zip"].map((field) => (
-                <TableCell key={field}>
-                  {editingOrderId === orderInfo.id ? (
-                    <TextField
-                      defaultValue={orderInfo[field]}
-                      onChange={(e) => {
-                        if (field === "address") {
-                          setEditAddress(e.target.value);
-                        } else if (field === "city") {
-                          setEditCity(e.target.value);
-                        } else if (field === "state") {
-                          setEditState(e.target.value);
-                        } else if (field === "zip") {
-                          setEditZip(e.target.value);
-                        }
-                      }}
-                    />
-                  ) : (
-                    orderInfo[field]
-                  )}
-                </TableCell>
-              ))}
-              <TableCell>
-                {editingOrderId === orderInfo.id ? (
-                  <Select
-                    value={editOrderInfo.payment_type || orderInfo.payment_type}
-                    onChange={(e) =>
-                      setEditOrderInfo({
-                        ...editOrderInfo,
-                        payment_type: e.target.value,
-                      })
-                    }
-                    displayEmpty
-                  >
-                    <MenuItem value={orderInfo.payment_type}>
-                      <em>{orderInfo.payment_type}</em>
-                    </MenuItem>
-                    <MenuItem value="Cash">Cash</MenuItem>
-                    <MenuItem value="Check">Check</MenuItem>
-                  </Select>
-                ) : (
-                  orderInfo.payment_type
-                )}
-              </TableCell>
-              <TableCell>${orderInfo.total}</TableCell>
-              <TableCell>
-                {editingOrderId === orderInfo.id ? (
-                  <>
-                    <IconButton
-                      color="success"
-                      fontSize="large"
-                      onClick={() => saveEditOrder(orderInfo.id)}
-                    >
-                      <CheckIcon />
-                    </IconButton>
-                    <Button
-                      color="error"
-                      fontSize="large"
-                      variant="contained"
-                      onClick={() => setEditingOrderId(null)}
-                    >
-                      Cancel
-                    </Button>
-                  </>
-                ) : (
-                  <Button
-                    fontSize="large"
-                    color="success"
-                    variant="contained"
-                    onClick={() => {
-                      setEditingOrderId(orderInfo.id);
-                      setEditFirstName(orderInfo.first_name);
-                      setEditLastName(orderInfo.last_name);
-                      setEditAddress(orderInfo.address);
-                      setEditCity(orderInfo.city);
-                      setEditState(orderInfo.state);
-                      setEditZip(orderInfo.zip);
-                      setEditPhone(orderInfo.phone);
-                      setEditEmail(orderInfo.email);
-                      setEditOrderInfo({
-                        payment_type: orderInfo.payment_type,
-                      });
-                    }}
-                  >
-                    Edit
-                  </Button>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-        <Notification />
-        <ConfirmDialog />
-      </div>
-      </Paper>
-
+            </TableBody>
           </div>
         </section>
         </Paper>
@@ -727,21 +476,12 @@ export default function Invoice() {
         <Notification />
         <ConfirmDialog />
 
-
         <Snackbar
           open={openSnackbar}
           autoHideDuration={9000}
           onClose={() => setOpenSnackbar(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
-
-          Please review and verify the information provided below.
-        </Alert>
-      </Snackbar>
-      </Card>
-      </ThemeProvider>
-    </div>
-
           <Alert
             onClose={() => setOpenSnackbar(false)}
             severity="info"
@@ -754,6 +494,6 @@ export default function Invoice() {
         </Snackbar>
       
     </>
-
   );
 }
+
