@@ -282,9 +282,24 @@ export default function Invoice() {
                 <TableCell>Date</TableCell>
                 <TableCell>Event Type</TableCell>
                 <TableCell>Name</TableCell>
+                <TableCell 
+                style={{ 
+              backgroundColor: "#77afdb", 
+              color: "white",
+              fontSize: "25px",
+              fontFamily: "bold" 
+               }}></TableCell>
+               <TableCell 
+               style={{ 
+              backgroundColor: "#77afdb", 
+              color: "white",
+              fontSize: "25px",
+              fontFamily: "bold" 
+               }}></TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody
+            >
               {events.map((event) => (
                 <TableRow key={event.id}>
                   <TableCell>
@@ -317,7 +332,7 @@ export default function Invoice() {
                     )}
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell >
                     {editingEventId === event.id ? (
                       <TextField
                         defaultValue={event.event_name}
@@ -372,9 +387,9 @@ export default function Invoice() {
           </Table>
         </TableContainer>
       </div>
-
+<Paper elevation={4}>
       <div className="orderDetails">
-        <TableBody>
+        <TableBody >
          <u> <h1>Order Information</h1></u>
           <TableRow>
             <TableCell>Address</TableCell>
@@ -477,10 +492,10 @@ export default function Invoice() {
             </TableRow>
           ))}
         </TableBody>
-
         <Notification />
         <ConfirmDialog />
       </div>
+      </Paper>
 
       <Snackbar
         open={openSnackbar}
