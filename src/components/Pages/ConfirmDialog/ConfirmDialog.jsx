@@ -32,7 +32,7 @@ function ConfirmDialog() {
 
   return (
     <>
-      <Button onClick={handleClickOpen}> Complete Order</Button>
+      <Button variant="contained" onClick={handleClickOpen}> Complete Order</Button>
       <Dialog
       sx={{textAlign:"center"}}
         open={open}
