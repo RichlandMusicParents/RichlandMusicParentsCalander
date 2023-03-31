@@ -27,7 +27,7 @@ function ConfirmDialog() {
     setShowThankYou(true);
     setTimeout(() => {
       history.push("/Complete");
-    }, 5000);
+    }, 3000);
   };
 
   return (
