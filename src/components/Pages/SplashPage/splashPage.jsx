@@ -65,15 +65,18 @@ function SplashPage() {
         }}
         onClick={getStartedButton}>Get Started</Button>
          <h2 className="subtitle">
-            Support students and the community with ease and join our cause
-            today!
+           <i><b>Support students and the community with ease and join our cause
+            today!</b> </i> 
           </h2>
          </div>
         <div className="image-slider-container"> 
         <ImageSlider/>
         </div>
         <Card className="card-container"
-        sx={{borderRadius:"35px"}}>
+
+        sx={{borderRadius:"35px", 
+        backgroundColor:"#aed1ec",
+        margin:"100px"}}>
         <div className="description-container">
         <p className="splash-description">
         Join the Richland Music Parents' community fundraising revolution with our Music Parents Community Calendar app! Our app offers an easy and efficient way to contribute to the community effort by adding important dates such as birthdays, anniversaries, and in memory of.
