@@ -6,7 +6,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
-import { textAlign } from "@mui/system";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 
 function ConfirmDialog() {
   const history = useHistory();
@@ -30,9 +31,51 @@ function ConfirmDialog() {
     }, 3000);
   };
 
+   const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+
+    typography: {
+      fontFamily: "Libre Baskerville, serif",
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: 1.5,
+    },
+  });
+
   return (
     <>
-      <Button onClick={handleClickOpen}> Complete Order</Button>
+       <ThemeProvider theme={richlandTheme}>
+
+      <Button 
+       color="primary"
+       variant="contained"
+       sx={{
+         backgroundColor: "#",
+         color: "white",
+         height: "65px",
+         fontSize: "1.2rem",
+         fontWeight: "600",
+         boxShadow: "none",
+         marginTop: "2rem",
+         borderRadius: "25px",
+         "&:hover": {
+           backgroundColor: richlandTheme.palette.primary.dark,
+         },
+       }}
+      onClick={handleClickOpen}> Complete Order</Button>
       <Dialog
       sx={{textAlign:"center"}}
         open={open}
@@ -68,6 +111,7 @@ function ConfirmDialog() {
           </DialogContent>
         )}
       </Dialog>
+      </ThemeProvider>
     </>
   );
 }

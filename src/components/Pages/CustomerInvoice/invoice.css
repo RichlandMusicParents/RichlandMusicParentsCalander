@@ -1,0 +1,23 @@
+.invoice-container {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    background-color: #f9f9f9;
+    margin: 50px;
+    
+}
+
+.event-title {
+    text-align: left;
+    padding: 1.2rem;
+}
+
+.contactInfo {
+    padding: 1.2rem;
+    margin: 50px;
+}
+
+.h2-container {
+    text-align: left;
+}
+

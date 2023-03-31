@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./Event.css";
 import { Card } from "@mui/material";
 
+
 import {
   CardContent,
   TextField,
@@ -484,7 +485,7 @@ function Events() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Date</TableCell>
+                        <TableCell >Date</TableCell>
                         <TableCell>Event Type</TableCell>
                         <TableCell>Name</TableCell>
                       </TableRow>

@@ -23,7 +23,7 @@
     -2px 2px 0 #000,
     2px 2px 0 #000;
     cursor: auto;
-    animation: blink 1s infinite alternate;
+    animation: blink 2s infinite alternate;
 }
 
 @keyframes blink {

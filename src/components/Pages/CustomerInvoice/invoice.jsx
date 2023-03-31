@@ -8,6 +8,10 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Card } from "@mui/material";
+
+
+import "./invoice.css"
 
 import {
   Table,
@@ -18,6 +22,7 @@ import {
   TableRow,
   Button,
   Paper,
+  Box,
   TextField,
   MenuItem,
   Select,
@@ -152,13 +157,23 @@ export default function Invoice() {
 
 
   return (
-    <>
-      <ThemeProvider theme={richlandTheme}>
-      <h2>Contact information</h2>
+    <div className="invoice-container">
+      <ThemeProvider  theme={richlandTheme}>
+        <Card className="card-container">
+        <h1 className="event-title" >Event Form</h1>
+     
       <div className="contactInfo">
+
+        <Box sx={{ width: 600}}>
+        <Paper elevation={6} 
+        sx={{ padding: "50px",
+        marginRight: "25px"}}>
+
+      <u> 
+        <h2 className="h2-container">Contact information</h2></u> 
         {orders.map((order) => (
           <section key={order.id}>
-            <h2>
+            <h2 className="h2-container">
               Name:{" "}
               {editingContactInfo ? (
                 <TextField
@@ -172,7 +187,7 @@ export default function Invoice() {
                 `${order.first_name} ${order.last_name}`
               )}
             </h2>
-            <h2>
+            <h2 className="h2-container">
               Address:{" "}
               {editingContactInfo ? (
                 <TextField
@@ -183,7 +198,7 @@ export default function Invoice() {
                 order.address
               )}
             </h2>
-            <h2>
+            <h2 className="h2-container">
               Phone:{" "}
               {editingContactInfo ? (
                 <TextField
@@ -194,7 +209,7 @@ export default function Invoice() {
                 order.phone
               )}
             </h2>
-            <h2>
+            <h2 className="h2-container">
               Email:{" "}
               {editingContactInfo ? (
                 <TextField
@@ -246,13 +261,23 @@ export default function Invoice() {
             )}
           </section>
         ))}
+        
+        </Paper>
+        </Box>
       </div>
 
       <div className="eventDetails">
-        <h1>Event Details</h1>
+       <u> <h1>Event Details</h1></u> 
         <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
+          <Table >
+            <TableHead
+            className="table-head"
+            style={{ 
+              backgroundColor: "#77afdb", 
+              color: "white",
+              fontSize: "25px",
+              fontFamily: "bold" 
+               }}>
               <TableRow>
                 <TableCell>Date</TableCell>
                 <TableCell>Event Type</TableCell>
@@ -350,7 +375,7 @@ export default function Invoice() {
 
       <div className="orderDetails">
         <TableBody>
-          <h1>Order Information</h1>
+         <u> <h1>Order Information</h1></u>
           <TableRow>
             <TableCell>Address</TableCell>
             <TableCell>City</TableCell>
@@ -473,7 +498,8 @@ export default function Invoice() {
           Please review and verify the information provided below.
         </Alert>
       </Snackbar>
+      </Card>
       </ThemeProvider>
-    </>
+    </div>
   );
 }
