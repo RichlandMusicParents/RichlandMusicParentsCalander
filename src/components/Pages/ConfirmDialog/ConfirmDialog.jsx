@@ -77,7 +77,7 @@ function ConfirmDialog() {
          },
        }}
   
-      <Button variant="contained" onClick={handleClickOpen}> Complete Order</Button>
+     onClick={handleClickOpen}> Complete Order</Button>
 
       <Dialog
       sx={{textAlign:"center"}}
