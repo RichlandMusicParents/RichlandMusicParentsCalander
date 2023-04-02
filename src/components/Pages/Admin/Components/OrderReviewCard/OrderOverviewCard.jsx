@@ -137,12 +137,14 @@ export default function OrderOverviewCard() {
                       </header>
                       <div className="name-input-container">
                         <input
+                          id="review-input"
                           className="name-input"
                           type="text"
                           value={firstName}
                           onChange={(e) => setFirstName(e.target.value)}
                         />
                         <input
+                          id="review-input"
                           className="name-input"
                           type="text"
                           value={lastName}
@@ -151,12 +153,14 @@ export default function OrderOverviewCard() {
                       </div>
 
                       <input
+                        id="review-input"
                         className="non-name-input"
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />
                       <input
+                        id="review-input"
                         className="non-name-input"
                         type="text"
                         value={phone}
@@ -168,18 +172,21 @@ export default function OrderOverviewCard() {
                         <h3>Shipping</h3>
                       </header>
                       <input
+                        id="review-input"
                         type="text"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                       />
                       <div className="city-state-inputs">
                         <input
+                          id="review-input"
                           className="city-input"
                           type="text"
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
                         />
                         <input
+                          id="review-input"
                           className="state-input"
                           type="text"
                           value={state}
@@ -188,6 +195,7 @@ export default function OrderOverviewCard() {
                       </div>
 
                       <input
+                        id="review-input"
                         className="zip-input"
                         type="text"
                         value={zip}
@@ -228,7 +236,10 @@ export default function OrderOverviewCard() {
                         <header>
                           <p className="radio-header">Delivered?</p>
                         </header>
-                        <div id="is-delivered-radio">
+                        <div
+                          className="is-payed-inputs"
+                          id="is-delivered-radio"
+                        >
                           <input
                             type="radio"
                             id="yes"

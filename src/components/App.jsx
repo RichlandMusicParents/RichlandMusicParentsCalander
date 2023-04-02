@@ -36,6 +36,8 @@ import AdminOrderOverview from "./Pages/Admin/Pages/AdminOrderOverview";
 import { AdminRegisterUser } from "./Pages/Admin/Pages/AdminRegisterUser";
 import { AdminEditUser } from "./Pages/Admin/Pages/AdminEditUser";
 import AdminAddOrder from "./Pages/Admin/Pages/AdminAddOrder";
+import AdminSearchUser from "./Pages/Admin/Pages/AdminSearchUser";
+import AdminAllEventsAndOrders from "./Pages/Admin/Pages/AdminAllEventsAndOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -124,16 +126,16 @@ function App() {
 
           <ProtectedRoute path="/userform">
             <UserForm />
-            </ProtectedRoute>
+          </ProtectedRoute>
 
           <ProtectedRoute path="/events">
             <Events />
-            </ProtectedRoute>
+          </ProtectedRoute>
 
           {/* This is the final final page the user sees that thanks them for ordering and to view their orders. */}
           <ProtectedRoute path="/Complete">
             <OrderCompleted />
-            </ProtectedRoute>
+          </ProtectedRoute>
 
           <Route exact path="/admin-home">
             {user.is_admin ? (
@@ -208,6 +210,34 @@ function App() {
           <Route exact path="/admin-edit-user/:id">
             {user.is_admin ? (
               <AdminEditUser />
+            ) : (
+              <Route>
+                <h1>403</h1>
+                <h2>
+                  You do not have access to this page. Please sign in as an
+                  admin to view.
+                </h2>
+              </Route>
+            )}
+          </Route>
+
+          <Route exact path="/admin-search-user">
+            {user.is_admin ? (
+              <AdminSearchUser />
+            ) : (
+              <Route>
+                <h1>403</h1>
+                <h2>
+                  You do not have access to this page. Please sign in as an
+                  admin to view.
+                </h2>
+              </Route>
+            )}
+          </Route>
+
+          <Route exact path="/admin-orders-and-events">
+            {user.is_admin ? (
+              <AdminAllEventsAndOrders />
             ) : (
               <Route>
                 <h1>403</h1>

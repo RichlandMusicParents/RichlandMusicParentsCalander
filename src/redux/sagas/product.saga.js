@@ -21,9 +21,19 @@ function* fetchUserProducts() {
   }
 }
 
+function* fetchAdminProducts() {
+  try {
+    const response = yield axios.get("/api/products/");
+    const product = response.data;
+    yield put({ type: "SET_ADMIN_PRODUCTS", payload: product });
+  } catch (error) {
+    console.log("Error fetching products", error);
+  }
+}
+
 function* addProduct(action) {
   try {
-    yield axios.post("/api/products", action.payload);
+    yield axios.post("/api/products/add-products", action.payload);
     yield put({
       type: "FETCH_PRODUCTS",
     });
@@ -36,6 +46,7 @@ function* productSaga() {
   yield takeLatest("FETCH_USER_PRODUCTS", fetchUserProducts);
   yield takeLatest("FETCH_PRODUCTS", fetchProducts);
   yield takeLatest("ADD_PRODUCT", addProduct);
+  yield takeLatest("ADMIN_RAW_PRODUCTS", fetchAdminProducts);
 }
 
 export default productSaga;

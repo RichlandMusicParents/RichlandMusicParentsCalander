@@ -14,10 +14,7 @@ router.get("/all-products", rejectUnauthenticated, (req, res) => {
   }
 
   const text = `
-  SELECT
-  *
-FROM
-  "product";
+  select *, "calendar".calendar_name from "product" join "calendar" on "calendar".id = product.calendar_id;
           `;
   if (req.user.is_admin === true) {
     pool
@@ -33,19 +30,18 @@ FROM
 });
 
 //GET route for user
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   const queryText = 'SELECT * FROM "product"';
-  pool.query(queryText)
+  pool
+    .query(queryText)
     .then((result) => {
       res.send(result.rows);
     })
     .catch((error) => {
-      console.log('Error getting product', error);
+      console.log("Error getting product", error);
       res.sendStatus(500);
     });
 });
-
-
 
 router.post("/add-products", rejectUnauthenticated, (req, res) => {
   if (!req.user.is_admin) {
