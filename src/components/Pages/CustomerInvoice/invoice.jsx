@@ -157,16 +157,26 @@ export default function Invoice() {
   });
 
   return (
-    <>
+    <div className="invoice-container" >
       <ThemeProvider theme={richlandTheme}>
-      <Grid container spacing={1}>
-    <Grid item xs={6} md={6}>
-      <Paper elevation={6}>
-        <h2>Contact information</h2>
+      <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem"}}>
+   
+
+      <Paper elevation={6} 
+    style={{
+      width: "calc(50% - 20px)",
+      margin: "10px",
+      padding: "20px",
+      boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    }}
+
+    className="contact-info"
+      >
+        <h2 className=".h2-container">Contact information</h2>
         <div className="contactInfo">
           {orders.map((order) => (
             <section key={order.id}>
-              <h2>
+              <h2 className=".h2-container" >
                 Name:{" "}
                 {editingContactInfo ? (
                   <TextField
@@ -234,6 +244,7 @@ export default function Invoice() {
                 </>
               ) : (
                 <Button
+               sx={{marginLeft:"150px"}}
                   fontSize="large"
                   color="success"
                   variant="contained"
@@ -256,9 +267,17 @@ export default function Invoice() {
           ))}
         </div>
         </Paper>
-        </Grid>
-        <Grid item xs={6} md={6}>
-      <Paper elevation={6}>
+       
+       
+        <Paper className="order-info" elevation={6} 
+     style={{
+      width: "calc(50% - 20px)",
+      margin: "10px",
+      padding: "20px",
+      boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+      overflowX: "auto",
+    }}
+        >
         <section className="contact_order">
           <div className="orderDetails">
             <TableBody>
@@ -295,6 +314,7 @@ export default function Invoice() {
                       )}
                     </TableCell>
                   ))}
+
                   <TableCell>
                     {editingOrderId === orderInfo.id ? (
                       <Select
@@ -369,19 +389,22 @@ export default function Invoice() {
           </div>
         </section>
         </Paper>
-        </Grid>
-        </Grid>
+        </div>
         </ThemeProvider>
 
-        <div className="eventDetails">
-          <h1>Event Details</h1>
-          <TableContainer component={Paper}>
+        <div className="event-details">
+          <u><h1>Event Details</h1></u>
+          <Paper elevation={5}>
+          <TableContainer  className="event-details" component={Paper}>
+      
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>Date</TableCell>
                   <TableCell>Event Type</TableCell>
                   <TableCell>Name</TableCell>
+                  <TableCell>Edit</TableCell>
+                  <TableCell>Delete</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -434,6 +457,8 @@ export default function Invoice() {
                             <CheckIcon color="success" fontSize="large" />
                           </IconButton>
                           <Button
+
+                        sx={{marginRight:" 50px"}}
                             color="error"
                             fontSize="large"
                             variant="contained"
@@ -444,6 +469,8 @@ export default function Invoice() {
                         </>
                       ) : (
                         <Button
+                        className="edit-button"
+                        sx={{fontFamily:" Libre Baskerville, serif;"}}
                           fontSize="large"
                           color="success"
                           variant="contained"
@@ -470,7 +497,9 @@ export default function Invoice() {
                 ))}
               </TableBody>
             </Table>
+          
           </TableContainer>
+          </Paper>
         </div>
 
         <Notification />
@@ -493,7 +522,7 @@ export default function Invoice() {
           </Alert>
         </Snackbar>
       
-    </>
+    </div>
   );
 }
 
