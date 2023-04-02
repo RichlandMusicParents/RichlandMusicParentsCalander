@@ -14,7 +14,7 @@ router.get("/all-products", rejectUnauthenticated, (req, res) => {
   }
 
   const text = `
-  select *, "calendar".calendar_name from "product" join "calendar" on "calendar".id = product.calendar_id;
+  select "product".id, "product".calendar_id, "product".price, "product"."name", "calendar".calendar_name, "product"."sku"  from "product" join "calendar" on "calendar".id = product.calendar_id;
           `;
   if (req.user.is_admin === true) {
     pool

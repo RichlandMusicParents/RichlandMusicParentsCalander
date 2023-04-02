@@ -90,6 +90,40 @@ body {
   border-radius: 5px;
 }
 
+.product-edit-input {
+  font-size: 1rem;
+  width: 95%;
+  height: 1.5rem;
+  text-align: center;
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+}
+
+.product-edit-select {
+  height: 1.75rem;
+  border-radius: 0.25rem;
+}
+
+.order-review-header {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.order-review-header > * {
+  padding: 0;
+  margin: 0;
+}
+
+.complete-order-button {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
 .product-input {
   height: 2rem;
   padding-left: 0.25rem;

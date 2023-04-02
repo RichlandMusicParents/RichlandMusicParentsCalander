@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import logger from "redux-logger";
+
 import "../Admin.css";
 import AdminNav from "../Components/AdminNav/AdminNav";
 
@@ -11,7 +11,7 @@ export default function Admin() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  const products = useSelector((store) => store.product);
+  const products = useSelector((store) => store.product.adminProductReducer);
   const calendars = useSelector((store) => store.calendar);
   console.log(calendars);
   console.log(products);
@@ -21,6 +21,10 @@ export default function Admin() {
   }, [dispatch]);
 
   const [productEditId, setProductEditId] = useState(0);
+  const [productEditName, setProductEditName] = useState("");
+  const [productEditPrice, setProductEditPrice] = useState(0);
+  const [productEditSku, setProductEditSku] = useState("");
+  const [productEditCalId, setProductEditCalId] = useState(0);
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productSku, setProductSku] = useState("");
@@ -30,10 +34,24 @@ export default function Admin() {
   function editProduct(id, name, price, sku, cal_id) {
     setProductEditMode(true);
     setProductEditId(id);
-    setProductName(name);
-    setProductCalId(cal_id);
-    setProductPrice(price);
-    setProductSku(sku);
+    setProductEditName(name);
+    setProductEditCalId(cal_id);
+    setProductEditPrice(price);
+    setProductEditSku(sku);
+  }
+
+  function saveEditProduct() {
+    const prodObj = {
+      id: Number(productEditId),
+      name: productEditName,
+      price: Number(productEditPrice).toFixed(2),
+      sku: productEditSku,
+      calendar_id: Number(productEditCalId),
+    };
+
+    // console.log(prodObj);
+    dispatch({ type: "ADMIN_EDIT_PRODUCTS", payload: prodObj });
+    setProductEditMode(false);
   }
 
   function createProduct() {
@@ -48,8 +66,6 @@ export default function Admin() {
 
     dispatch({ type: "ADD_PRODUCT", payload: prodObj });
   }
-
-  function deleteProduct(id) {}
 
   return (
     <>
@@ -110,7 +126,61 @@ export default function Admin() {
             {products.map((product) => (
               <div className="product">
                 {productEditMode && product.id === productEditId ? (
-                  <></>
+                  <>
+                    {" "}
+                    <div className="product-top">
+                      <div className="product-name">
+                        <h3>Name</h3>
+                        <input
+                          className="product-edit-input"
+                          type="text"
+                          value={productEditName}
+                          onChange={(e) => {
+                            setProductEditName(e.target.value);
+                          }}
+                        />
+                      </div>
+                      <div className="product-price">
+                        <h3>Price</h3>
+                        <input
+                          className="product-edit-input"
+                          type="number"
+                          value={productEditPrice}
+                          onChange={(e) => {
+                            setProductEditPrice(e.target.value);
+                          }}
+                        />
+                      </div>
+                      <div className="product-calendar">
+                        <h3>Calendar</h3>
+                        <select
+                          className="product-edit-select"
+                          name="calendar-select"
+                          id="calendar-select"
+                          value={productEditCalId}
+                          onChange={(e) => {
+                            setProductEditCalId(e.target.value);
+                            console.log("Event target", e.target.value);
+                          }}
+                        >
+                          <option value="0">Select Calendar</option>
+                          {calendars.map((cal) => (
+                            <option key={cal.id} value={cal.id}>
+                              {cal.calendar_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="product-bottom">
+                      <div className="product-buttons">
+                        <Button onClick={saveEditProduct}>Save</Button>
+                        <Button onClick={() => setProductEditMode(false)}>
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  </>
                 ) : (
                   <>
                     <div className="product-top">
@@ -129,11 +199,18 @@ export default function Admin() {
                     </div>
                     <div className="product-bottom">
                       <div className="product-buttons">
-                        <Button onClick={() => editProduct(product.id)}>
+                        <Button
+                          onClick={() =>
+                            editProduct(
+                              product.id,
+                              product.name,
+                              product.price,
+                              product.calendar_id,
+                              product.sku
+                            )
+                          }
+                        >
                           Edit
-                        </Button>
-                        <Button onClick={() => deleteProduct(product.id)}>
-                          Delete
                         </Button>
                       </div>
                     </div>

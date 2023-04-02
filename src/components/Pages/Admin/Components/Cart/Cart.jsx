@@ -135,7 +135,7 @@ export default function CartComponent() {
     };
 
     dispatch({ type: "ADMIN_EDIT_ORDER", payload: orderObj });
-    history.push(`/admin-order-review/${userId}`);
+    history.push(`/admin-order-review/${userId.id}`);
   }
 
   function deleteOrderItem(id) {
