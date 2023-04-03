@@ -30,7 +30,7 @@ export default function AdminAddEvents() {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
     dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId.id });
     dispatch({ type: "GET_SPECIFIC_EVENTS", payload: userId.id });
-    dispatch({ type: "ADMIN_RAW_PRODUCTS" });
+    dispatch({ type: "FETCH_PRODUCTS" });
     dispatch({
       type: "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
       payload: userId.id,

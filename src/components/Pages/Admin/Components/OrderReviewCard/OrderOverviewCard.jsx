@@ -216,7 +216,7 @@ export default function OrderOverviewCard() {
                             <input
                               type="radio"
                               id="yes"
-                              value={isPayed}
+                              value={true}
                               onChange={(e) => setIsPayed(e.target.value)}
                             />
                             <label htmlFor="yes">Yes</label>
@@ -225,7 +225,7 @@ export default function OrderOverviewCard() {
                             <input
                               type="radio"
                               id="no"
-                              value={isPayed}
+                              value={false}
                               onChange={(e) => setIsPayed(e.target.value)}
                             />
                             <label htmlFor="no">No</label>
