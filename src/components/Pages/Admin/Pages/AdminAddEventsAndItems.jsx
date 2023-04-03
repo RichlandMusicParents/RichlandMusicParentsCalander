@@ -30,7 +30,7 @@ export default function AdminAddEvents() {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
     dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId.id });
     dispatch({ type: "GET_SPECIFIC_EVENTS", payload: userId.id });
-    dispatch({ type: "FETCH_PRODUCTS" });
+    dispatch({ type: "ADMIN_RAW_PRODUCTS" });
     dispatch({
       type: "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
       payload: userId.id,
@@ -43,7 +43,7 @@ export default function AdminAddEvents() {
     (store) => store.adminReducer.specificOrderItems
   );
   const order = useSelector((store) => store.adminReducer.specificOrder);
-  const products = useSelector((store) => store.product);
+  const products = useSelector((store) => store.product.adminProductReducer);
 
   useEffect(() => {
     order[0] !== undefined && setOrderId(order[0].id);
@@ -171,11 +171,6 @@ export default function AdminAddEvents() {
 
   /* ==== END ORDER UPDATE ==== */
 
-  function sendToReview() {
-    saveOrderInfo();
-    history.push(`/admin-order-review/${Number(userId.id)}`);
-  }
-
   return (
     <>
       <div className="admin-add-products-top">
@@ -212,7 +207,7 @@ export default function AdminAddEvents() {
             ))}
           </article>
         </section>
-        <CartComponent />
+
         <div className="admin-add-event-form-container">
           <header className="event-form-header">
             <h2>Add Events</h2>
@@ -284,6 +279,7 @@ export default function AdminAddEvents() {
             </Button>
           </div>
         </div>
+        <CartComponent />
       </div>
       <section className="events-section">
         <Paper>
@@ -460,7 +456,6 @@ export default function AdminAddEvents() {
             </Table>
           </TableContainer>
         </Paper>
-        <Button onClick={sendToReview}>Checkout</Button>
       </section>
     </>
   );
