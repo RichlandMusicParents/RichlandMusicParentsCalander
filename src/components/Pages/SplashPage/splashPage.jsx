@@ -57,7 +57,7 @@ function SplashPage() {
           padding: "1rem 2rem",
           boxShadow: "none",
           marginTop: "2rem",
-          borderRadius: "15px",
+          borderRadius: "50px",
        
           "&:hover": {
             backgroundColor: richlandTheme.palette.primary.dark
