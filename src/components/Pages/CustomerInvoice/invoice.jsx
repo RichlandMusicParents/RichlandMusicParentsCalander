@@ -157,9 +157,18 @@ export default function Invoice() {
 
   return (
     <div className="invoice-container" >
+      <Card
+            className="form-card"
+            sx={{
+              marginBottom: "50px",
+              borderRadius: "25px",
+            }}
+          >
       <ThemeProvider theme={richlandTheme}>
-      <u><h1 style={{fontSize: "40px", marginBottom: "1rem"}}>Review Order</h1></u>
-      <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem"}}>
+      <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign: "center"}}>Review Order</h1></u>
+      <h3 style={{ textAlign: "center"}}>3/3 Completed</h3>
+      <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem", }}>
+         <hr/>
    
 
       <Paper elevation={6} 
@@ -393,7 +402,8 @@ export default function Invoice() {
         </ThemeProvider>
 
         <div className="event-details">
-          <u><h1>Event Details</h1></u>
+        <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign: "center"}}>Event Details</h1></u>
+        
           <Paper elevation={5}>
           <TableContainer  className="event-details" component={Paper}>
       
@@ -522,6 +532,7 @@ export default function Invoice() {
           </Alert>
         </Snackbar>
       
+        </Card>
     </div>
   );
 }
