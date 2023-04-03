@@ -10,7 +10,7 @@ function Nav() {
   return (
     <div className="nav">
       <div className="nav-header">
-      <Link to="/home">
+      <Link to="/splashPage">
         
         <h2 className="nav-title">Richland Music Parents</h2>
       </Link>
@@ -39,9 +39,6 @@ function Nav() {
               Admin
             </Link>
 
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
 
             <LogOutButton className="navLink" />
           </>

@@ -159,7 +159,7 @@ export default function Invoice() {
   return (
     <div className="invoice-container" >
       <ThemeProvider theme={richlandTheme}>
-      <u><h1 style={{fontSize: "40px", marginBottom: "1rem"}}>Review</h1></u>
+      <u><h1 style={{fontSize: "40px", marginBottom: "1rem"}}>Review Order</h1></u>
       <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem"}}>
    
 
