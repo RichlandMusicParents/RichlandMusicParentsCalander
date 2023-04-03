@@ -123,6 +123,7 @@ function UserForm() {
               />
 
               <h2>Personal Information</h2>
+              <h3>1/3 Completed</h3>
               <hr />
             </Grid>
             <Grid item xs={6}>
