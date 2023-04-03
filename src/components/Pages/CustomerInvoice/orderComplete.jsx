@@ -90,8 +90,10 @@ export default function OrderCompleted() {
           }}
           className="contact-info"
         >
-          <h2 style={{ color: "red" }}>Your order is confirmed!</h2>
-          <h2 className=".h2-container">Contact information</h2>
+ <Typography className="orderComplete" variant="h5"  style={{ color: "green" }}>
+  Your order is confirmed!
+</Typography>          
+<h2 className=".h2-container">Contact information</h2>
           <div className="contactInfo">
             {orders.map((order) => (
               <section key={order.id}>
