@@ -14,6 +14,7 @@ import {
   Toolbar,
   Button,
 } from "@mui/material";
+import { Card } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -74,14 +75,27 @@ export default function OrderCompleted() {
 
 
   return (
-  <div className="invoice-container">
+    <div className="invoice-container">
+      <Card
+            className="form-card"
+            sx={{
+              marginBottom: "50px",
+              borderRadius: "25px",
+              
+            }}
+          >
     <ThemeProvider theme={richlandTheme}>
-    <u><h1 style={{fontSize: "40px", marginBottom: "1rem"}}>Invoice</h1></u>
+    <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign:"center"}}>Invoice</h1></u>
+    <Typography className="orderComplete" variant="h5"  style={{ color: "green", textAlign: "center", fontSize:"30px" }}>
+  Your order is confirmed!
+</Typography>  
+      <hr/>
+
 
       <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem" }}>
 
         <Paper
-          elevation={6}
+          elevation={12}
           style={{
             width: "calc(50% - 20px)",
             margin: "10px",
@@ -90,9 +104,7 @@ export default function OrderCompleted() {
           }}
           className="contact-info"
         >
- <Typography className="orderComplete" variant="h5"  style={{ color: "green" }}>
-  Your order is confirmed!
-</Typography>          
+        
 <h2 className=".h2-container">Contact information</h2>
           <div className="contactInfo">
             {orders.map((order) => (
@@ -108,7 +120,7 @@ export default function OrderCompleted() {
         
         <Paper
           className="order-info"
-          elevation={6}
+          elevation={12}
           style={{
             width: "calc(50% - 20px)",
             margin: "10px",
@@ -145,8 +157,9 @@ export default function OrderCompleted() {
         </Paper>
       </div>
       <div className="event-details">
-  <u><h1>All Your Added Events</h1></u>
-  <Paper elevation={5} className="event-table" style={{ padding: '1rem' }}>
+  <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign:"center"}}>All Your Added Events</h1></u>
+  <Paper elevation={12} className="event-table" style={{ padding: '1rem' }}>
+  
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -181,7 +194,8 @@ export default function OrderCompleted() {
     backgroundColor: "#",
     width:"200px",
      padding: "40px",
-     marginLeft: "900px",
+     marginLeft: "545px",
+     marginBottom: "15px",
      color: "white",
      height: "65px",
      fontSize: "1.2rem",
@@ -197,6 +211,7 @@ export default function OrderCompleted() {
 
     
   </ThemeProvider>
+</Card>
 </div>
 
     
