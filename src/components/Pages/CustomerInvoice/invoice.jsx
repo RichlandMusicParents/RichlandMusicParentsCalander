@@ -167,9 +167,9 @@ export default function Invoice() {
       <ThemeProvider theme={richlandTheme}>
       <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign: "center"}}>Review Order</h1></u>
       <h3 style={{ textAlign: "center"}}>3/3 Completed</h3>
+      <hr/>
       <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem", }}>
-         <hr/>
-   
+        
 
       <Paper elevation={6} 
     style={{

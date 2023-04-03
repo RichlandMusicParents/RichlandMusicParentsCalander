@@ -69,6 +69,7 @@ function ConfirmDialog() {
      padding: "40px",
 
      marginLeft: "900px",
+     marginBottom: "15px",
 
     
 
