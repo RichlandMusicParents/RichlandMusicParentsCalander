@@ -67,7 +67,11 @@ function ConfirmDialog() {
          backgroundColor: "#",
          width:"200px",
      padding: "40px",
+
+     marginLeft: "900px",
+
     
+
          color: "white",
          height: "65px",
          fontSize: "1.2rem",

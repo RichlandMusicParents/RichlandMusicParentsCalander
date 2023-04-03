@@ -194,7 +194,7 @@ export default function OrderCompleted() {
     backgroundColor: "#",
     width:"200px",
      padding: "40px",
-     marginLeft: "545px",
+     marginLeft: "900px",
      marginBottom: "15px",
      color: "white",
      height: "65px",
