@@ -122,6 +122,9 @@ export default function Admin() {
     <>
       <ThemeProvider theme={richlandTheme}>
         <AdminNav />
+        <header className="admin-home-header">
+          <h2>Home</h2>
+        </header>
         <div className="admin-main-container">
           <div className="admin-home-left">
             <div className="create-product">

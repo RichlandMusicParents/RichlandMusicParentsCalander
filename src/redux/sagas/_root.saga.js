@@ -8,6 +8,7 @@ import productSaga from "./product.saga";
 import orderItemsSaga from "./orderitems.saga";
 import calendarSaga from "./calendar.saga";
 import eventSaga from "./events.saga";
+import googleSaga from "./google-spreadsheet";
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -27,5 +28,6 @@ export default function* rootSaga() {
     calendarSaga(),
     eventSaga(),
     orderItemsSaga(),
+    googleSaga(),
   ]);
 }
