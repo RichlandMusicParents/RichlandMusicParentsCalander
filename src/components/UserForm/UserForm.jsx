@@ -123,6 +123,7 @@ function UserForm() {
               />
 
               <h2>Personal Information</h2>
+              <h3>1/3 Completed</h3>
               <hr />
             </Grid>
             <Grid item xs={6}>
@@ -258,6 +259,7 @@ function UserForm() {
               <CardContent>
                 <FormControl className="form-input" sx={{ width: "100%" }}>
                   <InputLabel id="event-label"> Payment Options</InputLabel>
+
 
                   <Select
                     labelId="payment-select"

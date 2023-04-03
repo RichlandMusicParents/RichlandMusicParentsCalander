@@ -5,7 +5,10 @@ import { useHistory } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./Event.css";
 import { Card } from "@mui/material";
+import { GoPlus } from "react-icons/go";
+import { BsCartCheckFill } from "react-icons/bs";
 
+import UserCartComponent from "./userCart";
 
 import {
   CardContent,
@@ -53,11 +56,11 @@ function Events() {
   const [name, setName] = useState(null);
 
   // ORDER ITEMS
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
   // const [cartTotal, setCartTotal] = useState(0);
   const [orderId, setOrderId] = useState(0);
-  const [itemEditMode, setItemEditMode] = useState(false);
-  const [itemEditId, setItemEditId] = useState(0);
+  // const [itemEditMode, setItemEditMode] = useState(false);
+  // const [itemEditId, setItemEditId] = useState(0);
 
   // state fo
 
@@ -163,17 +166,17 @@ function Events() {
   }
 
   // DELETE CAL AND EXTRA EVENTS (orderItems)
-  function deleteOrderItem(id) {
-    dispatch({
-      type: "DELETE_ORDER_ITEMS",
-      payload: id,
-    });
-    setQuantity(1);
-  }
+  // function deleteOrderItem(id) {
+  //   dispatch({
+  //     type: "DELETE_ORDER_ITEMS",
+  //     payload: id,
+  //   });
+  //   setQuantity(1);
+  // }
   // add cal and extra events (orderItems)
   function addItems(product_id, price) {
     const orderItems = {
-      quantity: quantity,
+      quantity: 1,
       price,
       product_id,
       order_id: orders[0].id,
@@ -183,26 +186,26 @@ function Events() {
     dispatch({ type: "ADD_ORDER_ITEMS", payload: orderItems });
   }
   // UPDATE CAL AND EXTRA EVENTS (orderItems)
-  function updateItem(id, itemQuantity) {
-    setItemEditMode(true);
-    setItemEditId(id);
-    setQuantity(itemQuantity);
-  }
-  function saveUpdate(product_id, price) {
-    console.log(product_id, price);
-    const orderItems = {
-      id: itemEditId,
-      quantity: quantity,
-      price,
-      product_id,
-      order_id: Number(orders[0].id),
-      user_id: Number(user.id),
-    };
+  // function updateItem(id, itemQuantity) {
+  //   setItemEditMode(true);
+  //   setItemEditId(id);
+  //   setQuantity(itemQuantity);
+  // }
+  // function saveUpdate(product_id, price) {
+  //   console.log(product_id, price);
+  //   const orderItems = {
+  //     id: itemEditId,
+  //     quantity: quantity,
+  //     price,
+  //     product_id,
+  //     order_id: Number(orders[0].id),
+  //     user_id: Number(user.id),
+  //   };
 
-    dispatch({ type: "EDIT_ORDER_ITEMS", payload: orderItems });
-    setItemEditMode(false);
-    setQuantity(1);
-  }
+  //   dispatch({ type: "EDIT_ORDER_ITEMS", payload: orderItems });
+  //   setItemEditMode(false);
+  //   setQuantity(1);
+  // }
 
   // Function to alert user they ran out of free events.
   const checkEventLimit = () => {
@@ -250,6 +253,7 @@ function Events() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <h2>Event Form</h2>
+              <h3>2/3 Completed</h3>
               <hr />
               <br />
               <br />
@@ -326,104 +330,7 @@ function Events() {
                     <MenuItem value="memorial">Memorial</MenuItem>
                   </Select>
                 </FormControl>
-              </CardContent>
-            </Grid>
-            <Grid>
-              {products.map((product) => (
-                <>
-                  {!orderItems.some(
-                    (item) => item.product_id === product.id
-                  ) && (
-                    <div key={product.id} className="items-form">
-                      <h3>
-                        {product.name}: {product.price}
-                      </h3>
-                      <Button
-                        sx={{
-                          backgroundColor: "#77afdb",
-                          color: "white",
-                          fontSize: "1.2rem",
-                          height: "100%",
-                          fontWeight: "600",
-                          boxShadow: "none",
-                          marginTop: "2rem",
-                          borderRadius: "25px",
-                          "&:hover": {
-                            backgroundColor: "#77afdb",
-                          },
-                        }}
-                        onClick={() => addItems(product.id, product.price)}>
-                        ADD
-                      </Button>
-                    </div>
-                  )}
-                </>
-              ))}
-
-              <CardContent></CardContent>
-              <div className="extra-calendar-container">
-                {orderItems.map((item) => (
-                  <div>
-                    {itemEditMode && item.id === itemEditId ? (
-                      <div key={item.id} className="item">
-                        <h3>
-                          {item.name} {item.price}
-                        </h3>
-                        <TextField
-                          sx={{
-                            width: "100%",
-                          }}
-                          label="Quantity"
-                          type="number"
-                          value={quantity}
-                          onChange={(e) => setQuantity(e.target.value)}
-                        />
-                        <Button
-                          onClick={() =>
-                            saveUpdate(item.product_id, item.price)
-                          }>
-                          Update
-                        </Button>
-                      </div>
-                    ) : (
-                      <div key={item.id} className="item">
-                        <h3>
-                          {item.name} {item.price}
-                        </h3>
-                        <TextField
-                          sx={{
-                            width: "100%",
-                          }}
-                          label="Quantity"
-                          type="text"
-                          value={item.quantity}
-                          onClick={() => updateItem(item.id, item.quantity)}
-                        />
-                        <Button
-                          sx={{
-                            backgroundColor: "#b80000",
-
-                            color: "white",
-                            fontSize: "1.2rem",
-                            height: "100%",
-                            fontWeight: "600",
-                            boxShadow: "none",
-                            marginTop: "2rem",
-                            borderRadius: "25px",
-                            "&:hover": {
-                              backgroundColor: "#bf4040",
-                            },
-                          }}
-                          onClick={() => deleteOrderItem(item.id)}>
-                          Remove
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <br />
-              <Grid item xs={12} sm={6} md={2}>
+                <Grid item xs={12} sm={6} md={2}>
                 <Button
                   sx={{
                     backgroundColor: "#4caf50",
@@ -443,39 +350,41 @@ function Events() {
                   Submit Event{" "}
                 </Button>
               </Grid>
+              </CardContent>
             </Grid>
-            <br />
-            <Button
-              color="primary"
-              variant="contained"
-              sx={{
-                backgroundColor: "#4caf50",
-                color: "white",
-                height: "65px",
-                fontSize: "1.2rem",
-                fontWeight: "600",
-                boxShadow: "none",
-                marginTop: "2rem",
-                borderRadius: "25px",
-                "&:hover": {
-                  backgroundColor: "#4caf50",
-                },
-              }}
-              onClick={handleCheckout}>
-              {" "}
-              Check Out{" "}
-            </Button>
-            <h2>
-              <NumericFormat
-                className="subtotal"
-                value={total}
-                decimalScale={4}
-                prefix={"$"}
-                readOnly
-              />
-            </h2>
+            <Grid>
+                    <UserCartComponent/>
+            <article className="items">
+            {products.map((product) => (
+              <>
+                {!orderItems.some((item) => item.product_id === product.id) ? (
+                  <>
+                    <div key={product.id} className="product-item">
+                      <h3>
+                        {product.name}: ${product.price}
+                      </h3>
+                      <GoPlus
+                        className="product-cart-icon cart-plus"
+                        onClick={() => addItems(product.id, product.price)}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div key={product.id} className="product-item">
+                      <h3>
+                        {product.name}: ${product.price}
+                      </h3>
+                      <BsCartCheckFill className="product-cart-icon" />
+                    </div>
+                  </>
+                )}
+              </>
+            ))}
+          </article>
 
-            <div></div>
+              {}
+                </Grid>
             <div className="orderDetails">
               <h1>Event Details</h1>
               <hr />
@@ -523,6 +432,26 @@ function Events() {
                   </Table>
                 </CardContent>
               </TableContainer>
+              <Button
+              color="primary"
+              variant="contained"
+              sx={{
+                backgroundColor: "#4caf50",
+                color: "white",
+                height: "65px",
+                fontSize: "1.2rem",
+                fontWeight: "600",
+                boxShadow: "none",
+                marginTop: "2rem",
+                borderRadius: "25px",
+                "&:hover": {
+                  backgroundColor: "#4caf50",
+                },
+              }}
+              onClick={handleCheckout}>
+              {" "}
+              Check Out{" "}
+            </Button>
             </div>
           </Grid>
         </Card>
