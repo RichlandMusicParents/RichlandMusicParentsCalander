@@ -34,7 +34,7 @@ function Events() {
   const dispatch = useDispatch();
   const event = useSelector((store) => store.eventReducer);
   const calendars = useSelector((store) => store.calendar);
-  const products = useSelector((store) => store.product);
+  const products = useSelector((store) => store.product.productReducer);
   console.log("in products", products);
   const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order.newOrder);
