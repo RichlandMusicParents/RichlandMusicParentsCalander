@@ -5,6 +5,7 @@ import { GoPlus, GoDash } from "react-icons/go";
 import { BsXSquareFill, BsCheck2, BsCart2 } from "react-icons/bs";
 import { Button, createTheme, ThemeProvider } from "@mui/material";
 import "./Event.css"
+import "./userCart.css"
 
 export default function UserCartComponent() {
   // const userId = useParams();
@@ -157,7 +158,7 @@ export default function UserCartComponent() {
   };
 
   return (
-    <>
+    <div className="cart-container">
       <ThemeProvider theme={richlandTheme}>
         {orderItems.length > 0 ? (
           <>
@@ -258,6 +259,6 @@ export default function UserCartComponent() {
           </>
         )}
       </ThemeProvider>
-    </>
+    </div>
   );
 }

@@ -260,7 +260,10 @@ function Events() {
               <br />
             </Grid>
 
+            <div></div>
+
             <Grid item xs={6}>
+              
               <CardContent>
                 <FormControl fullWidth sx={{ width: "100%" }}>
                   <InputLabel htmlFor="selectCalendarId">
@@ -343,7 +346,7 @@ function Events() {
                       fontWeight: "600",
                       boxShadow: "none",
                       marginTop: "2rem",
-                      borderRadius: "25px",
+                      borderRadius: "50px",
                       "&:hover": {
                         backgroundColor: "#4caf50",
                       },
@@ -354,55 +357,62 @@ function Events() {
                     Submit Event{" "}
                   </Button>
                 </Grid>
+               
               </CardContent>
             </Grid>
-            <Grid>
-              <UserCartComponent />
-              <article className="items">
-                {products.map((product) => (
-                  <>
-                    {!orderItems.some(
-                      (item) => item.product_id === product.id
-                    ) ? (
-                      <>
-                        <div key={product.id} className="product-item">
-                          <h3>
-                            {product.name}: ${product.price}
-                          </h3>
-                          <GoPlus
-                            className="product-cart-icon cart-plus"
-                            onClick={() => addItems(product.id, product.price)}
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div key={product.id} className="product-item">
-                          <h3>
-                            {product.name}: ${product.price}
-                          </h3>
-                          <BsCartCheckFill className="product-cart-icon" />
-                        </div>
-                      </>
-                    )}
-                  </>
-                ))}
-              </article>
 
-              {}
-            </Grid>
-            <div className="orderDetails">
-              <h1>Event Details</h1>
-              <hr />
+            <Grid container spacing={3}>
+            <Grid item xs={8}>
+            <UserCartComponent className="event-page-cart" />
 
-              <TableContainer component={Paper}>
-                <CardContent>
+    </Grid>
+    <Grid>
+    <article className="items">
+      {products.map((product) => (
+        <>
+          {!orderItems.some(
+            (item) => item.product_id === product.id
+          ) ? (
+            <>
+              <div key={product.id} className="product-item">
+                <h3>
+                  {product.name}: ${product.price}
+                </h3>
+                <GoPlus
+                  className="product-cart-icon cart-plus"
+                  onClick={() => addItems(product.id, product.price)}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div key={product.id} className="product-item">
+                <h3>
+                  {product.name}: ${product.price}
+                </h3>
+                <BsCartCheckFill className="product-cart-icon" />
+              </div>
+            </>
+          )}
+        </>
+      ))}
+    </article>
+  </Grid>
+</Grid>
+
+<div className="event-details">
+              
+        
+              <Paper elevation={5}>
+              <TableContainer className="Table-Container" component={Paper}>
+             < h1>Event Details</h1>
                   <Table>
                     <TableHead>
                       <TableRow>
                         <TableCell>Date</TableCell>
                         <TableCell>Event Type</TableCell>
                         <TableCell>Name</TableCell>
+                        <TableCell></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -423,7 +433,7 @@ function Events() {
                                 padding: "1rem 2rem",
                                 boxShadow: "none",
                                 marginTop: "2rem",
-                                borderRadius: "25px",
+                                borderRadius: "50px",
                                 "&:hover": {
                                   backgroundColor: "#bf4040",
                                 },
@@ -437,8 +447,8 @@ function Events() {
                       ))}
                     </TableBody>
                   </Table>
-                </CardContent>
               </TableContainer>
+              </Paper>
               <Button
                 color="primary"
                 variant="contained"
@@ -450,7 +460,7 @@ function Events() {
                   fontWeight: "600",
                   boxShadow: "none",
                   marginTop: "2rem",
-                  borderRadius: "25px",
+                  borderRadius: "50px",
                   "&:hover": {
                     backgroundColor: "#4caf50",
                   },

@@ -1,0 +1,15 @@
+.cart-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    width: 100%;
+}
+
+.event-page-cart {
+    width: 300px;
+    margin-right: 20px;
+  }
+.product-item {
+    margin: 30px;
+    width: 500px;
+}

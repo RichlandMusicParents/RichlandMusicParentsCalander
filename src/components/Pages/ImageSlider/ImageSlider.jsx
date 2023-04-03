@@ -6,10 +6,7 @@ import "./ImageSlider.css";
 
 function ImageSlider() {
   const images = [
-    {
-      id: 1,
-      link: "https://scontent.ffar1-2.fna.fbcdn.net/v/t39.30808-6/275831594_1874734849384914_4711941001693061459_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=e3f864&_nc_ohc=Osvpnfd9O58AX_uepuj&_nc_ht=scontent.ffar1-2.fna&oh=00_AfDr3ifSTmJQCJL-8CAZQ_T60a76jUfwn_wBTfPHpT5mFw&oe=6426C57A",
-    },
+    
 
     {
       id: 2,
