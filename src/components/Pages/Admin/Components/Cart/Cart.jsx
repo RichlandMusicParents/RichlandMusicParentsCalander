@@ -79,6 +79,7 @@ export default function CartComponent() {
   const [quantity, setQuantity] = useState(1);
   const [orderId, setOrderId] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
+  console.log("Order ID", orderId);
 
   function saveUpdate(product_id, price) {
     console.log(product_id, price);
@@ -87,7 +88,7 @@ export default function CartComponent() {
       quantity: quantity,
       price,
       product_id,
-      order_id: Number(orderId),
+      order_id: orderId,
       user_id: Number(userId.id),
     };
     if (quantity <= 0) {

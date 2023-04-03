@@ -53,7 +53,7 @@ export default function Admin() {
   const [editCalName, setEditCalName] = useState("");
   const [calendarEditId, setCalendarEditId] = useState(0);
 
-  function editProduct(id, name, price, sku, cal_id) {
+  function editProduct(id, name, price, cal_id, sku) {
     setProductEditMode(true);
     setProductEditId(id);
     setProductEditName(name);
