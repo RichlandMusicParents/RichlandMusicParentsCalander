@@ -258,6 +258,7 @@ className="form-card"
                 label="Payment Options"
                 value={payment}
                 onChange={(event) => setPayment(event.target.value)}
+                required
               >
                 <MenuItem value={"Debit"}> Debit </MenuItem>
                 <MenuItem value={"Cash"}> Cash </MenuItem>
