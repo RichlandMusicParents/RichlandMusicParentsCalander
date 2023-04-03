@@ -10,7 +10,8 @@ import {
   Select,
   InputLabel,
   MenuItem,
-  FormControl
+  FormControl,
+  CardHeader
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
@@ -90,215 +91,214 @@ function UserForm() {
   };
 
   return (
-    
-    <form
-    noValidate autoComplete="off"
-    className="form-container"
-    
-    >
-          <ThemeProvider theme={richlandTheme}>
-<Card
-className="form-card"
- sx={{
-  marginBottom:"50px",
-  borderRadius:"25px"
-}}>
+    <form noValidate autoComplete="off" className="form-container">
+      <ThemeProvider theme={richlandTheme}>
+        <Card className="form-card">
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <h1 className="form-title">Richland Music Parents</h1>
 
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-            <h1 className="form-title">Richland Music Parents</h1>
-            <UserPage />
-            <h2>Personal Information</h2>
-            <hr />
-         
+              <CardHeader
+                title={
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}>
+                    <h2 style={{ fontWeight: "bold", marginBottom: 0 }}>
+                      Welcome, {user.first_name}!
+                    </h2>
+                    <h3 style={{ fontWeight: "bold", marginTop: 0 }}>
+                      Order Form
+                    </h3>
+                  </div>
+                }
+                sx={{
+                  backgroundColor: richlandTheme.palette.primary.main,
+                  color: "white",
+                  padding: "20px",
+                  borderBottom: "1px solid #eee",
+                }}
+              />
+
+              <h2>Personal Information</h2>
+              <hr />
             </Grid>
             <Grid item xs={6}>
-            <CardContent>
-              <TextField
-              className="form-input"
-                label="First Name"
-                type="text"
-                name="firstname"
-                variant="outlined"
-                value={firstName}
-                required
-                fullWidth
-                onChange={(event) => setFirstName(event.target.value)}
-                sx={{ width: "100%" }}
-              />
-               </CardContent>
+              <CardContent>
+                <TextField
+                  className="form-input"
+                  label="First Name"
+                  type="text"
+                  name="firstname"
+                  variant="outlined"
+                  value={firstName}
+                  required
+                  fullWidth
+                  onChange={(event) => setFirstName(event.target.value)}
+                  sx={{ width: "100%" }}
+                />
+              </CardContent>
             </Grid>
 
-            <Grid item xs={6}> 
-            <CardContent>
-              <TextField
-              className="form-input"
-                label="Last Name"
-                type="text"
-                name="lastname"
-                variant="outlined"
-                value={lastName}
-                required
-                fullWidth
-                onChange={(event) => setLastName(event.target.value)}
-                sx={{ width: "100%" }}
-              />
-            </CardContent>
-            </Grid >
-
-            
-          
-            <Grid item xs={12} > 
-            <CardContent>
-            <h2>Order Information</h2>
-            <hr/>
-            <br />
-            <br />
-          
-              <TextField
-              className="form-input"
-                label="Address"
-                type="text"
-                name="address"
-                value={address}
-                required
-                fullWidth
-                onChange={(event) => setAddress(event.target.value)}
-                sx={{ width: "100%" }}
-              />
+            <Grid item xs={6}>
+              <CardContent>
+                <TextField
+                  className="form-input"
+                  label="Last Name"
+                  type="text"
+                  name="lastname"
+                  variant="outlined"
+                  value={lastName}
+                  required
+                  fullWidth
+                  onChange={(event) => setLastName(event.target.value)}
+                  sx={{ width: "100%" }}
+                />
               </CardContent>
-         
-            </Grid > 
-            <Grid item xs={6} > 
-            <CardContent>
-              
-              <TextField
-              className="form-input"
-                label="City"
-                type="text"
-                name="city"
-                value={city}
-                required
-                fullWidth
-                onChange={(event) => setCity(event.target.value)}
-                sx={{ width: "100%" }}
-              />
-            </CardContent>
-            </Grid > 
-            <Grid item xs={6} > 
-            <CardContent>
-              <TextField
-              className="form-input"
-                label="State"
-                type="text"
-                name="state"
-                value={state}
-                required
-                fullWidth
-                onChange={(event) => setState(event.target.value)}
-                sx={{ width: "100%" }}
-              />
-            </CardContent>
-            </Grid > 
-            <Grid item xs={6} > 
-            <CardContent>
-              <TextField
-              className="form-input"
-                label="Zip Code"
-                type="number"
-                name="zip"
-                value={zip}
-                required
-                fullWidth
-                onChange={(event) => setZip(event.target.value)}
-                sx={{ width: "100%" }}
-              />
-            </CardContent>
-            </Grid > 
-            <Grid item xs={6} > 
-            <CardContent>
-              <TextField
-              className="form-input"
-                label="Phone Number"
-                type="text"
-                name="phone"
-                value={phone}
-                required
-                onChange={(event) => setPhone(event.target.value)}
-                sx={{ width: "100%" }}
-              />
-            </CardContent>
-            </Grid > 
-              
-            <Grid item xs={6} > 
-            <CardContent>
-              <TextField
-              className="form-input"
-                label="Email"
-                type="text"
-                name="email"
-                variant="outlined"
-                value={email}
-                required
-                fullWidth
-                onChange={(event) => setEmail(event.target.value)}
-                sx={{ width: "100%" }}
-              />
-              </CardContent>
-            </Grid> 
-            <Grid item xs={6} > 
-            <CardContent>
-            <FormControl 
-            className="form-input"
-            sx={{ width: "100%" }}>
-              <InputLabel id="event-label"> Payment Options</InputLabel>
+            </Grid>
 
-              <Select
-                labelId="payment-select"
-                label="Payment Options"
-                value={payment}
-                onChange={(event) => setPayment(event.target.value)}
-                required
-              >
-                <MenuItem value={"Debit"}> Debit </MenuItem>
-                <MenuItem value={"Cash"}> Cash </MenuItem>
-                <MenuItem value={"Check"}> Check </MenuItem>
-              </Select>
-            </FormControl>
-            </CardContent>
-            </Grid> 
             <Grid item xs={12}>
-            <Button
-            color="primary"
-            variant="contained"
-            sx={{
-              marginBottom:"50px",
-              width:"25%",
-              backgroundColor: richlandTheme.palette.primary.main,
-              color: "white",
-              fontSize: "1.2rem",
-              fontWeight: "600",
-              padding: "1rem 2rem",
-              boxShadow: "none",
-              marginTop: "2rem",
-              borderRadius: "15px",
-              "&:hover": {
-                backgroundColor: richlandTheme.palette.primary.dark
-               },
-              
-    
-            }}
-            
-             onClick={handleSubmit}> Continue </Button>
-     
-  </Grid>
+              <CardContent>
+                <h2>Order Information</h2>
+                <hr />
+                <br />
+                <br />
+                <TextField
+                  className="form-input"
+                  label="Address"
+                  type="text"
+                  name="address"
+                  value={address}
+                  required
+                  fullWidth
+                  onChange={(event) => setAddress(event.target.value)}
+                  sx={{ width: "100%" }}
+                />
+              </CardContent>
+            </Grid>
+            <Grid item xs={6}>
+              <CardContent>
+                <TextField
+                  className="form-input"
+                  label="City"
+                  type="text"
+                  name="city"
+                  value={city}
+                  required
+                  fullWidth
+                  onChange={(event) => setCity(event.target.value)}
+                  sx={{ width: "100%" }}
+                />
+              </CardContent>
+            </Grid>
+            <Grid item xs={6}>
+              <CardContent>
+                <TextField
+                  className="form-input"
+                  label="State"
+                  type="text"
+                  name="state"
+                  value={state}
+                  required
+                  fullWidth
+                  onChange={(event) => setState(event.target.value)}
+                  sx={{ width: "100%" }}
+                />
+              </CardContent>
+            </Grid>
+            <Grid item xs={6}>
+              <CardContent>
+                <TextField
+                  className="form-input"
+                  label="Zip Code"
+                  type="number"
+                  name="zip"
+                  value={zip}
+                  required
+                  fullWidth
+                  onChange={(event) => setZip(event.target.value)}
+                  sx={{ width: "100%" }}
+                />
+              </CardContent>
+            </Grid>
+            <Grid item xs={6}>
+              <CardContent>
+                <TextField
+                  className="form-input"
+                  label="Phone Number"
+                  type="text"
+                  name="phone"
+                  value={phone}
+                  required
+                  onChange={(event) => setPhone(event.target.value)}
+                  sx={{ width: "100%" }}
+                />
+              </CardContent>
+            </Grid>
 
-           
-    
-      </Grid>
-      </Card>
+            <Grid item xs={6}>
+              <CardContent>
+                <TextField
+                  className="form-input"
+                  label="Email"
+                  type="text"
+                  name="email"
+                  variant="outlined"
+                  value={email}
+                  required
+                  fullWidth
+                  onChange={(event) => setEmail(event.target.value)}
+                  sx={{ width: "100%" }}
+                />
+              </CardContent>
+            </Grid>
+            <Grid item xs={6}>
+              <CardContent>
+                <FormControl className="form-input" sx={{ width: "100%" }}>
+                  <InputLabel id="event-label"> Payment Options</InputLabel>
+
+
+                  <Select
+                    labelId="payment-select"
+                    label="Payment Options"
+                    value={payment}
+                    onChange={(event) => setPayment(event.target.value)}>
+                    <MenuItem value={"Debit"}> Debit </MenuItem>
+                    <MenuItem value={"Cash"}> Cash </MenuItem>
+                    <MenuItem value={"Check"}> Check </MenuItem>
+                  </Select>
+                </FormControl>
+              </CardContent>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                color="primary"
+                variant="contained"
+                sx={{
+                  marginBottom: "50px",
+                  width: "200px",
+                  backgroundColor: richlandTheme.palette.primary.main,
+                  color: "white",
+                  fontSize: "1.2rem",
+                  fontWeight: "600",
+                  padding: "1rem 2rem",
+                  boxShadow: "none",
+                  marginTop: "2rem",
+                  borderRadius: "50px",
+                  "&:hover": {
+                    backgroundColor: richlandTheme.palette.primary.dark,
+                  },
+                }}
+                onClick={handleSubmit}>
+                {" "}
+                Continue{" "}
+              </Button>
+            </Grid>
+          </Grid>
+        </Card>
       </ThemeProvider>
-
     </form>
   );
 }
