@@ -109,6 +109,7 @@ className="form-card"
             <h1 className="form-title">Richland Music Parents</h1>
             <UserPage />
             <h2>Personal Information</h2>
+            <h3>1/3 Completed</h3>
             <hr />
          
             </Grid>
