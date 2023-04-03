@@ -4,8 +4,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { GoPlus, GoDash } from "react-icons/go";
 import { BsXSquareFill, BsCheck2, BsCart2 } from "react-icons/bs";
 import { Button, createTheme, ThemeProvider } from "@mui/material";
-import "./Event.css"
-import "./userCart.css"
+import "./Event.css";
+import "./userCart.css";
 
 export default function UserCartComponent() {
   // const userId = useParams();
