@@ -23,6 +23,7 @@ import { FaTrash, FaPen, FaSave } from "react-icons/fa";
 import { MdOutlineCancelPresentation } from "react-icons/md";
 import ReviewOrderInfo from "../Components/OrderReviewCard/OrderOverviewCard";
 import CartComponent from "../Components/Cart/Cart";
+import { fontSize } from "@mui/system";
 
 export default function AdminOrderOverview() {
   const userId = useParams();
@@ -414,10 +415,15 @@ export default function AdminOrderOverview() {
             </Paper>
           </div>
         </div>
-
-        <Button variant="contained" onClick={sendToAdmin}>
-          Complete Order
-        </Button>
+        <div className="complete-order-button">
+          <Button
+            sx={{ width: 300, fontSize: 20 }}
+            variant="contained"
+            onClick={sendToAdmin}
+          >
+            Complete Order
+          </Button>
+        </div>
       </ThemeProvider>
     </>
   );

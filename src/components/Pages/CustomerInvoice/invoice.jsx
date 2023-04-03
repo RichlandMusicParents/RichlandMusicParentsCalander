@@ -156,20 +156,21 @@ export default function Invoice() {
   });
 
   return (
-    <Card
-      className="form-card"
-      sx={{
-        marginBottom: "50px",
-        borderRadius: "25px",
-      }}
-    >
-      <div className="invoice-container">
-        <ThemeProvider theme={richlandTheme}>
-          <u>
-            <h1 style={{ fontSize: "40px", marginBottom: "1rem" }}>Review</h1>
-          </u>
-          <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem" }}>
-            <hr />
+
+    <div className="invoice-container" >
+      <ThemeProvider theme={richlandTheme}>
+      <u><h1 style={{fontSize: "40px", marginBottom: "1rem"}}>Review Order</h1></u>
+      <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem"}}>
+   
+
+      <Paper elevation={6} 
+    style={{
+      width: "calc(50% - 20px)",
+      margin: "10px",
+      padding: "20px",
+      boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    }}
+
 
             <Paper
               elevation={6}

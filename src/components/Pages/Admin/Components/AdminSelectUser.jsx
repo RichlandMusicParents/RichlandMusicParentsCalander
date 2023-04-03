@@ -4,6 +4,7 @@ import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import "../Admin.css";
 
 export default function AdminSelectUserComponent() {
   useEffect(() => {
@@ -47,80 +48,85 @@ export default function AdminSelectUserComponent() {
   return (
     <>
       <ThemeProvider theme={richlandTheme}>
-        <article className="search">
-          <h2>Select A User</h2>
-
-          <Autocomplete
-            sx={{
-              width: 390,
-              margin: 1,
-            }}
-            value={userId}
-            onChange={(event, newValue) => setUserId(newValue)}
-            inputValue={userIdInput}
-            onInputChange={(event, newInputValue) =>
-              setUserIdInput(newInputValue)
-            }
-            id="user-list-lookup"
-            getOptionLabel={(users) => `${users.first_name} ${users.last_name}`}
-            options={users}
-            isOptionEqualToValue={(option, value) =>
-              option.first_name === value.first_name
-            }
-            noOptionsText={"No valid User"}
-            renderOption={(props, users) => (
-              <Box component="li" {...props} key={users.id}>
-                {users.first_name} {users.last_name}
-              </Box>
-            )}
-            renderInput={(params) => (
-              <TextField {...params} label="Linked User" />
-            )}
-          />
-        </article>
-        <article className="search-buttons">
-          <Button
-            onClick={sendToForm}
-            sx={{
-              height: 50,
-              width: 120,
-              margin: 1,
-              fontSize: 12,
-              fontWeight: "bold",
-            }}
-            variant="contained"
-            color="primary"
-          >
-            New Order
-          </Button>
-          <Button
-            onClick={sendToEditUser}
-            sx={{
-              height: 50,
-              width: 120,
-              margin: 1,
-              fontSize: 12,
-              fontWeight: "bold",
-            }}
-            variant="contained"
-            color="primary"
-          >
-            Edit User
-          </Button>
-          <Button
-            onClick={sendToRegister}
-            sx={{
-              height: 50,
-              width: 120,
-              margin: 1,
-              fontSize: 12,
-              fontWeight: "bold",
-            }}
-            variant="contained"
-            color="primary"
-          >
-            New User
-          </Button>
+        <article className="search-user-container">
+          <header>
+            <h2>Select A User</h2>
+          </header>
+          <div className="search-user-inputs">
+            <Autocomplete
+              sx={{
+                width: 390,
+                margin: 1,
+              }}
+              value={userId}
+              onChange={(event, newValue) => setUserId(newValue)}
+              inputValue={userIdInput}
+              onInputChange={(event, newInputValue) =>
+                setUserIdInput(newInputValue)
+              }
+              id="user-list-lookup"
+              getOptionLabel={(users) =>
+                `${users.first_name} ${users.last_name}`
+              }
+              options={users}
+              isOptionEqualToValue={(option, value) =>
+                option.first_name === value.first_name
+              }
+              noOptionsText={"No valid User"}
+              renderOption={(props, users) => (
+                <Box component="li" {...props} key={users.id}>
+                  {users.first_name} {users.last_name}
+                </Box>
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="Linked User" />
+              )}
+            />
+          </div>
+          <div className="search-buttons">
+            <Button
+              onClick={sendToForm}
+              sx={{
+                height: 50,
+                width: 120,
+                margin: 1,
+                fontSize: 12,
+                fontWeight: "bold",
+              }}
+              variant="contained"
+              color="primary"
+            >
+              New Order
+            </Button>
+            <Button
+              onClick={sendToEditUser}
+              sx={{
+                height: 50,
+                width: 120,
+                margin: 1,
+                fontSize: 12,
+                fontWeight: "bold",
+              }}
+              variant="contained"
+              color="primary"
+            >
+              View User
+            </Button>
+            <Button
+              onClick={sendToRegister}
+              sx={{
+                height: 50,
+                width: 120,
+                margin: 1,
+                fontSize: 12,
+                fontWeight: "bold",
+              }}
+              variant="contained"
+              color="primary"
+            >
+              New User
+            </Button>
+          </div>
         </article>
       </ThemeProvider>
     </>

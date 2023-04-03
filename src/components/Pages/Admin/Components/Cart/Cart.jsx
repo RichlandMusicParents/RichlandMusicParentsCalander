@@ -41,7 +41,7 @@ export default function CartComponent() {
   }, [order]);
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
-    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId });
+    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId.id });
     dispatch({
       type: "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
       payload: userId.id,
@@ -135,6 +135,7 @@ export default function CartComponent() {
     };
 
     dispatch({ type: "ADMIN_EDIT_ORDER", payload: orderObj });
+    history.push(`/admin-order-review/${userId.id}`);
   }
 
   function deleteOrderItem(id) {
@@ -235,6 +236,9 @@ export default function CartComponent() {
               </article>
               <div className="cart-total">
                 <h2>Total: {formatter.format(cartTotal)}</h2>
+                <Button variant="contained" onClick={saveOrderInfo}>
+                  Checkout
+                </Button>
               </div>
             </section>
           </>
@@ -255,6 +259,9 @@ export default function CartComponent() {
               </article>
               <article className="cart-total">
                 <h2>Total: {formatter.format(cartTotal)}</h2>
+                <Button variant="contained" onClick={saveOrderInfo}>
+                  Checkout
+                </Button>
               </article>
             </section>
           </>

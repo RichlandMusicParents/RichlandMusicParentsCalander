@@ -20,6 +20,7 @@ import format from "date-fns/format";
 import { ThemeProvider } from "@mui/material";
 import { FaTrash, FaPen, FaSave } from "react-icons/fa";
 import { MdOutlineCancelPresentation } from "react-icons/md";
+import AdminNav from "../Components/AdminNav/AdminNav";
 
 export function AdminEditUser() {
   const userId = useParams();
@@ -140,6 +141,7 @@ export function AdminEditUser() {
 
   return (
     <>
+      <AdminNav />
       <ThemeProvider theme={richlandTheme}>
         <header className="admin-user-header">
           <h1>
@@ -173,7 +175,7 @@ export function AdminEditUser() {
                     name="event_type"
                     id="eType"
                     value={isAdmin}
-                    onChange={(e) => setEditEventType(e.target.value)}
+                    onChange={(e) => setIsAdmin(e.target.value)}
                   >
                     <MenuItem value={true}>Admin</MenuItem>
                     <MenuItem value={false}>Not Admin</MenuItem>
@@ -261,7 +263,7 @@ export function AdminEditUser() {
                     sx={{
                       height: 40,
                       width: 100,
-                      marginBottom: 1,
+                      margin: 1,
                       fontSize: 15,
                     }}
                     variant="contained"

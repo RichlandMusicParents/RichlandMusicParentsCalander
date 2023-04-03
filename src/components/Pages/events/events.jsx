@@ -34,7 +34,7 @@ function Events() {
   const dispatch = useDispatch();
   const event = useSelector((store) => store.eventReducer);
   const calendars = useSelector((store) => store.calendar);
-  const products = useSelector((store) => store.product);
+  const products = useSelector((store) => store.product.productReducer);
   console.log("in products", products);
   const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order.newOrder);
@@ -249,7 +249,8 @@ function Events() {
           sx={{
             marginBottom: "50px",
             borderRadius: "25px",
-          }}>
+          }}
+        >
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <h2>Event Form</h2>
@@ -274,7 +275,8 @@ function Events() {
                       setSelectedCalendarID(event.target.value)
                     }
                     id="calendar"
-                    value={selectCalendarId}>
+                    value={selectCalendarId}
+                  >
                     {calendars.map((calendar) => (
                       <MenuItem value={calendar.id} key={calendar.id}>
                         {calendar.calendar_name}
@@ -323,7 +325,8 @@ function Events() {
                     name="event_type"
                     id="eType"
                     value={eventOption}
-                    onChange={(e) => setEventOption(e.target.value)}>
+                    onChange={(e) => setEventOption(e.target.value)}
+                  >
                     <MenuItem value="0">Select Event Type</MenuItem>
                     <MenuItem value="birthday">Birthday</MenuItem>
                     <MenuItem value="anniversary">Anniversary</MenuItem>
@@ -331,60 +334,63 @@ function Events() {
                   </Select>
                 </FormControl>
                 <Grid item xs={12} sm={6} md={2}>
-                <Button
-                  sx={{
-                    backgroundColor: "#4caf50",
-                    color: "white",
-                    fontSize: "1.2rem",
-                    height: "100%",
-                    fontWeight: "600",
-                    boxShadow: "none",
-                    marginTop: "2rem",
-                    borderRadius: "25px",
-                    "&:hover": {
+                  <Button
+                    sx={{
                       backgroundColor: "#4caf50",
-                    },
-                  }}
-                  onClick={eventHandleSubmit}>
-                  {" "}
-                  Submit Event{" "}
-                </Button>
-              </Grid>
+                      color: "white",
+                      fontSize: "1.2rem",
+                      height: "100%",
+                      fontWeight: "600",
+                      boxShadow: "none",
+                      marginTop: "2rem",
+                      borderRadius: "25px",
+                      "&:hover": {
+                        backgroundColor: "#4caf50",
+                      },
+                    }}
+                    onClick={eventHandleSubmit}
+                  >
+                    {" "}
+                    Submit Event{" "}
+                  </Button>
+                </Grid>
               </CardContent>
             </Grid>
             <Grid>
-                    <UserCartComponent/>
-            <article className="items">
-            {products.map((product) => (
-              <>
-                {!orderItems.some((item) => item.product_id === product.id) ? (
+              <UserCartComponent />
+              <article className="items">
+                {products.map((product) => (
                   <>
-                    <div key={product.id} className="product-item">
-                      <h3>
-                        {product.name}: ${product.price}
-                      </h3>
-                      <GoPlus
-                        className="product-cart-icon cart-plus"
-                        onClick={() => addItems(product.id, product.price)}
-                      />
-                    </div>
+                    {!orderItems.some(
+                      (item) => item.product_id === product.id
+                    ) ? (
+                      <>
+                        <div key={product.id} className="product-item">
+                          <h3>
+                            {product.name}: ${product.price}
+                          </h3>
+                          <GoPlus
+                            className="product-cart-icon cart-plus"
+                            onClick={() => addItems(product.id, product.price)}
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div key={product.id} className="product-item">
+                          <h3>
+                            {product.name}: ${product.price}
+                          </h3>
+                          <BsCartCheckFill className="product-cart-icon" />
+                        </div>
+                      </>
+                    )}
                   </>
-                ) : (
-                  <>
-                    <div key={product.id} className="product-item">
-                      <h3>
-                        {product.name}: ${product.price}
-                      </h3>
-                      <BsCartCheckFill className="product-cart-icon" />
-                    </div>
-                  </>
-                )}
-              </>
-            ))}
-          </article>
+                ))}
+              </article>
 
               {}
-                </Grid>
+            </Grid>
             <div className="orderDetails">
               <h1>Event Details</h1>
               <hr />
@@ -394,7 +400,7 @@ function Events() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell >Date</TableCell>
+                        <TableCell>Date</TableCell>
                         <TableCell>Event Type</TableCell>
                         <TableCell>Name</TableCell>
                       </TableRow>
@@ -422,7 +428,8 @@ function Events() {
                                   backgroundColor: "#bf4040",
                                 },
                               }}
-                              onClick={() => deleteUserEvent(event.id)}>
+                              onClick={() => deleteUserEvent(event.id)}
+                            >
                               Delete
                             </Button>
                           </TableCell>
@@ -433,25 +440,26 @@ function Events() {
                 </CardContent>
               </TableContainer>
               <Button
-              color="primary"
-              variant="contained"
-              sx={{
-                backgroundColor: "#4caf50",
-                color: "white",
-                height: "65px",
-                fontSize: "1.2rem",
-                fontWeight: "600",
-                boxShadow: "none",
-                marginTop: "2rem",
-                borderRadius: "25px",
-                "&:hover": {
+                color="primary"
+                variant="contained"
+                sx={{
                   backgroundColor: "#4caf50",
-                },
-              }}
-              onClick={handleCheckout}>
-              {" "}
-              Check Out{" "}
-            </Button>
+                  color: "white",
+                  height: "65px",
+                  fontSize: "1.2rem",
+                  fontWeight: "600",
+                  boxShadow: "none",
+                  marginTop: "2rem",
+                  borderRadius: "25px",
+                  "&:hover": {
+                    backgroundColor: "#4caf50",
+                  },
+                }}
+                onClick={handleCheckout}
+              >
+                {" "}
+                Check Out{" "}
+              </Button>
             </div>
           </Grid>
         </Card>

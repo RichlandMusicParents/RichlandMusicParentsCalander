@@ -13,8 +13,33 @@ function* fetchCalendar() {
   }
 }
 
+function* addCalendar(action) {
+  try {
+    yield axios.post("/api/calendar/add-calendar", action.payload);
+    yield put({ type: "FETCH_CALENDAR" });
+  } catch (err) {
+    console.log("Error POSTING calendar", err);
+  }
+}
+
+function* editCalendar(action) {
+  try {
+    yield axios.put(
+      `/api/calendar/edit-calendar/${Number(action.payload.id)}`,
+      {
+        calendar_name: action.payload.calendar_name,
+      }
+    );
+    yield put({ type: "FETCH_CALENDAR" });
+  } catch (err) {
+    console.log("Error in PUTTING calendar", err);
+  }
+}
+
 function* calendarSaga() {
   yield takeLatest("FETCH_CALENDAR", fetchCalendar);
+  yield takeLatest("ADD_CALENDAR", addCalendar);
+  yield takeLatest("EDIT_CALENDAR", editCalendar);
 }
 
 export default calendarSaga;
