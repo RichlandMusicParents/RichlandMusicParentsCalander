@@ -155,6 +155,7 @@ body {
   -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
   border-radius: 10px;
   box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
+  margin-bottom: 2rem;
 }
 
 .admin-home-right {
@@ -166,6 +167,7 @@ body {
   -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
   border-radius: 10px;
   box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
+  margin-bottom: 2rem;
 }
 
 .products {
@@ -207,6 +209,11 @@ body {
 
   margin: 1rem;
   padding: 1rem;
+}
+
+.calendar-list-header {
+  display: flex;
+  justify-content: center;
 }
 
 .product-price,
@@ -278,14 +285,61 @@ nav > p:hover {
   padding: 0;
 }
 
+.order-card-details {
+  width: 45%;
+}
+
+.order-card-contact-info {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 li {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+.order-card-info > p,
+.order-details-info > p {
+  padding: 0;
+  margin: 0.5rem;
+}
+
+.order-card-info,
+.order-details-info {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.order-card-footer {
+  height: 20%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px solid rgb(230, 230, 230);
+}
+
+.order-card-body {
+  width: 100%;
+  border-top: 2px solid rgb(230, 230, 230);
+  height: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .order-card {
-  width: 25rem;
+  width: 29rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 20rem;
   -webkit-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
   box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
@@ -293,14 +347,18 @@ li {
   padding: 1rem;
   margin: 1rem;
 }
+
+.orders-section {
+  margin-block: 10rem;
+}
 .address {
   text-align: center;
 }
 .orders {
   display: flex;
-  width: 80%;
+  width: 100rem;
   flex-wrap: wrap;
-  height: 50rem;
+  height: 49rem;
   margin-inline: auto;
   justify-content: space-evenly;
   overflow-x: scroll;
@@ -346,14 +404,30 @@ li {
   margin-block: 3rem;
 }
 
+.contact-info-header,
+.order-card-details-header {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bold-total {
+  font-weight: bold;
+}
+
 .order-card h2 {
   text-align: center;
 }
 
 .order-card-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 10%;
+  margin-bottom: 0.5rem;
 }
 
 .edit-order-info-form {
@@ -385,8 +459,14 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-block: 5rem;
 }
 
+.checkout-button {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+}
 .admin-events-list-header {
   font-size: 2rem;
 }
@@ -433,6 +513,8 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 .user-card-info {

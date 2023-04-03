@@ -128,7 +128,7 @@ export default function AdminOrderOverview() {
   const [orderId, setOrderId] = useState(0);
 
   function sendToAdmin() {
-    history.push("/admin-home");
+    history.push("/admin-orders-and-events");
   }
   return (
     <>
