@@ -65,13 +65,16 @@ function ConfirmDialog() {
        variant="contained"
        sx={{
          backgroundColor: "#",
+         width:"200px",
+     padding: "40px",
+     marginLeft: "900px",
          color: "white",
          height: "65px",
          fontSize: "1.2rem",
          fontWeight: "600",
          boxShadow: "none",
          marginTop: "2rem",
-         borderRadius: "25px",
+         borderRadius: "50px",
          "&:hover": {
            backgroundColor: richlandTheme.palette.primary.dark,
          },
