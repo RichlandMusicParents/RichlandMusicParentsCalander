@@ -69,10 +69,13 @@ export default function Admin() {
   }
 
   function saveCalEdit() {
+    // console.log(editCalName);
     dispatch({
-      type: "ADMIN_EDIT_CALENDAR",
-      payload: { id: calendarEditId, name: editCalName },
+      type: "EDIT_CALENDAR",
+      payload: { id: calendarEditId, calendar_name: editCalName },
     });
+
+    setCalendarEditId(false);
   }
 
   function saveEditProduct() {
@@ -100,6 +103,19 @@ export default function Admin() {
     // console.log(prodObj);
 
     dispatch({ type: "ADD_PRODUCT", payload: prodObj });
+    setProductName("");
+    setProductPrice(0);
+    setProductSku("");
+    setProductCalId(0);
+  }
+
+  function createCalendar() {
+    dispatch({
+      type: "ADD_CALENDAR",
+      payload: { calendar_name: calendarName },
+    });
+
+    setCalendarName("");
   }
 
   return (
@@ -277,7 +293,7 @@ export default function Admin() {
             </div>
           </div>
           <div className="admin-home-right">
-            <div className="create-product">
+            <div className="create-calendar">
               <header className="create-product-header">
                 <h2>New Calendar</h2>
               </header>
@@ -294,7 +310,7 @@ export default function Admin() {
                   variant="contained"
                   color="primary"
                   sx={{ height: 25 }}
-                  onClick={createProduct}
+                  onClick={createCalendar}
                 >
                   Add
                 </Button>

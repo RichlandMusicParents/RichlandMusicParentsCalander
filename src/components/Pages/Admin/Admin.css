@@ -308,6 +308,26 @@ li {
 .create-product {
   width: 90%;
   height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: fit-content;
+  padding-block: 2rem;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
+  margin-block: 3rem;
+}
+
+.create-calendar {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: fit-content;
   padding-block: 2rem;
   border-radius: 10px;
   -webkit-box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.16);
