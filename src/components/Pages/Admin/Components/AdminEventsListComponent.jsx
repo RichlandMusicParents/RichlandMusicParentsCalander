@@ -98,6 +98,10 @@ export default function AdminEventsListComponent() {
     },
   });
 
+  function exportEvents() {
+    dispatch({ type: "EXPORT_EVENTS" });
+  }
+
   return (
     <>
       <header className="admin-events-list-header">
@@ -384,6 +388,7 @@ export default function AdminEventsListComponent() {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Paper>
+          <Button onClick={exportEvents}>Export</Button>
         </ThemeProvider>
       </section>
     </>

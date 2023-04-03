@@ -14,6 +14,7 @@ const ordersRouter = require("./routes/orders.router");
 const orderitemsRouter = require("./routes/orderitems.router");
 const productsRouter = require("./routes/products.router");
 const calendarRouter = require("./routes/calendar.router");
+const googleRouter = require("./routes/googlesheets.router");
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -33,6 +34,7 @@ app.use("/api/orders", ordersRouter);
 app.use("/api/orderitems", orderitemsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/calendar", calendarRouter);
+app.use("/api/google-sheets", googleRouter);
 
 // Serve static files
 app.use(express.static("build"));
