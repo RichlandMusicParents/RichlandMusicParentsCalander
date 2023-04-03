@@ -86,10 +86,10 @@ export default function OrderCompleted() {
           >
     <ThemeProvider theme={richlandTheme}>
     <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign:"center"}}>Invoice</h1></u>
-    <Typography className="orderComplete" variant="h5"  style={{ color: "green", textAlign: "center", fontSize:"30px" }}>
-  Your order is confirmed!
-</Typography>  
       <hr/>
+    <Typography className="orderComplete" variant="h5"  style={{ color: "green", textAlign: "center", fontSize:"30px" }}>
+ Thank you for supporting RMP! Your order is confirmed!
+</Typography>  
 
 
       <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem" }}>
