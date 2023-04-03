@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {createTheme, Button,
+ThemeProvider} from "@mui/material";
 
 function RegisterForm() {
   const [first_name, setfirstName] = useState('');
@@ -23,10 +25,41 @@ function RegisterForm() {
     });
   }; // end registerUser
 
+  
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+
+    typography: {
+      fontFamily: "Libre Baskerville, serif",
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: 1.5,
+    },
+  });
+
+
+
   return (
+    <>
+    <ThemeProvider theme={richlandTheme}>
+   
     <form className="formPanel" onSubmit={registerUser}>
-      <h2>Register User</h2>
-      {errors.registrationMessage && (
+    <header>
+            <h2>Register New User</h2>
+          </header>      {errors.registrationMessage && (
         <h3 className="alert" role="alert">
           {errors.registrationMessage}
         </h3>
@@ -78,9 +111,22 @@ function RegisterForm() {
         </label>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
-      </div>
+      <Button
+            sx={{
+              width: 300,
+              margin: 1,
+              marginBottom: 5,
+              height: 50,
+              fontSize: 15,
+            }}
+            variant="contained"
+            onClick={registerUser}
+          >
+            Create Account
+          </Button>      </div>
     </form>
+    </ThemeProvider>
+    </>
   );
 }
 
