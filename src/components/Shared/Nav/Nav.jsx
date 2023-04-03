@@ -21,39 +21,38 @@ function Nav() {
         ></div>
       </div>
       {/* If no user is logged in, show these links */}
-      {!user.id && (
-        // If there's no user, show login/registration links
-        <Link className="navLink" to="/login">
-          Login / Register
-        </Link>
-      )}
 
       {/* If a user is logged in, show these links */}
-      {user.id && user.is_admin === true ? (
+      {user.id ? (
         <>
-          <Link className="navLink" to="/userform">
-            Home
-          </Link>
+          {user.is_admin === true ? (
+            <>
+              <Link className="navLink" to="/splashPage">
+                Home
+              </Link>
 
-          <Link className="navLink" to="/admin-home">
-            Admin
-          </Link>
-          <Link className="navLink" to="/info">
-            Info Page
-          </Link>
-
-          <LogOutButton className="navLink" />
+              <Link className="navLink" to="/admin-home">
+                Admin
+              </Link>
+              <LogOutButton className="navLink" />
+            </>
+          ) : (
+            <>
+              <Link className="navLink" to="/userform">
+                Home
+              </Link>
+              <Link className="navLink" to="/userform">
+                Create Order
+              </Link>
+              <LogOutButton className="navLink" />
+            </>
+          )}
         </>
       ) : (
         <>
-          <Link className="navLink" to="/userform">
-            Home
+          <Link className="navLink" to="/login">
+            Login / Register
           </Link>
-
-          <Link className="navLink" to="/info">
-            Info Page
-          </Link>
-          <LogOutButton className="navLink" />
         </>
       )}
     </div>
