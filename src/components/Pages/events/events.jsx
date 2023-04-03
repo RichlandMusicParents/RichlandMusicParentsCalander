@@ -253,6 +253,7 @@ function Events() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <h2>Event Form</h2>
+              <h3>2/3 Completed</h3>
               <hr />
               <br />
               <br />
