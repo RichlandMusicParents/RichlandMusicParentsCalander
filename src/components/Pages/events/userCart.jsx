@@ -4,10 +4,10 @@ import { useHistory, useParams } from "react-router-dom";
 import { GoPlus, GoDash } from "react-icons/go";
 import { BsXSquareFill, BsCheck2, BsCart2 } from "react-icons/bs";
 import { Button, createTheme, ThemeProvider } from "@mui/material";
-import "./Cart.css";
+import "./Event.css"
 
-export default function CartComponent() {
-  const userId = useParams();
+export default function UserCartComponent() {
+  // const userId = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -30,27 +30,26 @@ export default function CartComponent() {
   useEffect(() => {
     // IF OUR ORDER[0] IS NOT UNDEFINED WE WILL SET EACH STATE TO THE CORRECT OBJECT KEY AND WE WILL DO THIS ANYTIME OUR ORDER STORE CHANGES
     // IF OUR ORDER[0] IS UNDEFINED WE WILL NOT SET ANY STATE WHICH MEANS WE WONT GET AN ERROR
-    order[0] !== undefined && setFirstName(order[0].first_name);
-    order[0] !== undefined && setLastName(order[0].last_name);
-    order[0] !== undefined && setAddress(order[0].address);
-    order[0] !== undefined && setCity(order[0].city);
-    order[0] !== undefined && setZip(order[0].zip);
-    order[0] !== undefined && setState(order[0].state);
-    order[0] !== undefined && setEmail(order[0].email);
-    order[0] !== undefined && setPhone(order[0].phone);
-  }, [order]);
+    orders[0] !== undefined && setFirstName(orders[0].first_name);
+    orders[0] !== undefined && setLastName(orders[0].last_name);
+    orders[0] !== undefined && setAddress(orders[0].address);
+    orders[0] !== undefined && setCity(orders[0].city);
+    orders[0] !== undefined && setZip(orders[0].zip);
+    orders[0] !== undefined && setState(orders[0].state);
+    orders[0] !== undefined && setEmail(orders[0].email);
+    orders[0] !== undefined && setPhone(orders[0].phone);
+  }, [orders]);
   useEffect(() => {
-    dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
-    dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId });
-    dispatch({
-      type: "ADMIN_GET_SPECIFIC_ORDER_ITEMS",
-      payload: userId.id,
-    });
+    dispatch({ type: "GET_USER_EVENT" });
+    dispatch({ type: "FETCH_USER_PRODUCTS" });
+    dispatch({ type: "FETCH_CALENDAR" });
+    dispatch({ type: "GET_NEW_ORDER" });
+    dispatch({ type: "FETCH_ORDER_ITEMS" });
   }, [dispatch]);
 
   useEffect(() => {
-    order[0] !== undefined && setOrderId(order[0].id);
-  }, [order]);
+    orders[0] !== undefined && setOrderId(orders[0].id);
+  }, [orders]);
   const paymentType = "0";
   const isPayed = false;
   const isDelivered = false;
@@ -67,18 +66,17 @@ export default function CartComponent() {
     style: "currency",
     currency: "USD",
   });
-  const order = useSelector((store) => store.adminReducer.specificOrder);
+  const orders = useSelector((store) => store.order.newOrder);
 
-  const user = useSelector((store) => store.adminReducer.specificUser);
-  const orderItems = useSelector(
-    (store) => store.adminReducer.specificOrderItems
-  );
+  const user = useSelector((store) => store.user);
+  const orderItems = useSelector((store) => store.orderItemsReducer);
 
   const [itemEditId, setItemEditId] = useState(0);
   const [itemEditMode, setItemEditMode] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [orderId, setOrderId] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
+  const [total, setTotal] = useState(0);
 
   function saveUpdate(product_id, price) {
     console.log(product_id, price);
@@ -87,15 +85,16 @@ export default function CartComponent() {
       quantity: quantity,
       price,
       product_id,
-      order_id: Number(orderId),
-      user_id: Number(userId.id),
+      order_id: Number(orders[0].id),
+      user_id: Number(user.id),
     };
+
     if (quantity <= 0) {
       deleteOrderItem(itemEditId);
       setItemEditMode(false);
       setQuantity(1);
     } else {
-      dispatch({ type: "ADMIN_EDIT_ORDER_ITEMS", payload: orderItems });
+      dispatch({ type: "EDIT_ORDER_ITEMS", payload: orderItems });
       setItemEditMode(false);
       setQuantity(1);
     }
@@ -118,44 +117,43 @@ export default function CartComponent() {
   }
   function saveOrderInfo() {
     const orderObj = {
-      id: orderId,
-      first_name: firstName,
-      last_name: lastName,
-      address: address,
-      city: city,
-      state: state,
-      zip: Number(zip),
-      user_id: Number(userId.id),
-      email: email,
-      phone: phone,
-      total: cartTotal,
-      payment_type: paymentType,
-      is_payed: isPayed,
-      is_delivered: isDelivered,
+      first_name: orders[0].first_name,
+      last_name: orders[0].last_name,
+      address: orders[0].address,
+      city: orders[0].city,
+      state: orders[0].state,
+      zip: orders[0].zip,
+      phone: orders[0].phone,
+      email: orders[0].email,
+      total: total,
+      payment_type: orders[0].payment_type,
+      is_payed: false,
+      is_delivered: false,
+      user_id: user.id,
+      id: orders[0].id,
     };
 
-    dispatch({ type: "ADMIN_EDIT_ORDER", payload: orderObj });
+    dispatch({ type: "EDIT_ORDER", payload: orderObj });
   }
 
   function deleteOrderItem(id) {
     dispatch({
-      type: "ADMIN_DELETE_ORDER_ITEM",
-      payload: { id: id, user_id: userId },
+      type: "DELETE_ORDER_ITEMS",
+      payload: id,
     });
     setQuantity(1);
   }
-
   useEffect(() => {
-    total();
+    addTotal();
   }, [orderItems]);
 
-  const total = () => {
+  const addTotal = () => {
     let totalVal = 0;
     for (let i = 0; i < orderItems.length; i++) {
       totalVal +=
         Number(orderItems[i].price).toFixed(2) * Number(orderItems[i].quantity);
     }
-    setCartTotal(totalVal);
+    setTotal(totalVal);
   };
 
   return (
@@ -234,7 +232,7 @@ export default function CartComponent() {
                 ))}
               </article>
               <div className="cart-total">
-                <h2>Total: {formatter.format(cartTotal)}</h2>
+                <h2>Total: {formatter.format(total)}</h2>
               </div>
             </section>
           </>
@@ -254,7 +252,7 @@ export default function CartComponent() {
                 <h2>Cart is empty</h2>
               </article>
               <article className="cart-total">
-                <h2>Total: {formatter.format(cartTotal)}</h2>
+                <h2>Total: {formatter.format(total)}</h2>
               </article>
             </section>
           </>
