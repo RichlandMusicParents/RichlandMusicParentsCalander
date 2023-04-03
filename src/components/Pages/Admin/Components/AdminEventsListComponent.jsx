@@ -38,6 +38,7 @@ export default function AdminEventsListComponent() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_ALL_EVENTS" });
+    dispatch({ type: "ADMIN_GET_ALL_USERS" });
   }, [dispatch]);
 
   /* =====  Our Functions to handle the TablePagination ===== */
@@ -387,8 +388,15 @@ export default function AdminEventsListComponent() {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <Button
+              sx={{ margin: 1 }}
+              variant="contained"
+              color="primary"
+              onClick={exportEvents}
+            >
+              Export
+            </Button>
           </Paper>
-          <Button onClick={exportEvents}>Export</Button>
         </ThemeProvider>
       </section>
     </>
