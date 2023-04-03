@@ -48,9 +48,10 @@ export default function CartComponent() {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    order[0] !== undefined && setOrderId(order[0].id);
-  }, [order]);
+  // useEffect(() => {
+  //   order[0] !== undefined && setOrderId(order[0].id);
+  // }, [order]);
+
   const paymentType = "0";
   const isPayed = false;
   const isDelivered = false;
@@ -69,6 +70,7 @@ export default function CartComponent() {
   });
   const order = useSelector((store) => store.adminReducer.specificOrder);
 
+  console.log(order[0]?.id);
   const user = useSelector((store) => store.adminReducer.specificUser);
   const orderItems = useSelector(
     (store) => store.adminReducer.specificOrderItems
@@ -77,9 +79,9 @@ export default function CartComponent() {
   const [itemEditId, setItemEditId] = useState(0);
   const [itemEditMode, setItemEditMode] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [orderId, setOrderId] = useState(0);
-  const [cartTotal, setCartTotal] = useState(0);
-  console.log("Order ID", orderId);
+  // const [orderId, setOrderId] = useState(0);
+  // const [cartTotal, setCartTotal] = useState(0);
+  console.log("Order", order);
 
   function saveUpdate(product_id, price) {
     console.log(product_id, price);
@@ -88,9 +90,10 @@ export default function CartComponent() {
       quantity: quantity,
       price,
       product_id,
-      order_id: orderId,
+      order_id: order[0].id,
       user_id: Number(userId.id),
     };
+
     if (quantity <= 0) {
       deleteOrderItem(itemEditId);
       setItemEditMode(false);
@@ -119,7 +122,7 @@ export default function CartComponent() {
   }
   function saveOrderInfo() {
     const orderObj = {
-      id: orderId,
+      id: order[0].id,
       first_name: firstName,
       last_name: lastName,
       address: address,
@@ -147,9 +150,9 @@ export default function CartComponent() {
     setQuantity(1);
   }
 
-  useEffect(() => {
-    total();
-  }, [orderItems]);
+  // useEffect(() => {
+  //   total();
+  // }, [orderItems]);
 
   const total = () => {
     let totalVal = 0;
@@ -157,8 +160,12 @@ export default function CartComponent() {
       totalVal +=
         Number(orderItems[i].price).toFixed(2) * Number(orderItems[i].quantity);
     }
-    setCartTotal(totalVal);
+    return totalVal;
+    // setCartTotal(totalVal);
   };
+
+  // calculate current cart total
+  const cartTotal = total();
 
   return (
     <>
