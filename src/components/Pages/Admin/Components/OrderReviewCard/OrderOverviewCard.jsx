@@ -115,7 +115,7 @@ export default function OrderOverviewCard() {
     <>
       <ThemeProvider theme={richlandTheme}>
         <div className="admin-review-container">
-          <header className="customer-info-header">
+          <header className="customer-info-header-edit">
             {orderInfoEditMode ? (
               <>
                 <h2>Edit Order Details</h2>
@@ -129,8 +129,8 @@ export default function OrderOverviewCard() {
           {specificOrder.map((orderInfo) => (
             <>
               {orderInfoEditMode ? (
-                <article className="customer-info-body">
-                  <div className="order-info">
+                <article className="customer-info-body-edit">
+                  <div className="order-info-edit">
                     <div className="customer-info">
                       <header className="info-header">
                         <h3>Contact Info</h3>
@@ -302,8 +302,8 @@ export default function OrderOverviewCard() {
                   </div>
                 </article>
               ) : (
-                <article className="customer-info-body">
-                  <div className="order-info">
+                <article className="customer-info-body-edit">
+                  <div className="order-info-edit">
                     <div className="customer-info">
                       <header className="info-header">
                         <h3>Contact Info</h3>

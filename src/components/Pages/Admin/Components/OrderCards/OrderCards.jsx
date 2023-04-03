@@ -122,7 +122,7 @@ export default function OrderOverviewCard() {
             <h2>Order Details</h2>
           </header>
 
-          <article className="customer-info-body">
+          <article className="customer-info-body-list">
             <div className="order-info">
               <div className="customer-info">
                 <header className="info-header">

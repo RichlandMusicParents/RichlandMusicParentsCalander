@@ -1,5 +1,5 @@
 .admin-review-container {
-  height: 20rem;
+  height: 25rem;
   border-radius: 10px;
   padding: 1rem;
   margin: 1rem;
@@ -18,8 +18,8 @@
   justify-content: center;
 }
 
-.customer-info-header {
-  height: 15%;
+.customer-info-header-edit {
+  height: 20%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -27,14 +27,13 @@
   border-bottom: 1.5px solid rgb(210, 210, 210);
 }
 
-.customer-info-body {
+.customer-info-body-edit {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 85%;
-  /* background-color: red; */
+  height: 80%;
 }
 
 .name-input-container {
@@ -46,20 +45,22 @@
 .shipping-address,
 .order-status {
   width: 33%;
+  height: 100%;
   text-align: center;
 }
+
 .events-table-container {
   width: 81%;
   margin-inline: auto;
 }
 
-.order-info {
+.order-info-edit {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 95%;
   margin-inline: auto;
-  height: 85%;
+  height: 70%;
 }
 
 .edit-order-info-form {
@@ -67,7 +68,6 @@
   flex-direction: row;
   justify-content: center;
   height: 85%;
-  /* background-color: red; */
 }
 
 .order-review-top-container {

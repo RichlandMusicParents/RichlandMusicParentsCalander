@@ -111,7 +111,7 @@ export default function AdminEventsListComponent() {
       <section className="events-list-table">
         <ThemeProvider theme={richlandTheme}>
           <Paper sx={{ width: 1200, marginInline: "auto" }}>
-            <TableContainer component={Paper} sx={{ height: 448 }}>
+            <TableContainer component={Paper} sx={{ height: 460 }}>
               <Table>
                 <TableHead>
                   <TableRow sx={{ height: 40 }}>

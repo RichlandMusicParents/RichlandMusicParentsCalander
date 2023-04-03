@@ -87,7 +87,7 @@ export default function Admin() {
       calendar_id: Number(productEditCalId),
     };
 
-    // console.log(prodObj);
+    console.log(prodObj);
     dispatch({ type: "ADMIN_EDIT_PRODUCTS", payload: prodObj });
     setProductEditMode(false);
   }
@@ -319,8 +319,8 @@ export default function Admin() {
                 </Button>
               </form>
             </div>
-            <div className="products">
-              <header>
+            <div className="">
+              <header className="calendar-list-header">
                 <h2>Calendars</h2>
               </header>
               <div className="products">

@@ -146,6 +146,10 @@ export default function AdminAddEvents() {
     setEventEditId(false);
   }
 
+  function saveOrderInfo() {
+    history.push(`/admin-order-review/${userId.id}`);
+  }
+
   /* ==== ORDER UPDATE ==== */
 
   // STATES FOR OUR ORDER OBJECT
