@@ -27,18 +27,19 @@ export default function CartComponent() {
       },
     },
   });
-  useEffect(() => {
-    // IF OUR ORDER[0] IS NOT UNDEFINED WE WILL SET EACH STATE TO THE CORRECT OBJECT KEY AND WE WILL DO THIS ANYTIME OUR ORDER STORE CHANGES
-    // IF OUR ORDER[0] IS UNDEFINED WE WILL NOT SET ANY STATE WHICH MEANS WE WONT GET AN ERROR
-    order[0] !== undefined && setFirstName(order[0].first_name);
-    order[0] !== undefined && setLastName(order[0].last_name);
-    order[0] !== undefined && setAddress(order[0].address);
-    order[0] !== undefined && setCity(order[0].city);
-    order[0] !== undefined && setZip(order[0].zip);
-    order[0] !== undefined && setState(order[0].state);
-    order[0] !== undefined && setEmail(order[0].email);
-    order[0] !== undefined && setPhone(order[0].phone);
-  }, [order]);
+  // useEffect(() => {
+  //   // IF OUR ORDER[0] IS NOT UNDEFINED WE WILL SET EACH STATE TO THE CORRECT OBJECT KEY AND WE WILL DO THIS ANYTIME OUR ORDER STORE CHANGES
+  //   // IF OUR ORDER[0] IS UNDEFINED WE WILL NOT SET ANY STATE WHICH MEANS WE WONT GET AN ERROR
+  //   order[0] !== undefined && setFirstName(order[0].first_name);
+  //   order[0] !== undefined && setLastName(order[0].last_name);
+  //   order[0] !== undefined && setAddress(order[0].address);
+  //   order[0] !== undefined && setCity(order[0].city);
+  //   order[0] !== undefined && setZip(order[0].zip);
+  //   order[0] !== undefined && setState(order[0].state);
+  //   order[0] !== undefined && setEmail(order[0].email);
+  //   order[0] !== undefined && setPhone(order[0].phone);
+  // }, [order]);
+
   useEffect(() => {
     dispatch({ type: "ADMIN_GET_SPECIFIC_USER", payload: userId });
     dispatch({ type: "ADMIN_GET_SPECIFIC_ORDER", payload: userId.id });
@@ -55,14 +56,6 @@ export default function CartComponent() {
   const paymentType = "0";
   const isPayed = false;
   const isDelivered = false;
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState(0);
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -123,15 +116,15 @@ export default function CartComponent() {
   function saveOrderInfo() {
     const orderObj = {
       id: order[0].id,
-      first_name: firstName,
-      last_name: lastName,
-      address: address,
-      city: city,
-      state: state,
-      zip: Number(zip),
+      first_name: order[0].first_name,
+      last_name: order[0].last_name,
+      address: order[0].address,
+      city: order[0].city,
+      state: order[0].state,
+      zip: Number(order[0].zip),
       user_id: Number(userId.id),
-      email: email,
-      phone: phone,
+      email: order[0].email,
+      phone: order[0].phone,
       total: cartTotal,
       payment_type: paymentType,
       is_payed: isPayed,

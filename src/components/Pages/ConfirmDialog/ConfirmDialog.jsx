@@ -80,6 +80,7 @@ function ConfirmDialog() {
          boxShadow: "none",
          marginTop: "2rem",
          borderRadius: "50px",
+         marginBottom: "3rem",
          "&:hover": {
            backgroundColor: richlandTheme.palette.primary.dark,
          },

@@ -241,26 +241,28 @@ function Events() {
   });
 
   return (
-    <form noValidate autoComplete="off" className="event-container">
+    <div className="invoice-container" >
       <ThemeProvider theme={richlandTheme}>
         <h1 className="form-title">Richland Music Parents</h1>
         <Card
           className="form-card"
           sx={{
             marginBottom: "50px",
-            borderRadius: "25px",
+            borderRadius: "4px",
           }}
         >
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <h2>Event Form</h2>
-              <h3>2/3 Completed</h3>
+            <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign: "center"}}>Event Form</h1></u>
+
+              <h3 style={{ textAlign: "center"}}>3/3 Completed</h3>
+
               <hr />
               <br />
               <br />
             </Grid>
 
-            <div></div>
+       
 
             <Grid item xs={6}>
               
@@ -339,7 +341,10 @@ function Events() {
                 <Grid item xs={12} sm={6} md={2}>
                   <Button
                     sx={{
+                      display:"flex",
+                      justifyContent:"center",
                       backgroundColor: "#4caf50",
+                      padding: "7px",
                       color: "white",
                       fontSize: "1.2rem",
                       height: "100%",
@@ -354,7 +359,7 @@ function Events() {
                     onClick={eventHandleSubmit}
                   >
                     {" "}
-                    Submit Event{" "}
+                    Add Event{" "}
                   </Button>
                 </Grid>
                
@@ -363,118 +368,131 @@ function Events() {
 
             <Grid container spacing={3}>
             <Grid item xs={8}>
-            <UserCartComponent className="event-page-cart" />
-
+            <UserCartComponent  />
     </Grid>
     <Grid>
-    <article className="items">
-      {products.map((product) => (
+
+<article 
+  className="cart-icon-container" 
+  style={{ 
+    padding: "1rem", 
+    borderRadius: "4px", 
+
+    marginLeft:"0px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start"
+  }}
+>
+  {products.map((product) => (
+    <>
+      {!orderItems.some(
+        (item) => item.product_id === product.id
+      ) ? (
         <>
-          {!orderItems.some(
-            (item) => item.product_id === product.id
-          ) ? (
-            <>
-              <div key={product.id} className="product-item">
-                <h3>
-                  {product.name}: ${product.price}
-                </h3>
-                <GoPlus
-                  className="product-cart-icon cart-plus"
-                  onClick={() => addItems(product.id, product.price)}
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              <div key={product.id} className="product-item">
-                <h3>
-                  {product.name}: ${product.price}
-                </h3>
-                <BsCartCheckFill className="product-cart-icon" />
-              </div>
-            </>
-          )}
+          <div key={product.id} className="product-item" style={{ marginBottom: "1rem" }}>
+            <h3 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+              {product.name}: ${product.price}
+            </h3>
+            <GoPlus
+              className="product-cart-icon cart-plus"
+              onClick={() => addItems(product.id, product.price)}
+            />
+          </div>
         </>
-      ))}
-    </article>
+      ) : (
+        <>
+          <div key={product.id} className="product-cart-item " style={{ marginBottom: "1rem" }}>
+            <h3 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+              {product.name}: ${product.price}
+            </h3>
+            <BsCartCheckFill className="product-cart-icon" />
+          </div>
+        </>
+      )}
+    </>
+  ))}
+</article>
+
+
   </Grid>
 </Grid>
+<div className="event-details" style={{ width: "100%", marginLeft: "1rem", marginRight: "-1rem", marginTop:"-500px" }}>
+  <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign:"center"}}>Event Details</h1></u>
+  <Paper elevation={12} className="event-table" style={{ padding: '1rem' }}>
+    <TableContainer  component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell style={{fontWeight: "bold", fontSize: "1.2rem"}}>Date</TableCell>
+            <TableCell style={{fontWeight: "bold", fontSize: "1.2rem"}}>Event Type</TableCell>
+            <TableCell style={{fontWeight: "bold", fontSize: "1.2rem"}}>Name</TableCell>
+            <TableCell style={{fontWeight: "bold", fontSize: "1.2rem"}}>Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {event.map((event) => (
+            <TableRow key={event.id}>
+              <TableCell style={{fontSize: "1.2rem"}}>{formatDate(event.event_date)}</TableCell>
+              <TableCell style={{fontSize: "1.2rem"}}>{event.event_type}</TableCell>
+              <TableCell style={{fontSize: "1.2rem"}}>{event.event_name}</TableCell>
+              <TableCell>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#b80000",
+                    color: "white",
+                    fontSize: "1.2rem",
+                    fontWeight: "600",
+                    padding: "1rem 2rem",
+                    boxShadow: "none",
+                    marginTop: "2rem",
+                    borderRadius: "50px",
+                    "&:hover": {
+                      backgroundColor: "#bf4040",
+                    },
+                  }}
+                  onClick={() => deleteUserEvent(event.id)}
+                >
+                  Delete
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Paper>
+  <Button
+    color="primary"
+    variant="contained"
+    sx={{
+      backgroundColor: "#4caf50",
+      color: "white",
+      height: "65px",
+      fontSize: "1.2rem",
+      marginLeft: "900px",
+      fontWeight: "600",
+      boxShadow: "none",
+      marginTop: "2rem",
+      marginBottom: "3rem",
+      borderRadius: "50px",
+      "&:hover": {
+        backgroundColor: "#4caf50",
+      },
+    }}
+    onClick={handleCheckout}
+  >
+    {" "}
+    Check Out{" "}
+  </Button>
+</div>
 
-<div className="event-details">
-              
-        
-              <Paper elevation={5}>
-              <TableContainer className="Table-Container" component={Paper}>
-             < h1>Event Details</h1>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Date</TableCell>
-                        <TableCell>Event Type</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {event.map((event) => (
-                        <TableRow key={event.id}>
-                          <TableCell>{formatDate(event.event_date)}</TableCell>
-                          <TableCell>{event.event_type}</TableCell>
-                          <TableCell>{event.event_name}</TableCell>
-                          <TableCell>
-                            <Button
-                              color="primary"
-                              variant="contained"
-                              sx={{
-                                backgroundColor: "#b80000",
-                                color: "white",
-                                fontSize: "1.2rem",
-                                fontWeight: "600",
-                                padding: "1rem 2rem",
-                                boxShadow: "none",
-                                marginTop: "2rem",
-                                borderRadius: "50px",
-                                "&:hover": {
-                                  backgroundColor: "#bf4040",
-                                },
-                              }}
-                              onClick={() => deleteUserEvent(event.id)}
-                            >
-                              Delete
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-              </TableContainer>
-              </Paper>
-              <Button
-                color="primary"
-                variant="contained"
-                sx={{
-                  backgroundColor: "#4caf50",
-                  color: "white",
-                  height: "65px",
-                  fontSize: "1.2rem",
-                  fontWeight: "600",
-                  boxShadow: "none",
-                  marginTop: "2rem",
-                  borderRadius: "50px",
-                  "&:hover": {
-                    backgroundColor: "#4caf50",
-                  },
-                }}
-                onClick={handleCheckout}
-              >
-                {" "}
-                Check Out{" "}
-              </Button>
-            </div>
           </Grid>
         </Card>
       </ThemeProvider>
-    </form>
+    </div>
   );
 }
 

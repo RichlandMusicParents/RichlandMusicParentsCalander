@@ -80,7 +80,7 @@ export default function OrderCompleted() {
             className="form-card"
             sx={{
               marginBottom: "50px",
-              borderRadius: "25px",
+              borderRadius: "4px",
               
             }}
           >
@@ -195,7 +195,7 @@ export default function OrderCompleted() {
     width:"200px",
      padding: "40px",
      marginLeft: "900px",
-     marginBottom: "15px",
+     marginBottom: "3rem",
      color: "white",
      height: "65px",
      fontSize: "1.2rem",

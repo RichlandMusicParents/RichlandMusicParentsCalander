@@ -4,8 +4,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { GoPlus, GoDash } from "react-icons/go";
 import { BsXSquareFill, BsCheck2, BsCart2 } from "react-icons/bs";
 import { Button, createTheme, ThemeProvider } from "@mui/material";
-import "./Event.css"
-import "./userCart.css"
+import "./Event.css";
+import "./userCart.css";
 
 export default function UserCartComponent() {
   // const userId = useParams();
@@ -158,11 +158,19 @@ export default function UserCartComponent() {
   };
 
   return (
-    <div className="cart-container">
+    <div className="cart-container"   
+    style={{ marginTop: "4rem",
+     padding: "6rem",
+       borderRadius: "4px", 
+        marginRight:"2050px"  }}
+    >
       <ThemeProvider theme={richlandTheme}>
         {orderItems.length > 0 ? (
           <>
-            <section className="admin-cart-true">
+            <section className="admin-cart-true"
+            style={{ padding: "6rem",
+            marginRight:"20px" }}
+            >
               <header className="cart-header">
                 <h2>Cart Items</h2>
                 <div className="cart-icon-container">
@@ -239,7 +247,7 @@ export default function UserCartComponent() {
           </>
         ) : (
           <>
-            <section className="admin-cart-true">
+            <section className="admin-cart-true" style={{ height: "50%", marginLeft: "1rem", marginRight: "-1rem" }}>
               <header className="cart-header">
                 <h2>Cart Items</h2>
                 <div className="cart-icon-container">
