@@ -22,7 +22,7 @@ export default function AdminAddOrder() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
-  const [paymentType, setPaymentType] = useState("0");
+  const [paymentType, setPaymentType] = useState("Cash");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [isPayed, setIsPayed] = useState(false);

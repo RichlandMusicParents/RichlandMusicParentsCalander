@@ -246,7 +246,7 @@ export default function Admin() {
                           <Button
                             sx={{ width: 50, marginInline: 1 }}
                             variant="contained"
-                            color="danger"
+                            color="secondary"
                             onClick={() => setProductEditMode(false)}
                           >
                             Cancel
@@ -354,7 +354,7 @@ export default function Admin() {
                             <Button
                               sx={{ width: 50, marginInline: 1 }}
                               variant="contained"
-                              color="danger"
+                              color="secondary"
                               onClick={() => setCalEditMode(false)}
                             >
                               Cancel
