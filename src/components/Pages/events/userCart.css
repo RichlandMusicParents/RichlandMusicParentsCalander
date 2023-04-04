@@ -1,7 +1,7 @@
 .cart-container {
     display: flex;
-    justify-content: center;
-    margin: 20px;
+    justify-content: flex-end;
+    margin: 28rem;
     width: 100%;
 }
 
@@ -9,7 +9,3 @@
     width: 300px;
     margin-right: 20px;
   }
-.product-item {
-    margin: 30px;
-    width: 500px;
-}
