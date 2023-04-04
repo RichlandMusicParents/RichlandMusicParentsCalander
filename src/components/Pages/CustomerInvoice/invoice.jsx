@@ -160,8 +160,8 @@ export default function Invoice() {
       <Card
             className="form-card"
             sx={{
-              marginBottom: "50px",
-              borderRadius: "25px",
+              marginBottom: "70px",
+              borderRadius: "4px",
             }}
           >
       <ThemeProvider theme={richlandTheme}>
@@ -401,10 +401,10 @@ export default function Invoice() {
         </div>
         </ThemeProvider>
 
-        <div className="event-details">
+        <div className="event-details" style={{ width: "100%", marginLeft: "-1rem", marginRight: "-1rem" }}>
         <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign: "center"}}>Event Details</h1></u>
         
-          <Paper elevation={5}>
+          <Paper elevation={12} style={{ width: "90%", marginLeft: "5rem", marginRight: "1rem" }}>
           <TableContainer  className="event-details" component={Paper}>
       
             <Table>
@@ -498,6 +498,7 @@ export default function Invoice() {
                     <TableCell>
                       <IconButton
                         onClick={() => deleteUserEvent(event.id)}
+                      
                         color="error"
                       >
                         <DeleteIcon fontSize="large" />
