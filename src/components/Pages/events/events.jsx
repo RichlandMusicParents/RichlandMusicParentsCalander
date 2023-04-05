@@ -338,15 +338,7 @@ function Events() {
                     >
                       Event Date
                     </TableCell>
-                    <TableCell
-                      sx={{
-                        width: 150,
-                        height: 50,
-                        margin: 0,
-                      }}
-                    >
-                      Calendar
-                    </TableCell>
+
                     <TableCell
                       sx={{
                         width: 25,
@@ -421,29 +413,7 @@ function Events() {
                               onChange={(e) => setEditEventDate(e.target.value)}
                             />
                           </TableCell>
-                          <TableCell>
-                            <Select
-                              sx={{
-                                width: 150,
-                                margin: 1,
-                              }}
-                              name="calendar"
-                              id="eType"
-                              renderInput={(params) => (
-                                <TextField {...params} label="Calendar" />
-                              )}
-                              value={calId}
-                              onChange={(e) => setCalId(e.target.value)}
-                            >
-                              {calendars.map((cal) => {
-                                return (
-                                  <MenuItem value={cal.id}>
-                                    {cal.calendar_name}
-                                  </MenuItem>
-                                );
-                              })}
-                            </Select>
-                          </TableCell>
+
                           <TableCell>
                             <Button onClick={saveEditEvent}>Save</Button>
                           </TableCell>
@@ -460,7 +430,6 @@ function Events() {
                           <TableCell>
                             {format(new Date(event.event_date), "MM/dd/yy")}
                           </TableCell>
-                          <TableCell>{event.calendar_name}</TableCell>
                           <TableCell>
                             <Button
                               onClick={() =>
