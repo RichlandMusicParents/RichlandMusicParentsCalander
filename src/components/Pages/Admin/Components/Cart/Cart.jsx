@@ -72,8 +72,6 @@ export default function CartComponent() {
   const [itemEditId, setItemEditId] = useState(0);
   const [itemEditMode, setItemEditMode] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  // const [orderId, setOrderId] = useState(0);
-  // const [cartTotal, setCartTotal] = useState(0);
   console.log("Order", order);
 
   function saveUpdate(product_id, price) {

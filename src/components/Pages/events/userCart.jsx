@@ -5,7 +5,7 @@ import { GoPlus, GoDash } from "react-icons/go";
 import { BsXSquareFill, BsCheck2, BsCart2 } from "react-icons/bs";
 import { Button, createTheme, ThemeProvider } from "@mui/material";
 import "./Event.css";
-import "./userCart.css";
+import "../Admin/Components/Cart/Cart.css";
 
 export default function UserCartComponent() {
   // const userId = useParams();
@@ -76,8 +76,6 @@ export default function UserCartComponent() {
   const [itemEditMode, setItemEditMode] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [orderId, setOrderId] = useState(0);
-  const [cartTotal, setCartTotal] = useState(0);
-  const [total, setTotal] = useState(0);
 
   function saveUpdate(product_id, price) {
     console.log(product_id, price);
@@ -135,6 +133,7 @@ export default function UserCartComponent() {
     };
 
     dispatch({ type: "EDIT_ORDER", payload: orderObj });
+    history.push("/customerInvoice");
   }
 
   function deleteOrderItem(id) {
@@ -144,33 +143,25 @@ export default function UserCartComponent() {
     });
     setQuantity(1);
   }
-  useEffect(() => {
-    addTotal();
-  }, [orderItems]);
-
-  const addTotal = () => {
+  const total = () => {
     let totalVal = 0;
     for (let i = 0; i < orderItems.length; i++) {
       totalVal +=
         Number(orderItems[i].price).toFixed(2) * Number(orderItems[i].quantity);
     }
-    setTotal(totalVal);
+    return totalVal;
+    // setCartTotal(totalVal);
   };
 
+  // calculate current cart total
+  const cartTotal = total();
+
   return (
-    <div className="cart-container"   
-    style={{ marginTop: "4rem",
-     padding: "6rem",
-       borderRadius: "4px", 
-        marginRight:"2050px"  }}
-    >
+    <>
       <ThemeProvider theme={richlandTheme}>
         {orderItems.length > 0 ? (
           <>
-            <section className="admin-cart-true"
-            style={{ padding: "6rem",
-            marginRight:"20px" }}
-            >
+            <section className="admin-cart-true">
               <header className="cart-header">
                 <h2>Cart Items</h2>
                 <div className="cart-icon-container">
@@ -241,13 +232,23 @@ export default function UserCartComponent() {
                 ))}
               </article>
               <div className="cart-total">
-                <h2>Total: {formatter.format(total)}</h2>
+                <h2>Total: {formatter.format(cartTotal)}</h2>
+                <Button variant="contained" onClick={saveOrderInfo}>
+                  Checkout
+                </Button>
               </div>
             </section>
           </>
         ) : (
           <>
-            <section className="admin-cart-true" style={{ height: "50%", marginLeft: "1rem", marginRight: "-1rem" }}>
+            <section
+              className="admin-cart-true"
+              style={{
+                height: "50%",
+                marginLeft: "1rem",
+                marginRight: "-1rem",
+              }}
+            >
               <header className="cart-header">
                 <h2>Cart Items</h2>
                 <div className="cart-icon-container">
@@ -261,12 +262,15 @@ export default function UserCartComponent() {
                 <h2>Cart is empty</h2>
               </article>
               <article className="cart-total">
-                <h2>Total: {formatter.format(total)}</h2>
+                <h2>Total: {formatter.format(cartTotal)}</h2>
+                <Button variant="contained" onClick={saveOrderInfo}>
+                  Checkout
+                </Button>
               </article>
             </section>
           </>
         )}
       </ThemeProvider>
-    </div>
+    </>
   );
 }
