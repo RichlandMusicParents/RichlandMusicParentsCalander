@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import {
@@ -11,25 +11,24 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  CardHeader
+  CardHeader,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
-import UserPage from "../Pages/UserPage/UserPage";
-import "./UserForm.css"
+import "./UserForm.css";
 
 function UserForm() {
   const history = useHistory();
   const dispatch = useDispatch();
+  //Connects to the user store
   const user = useSelector((store) => store.user);
 
-  // order details form
+  // useState for order details form
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
-  const [total, setTotal] = useState(0);
   const [payment, setPayment] = useState("");
   const [email, setEmail] = useState("");
   const [isDelivered, setIsDelivered] = useState(false);
@@ -60,8 +59,7 @@ function UserForm() {
       lineHeight: 1.5,
     },
   });
-  
-
+// This function is called when the user submits the form
   const handleSubmit = () => {
     dispatch({
       type: "ADD_ORDERS",
@@ -259,7 +257,6 @@ function UserForm() {
               <CardContent>
                 <FormControl className="form-input" sx={{ width: "100%" }}>
                   <InputLabel id="event-label"> Payment Options</InputLabel>
-
 
                   <Select
                     labelId="payment-select"
