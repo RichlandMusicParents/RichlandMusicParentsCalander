@@ -22,13 +22,17 @@ import "./orderComplete.css"
 import "./invoice.css"
 // import "./OrderCompleted.css";
 
+// This component is the last page the user sees, its essentially an invoice page with the contact info, order info and the added events
+
 export default function OrderCompleted() {
+  // here we are pulling events and orders reducer from our redux store. orders includes all the order and contact info of the user.
   const user = useSelector((store) => store.user);
   const events = useSelector((store) => store.eventReducer);
   const orders = useSelector((store) => store.order.newOrder);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // these two actions are disptaching get requests. first one gets the events and the second one gets the current users order.
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
     dispatch({ type: "GET_NEW_ORDER" });
