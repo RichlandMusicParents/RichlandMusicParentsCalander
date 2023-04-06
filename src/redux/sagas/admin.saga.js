@@ -68,12 +68,12 @@ function* adminEditEvent(action) {
 function* deleteEvent(action) {
   console.log(action.payload);
   try {
-    yield axios.delete(`/api/events/admin-delete-event/${action.payload}`);
+    yield axios.delete(`/api/events/admin-delete-event/${action.payload.id}`);
     yield put({ type: "ADMIN_GET_ALL_EVENTS" });
-    if (action.payload.user_id.id) {
+    if (action.payload.user_id) {
       yield put({
         type: "GET_SPECIFIC_EVENTS",
-        payload: action.payload.user_id.id,
+        payload: action.payload.user_id,
       });
     }
   } catch (error) {
