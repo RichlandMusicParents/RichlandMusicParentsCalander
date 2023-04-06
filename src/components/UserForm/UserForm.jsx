@@ -60,6 +60,8 @@ function UserForm() {
     },
   });
 // This function is called when the user submits the form
+// this action does a post request to the server in the order form, it also updates the orders reducer with this info,
+// isPayed and isDelivered is set to false by default.
   const handleSubmit = () => {
     dispatch({
       type: "ADD_ORDERS",
@@ -87,6 +89,7 @@ function UserForm() {
     setPhone("");
     setPayment("");
   };
+  // Below is a form input that takes the users first name,last name, address,city, state, zip, phone number, and payment type.
 
   return (
     <form noValidate autoComplete="off" className="form-container">

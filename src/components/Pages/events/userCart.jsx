@@ -7,8 +7,11 @@ import { Button, createTheme, ThemeProvider } from "@mui/material";
 import "./Event.css";
 import "../Admin/Components/Cart/Cart.css";
 
+// This component, is the cart component, it displays the calendar, quanity of the calendar, and extra events, user is able to
+//  add or subtract the quanity of the products and it updates the data base. this component also contains the total.
+
 export default function UserCartComponent() {
-  // const userId = useParams();
+  ;
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -40,6 +43,9 @@ export default function UserCartComponent() {
     orders[0] !== undefined && setEmail(orders[0].email);
     orders[0] !== undefined && setPhone(orders[0].phone);
   }, [orders]);
+
+  // UseEffect that dispatches actions to get user events, products, calendar, orders, and order items. Order items contains two items
+  // first one is calendar and second one is extra events, it has the quantity, and price.
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
     dispatch({ type: "FETCH_USER_PRODUCTS" });
@@ -67,11 +73,13 @@ export default function UserCartComponent() {
     style: "currency",
     currency: "USD",
   });
+  // This is how were accessing the store, were pulling orders, user, and orderItems.
   const orders = useSelector((store) => store.order.newOrder);
 
   const user = useSelector((store) => store.user);
   const orderItems = useSelector((store) => store.orderItemsReducer);
 
+// This is the state we have to manage the editing of the cart.
   const [itemEditId, setItemEditId] = useState(0);
   const [itemEditMode, setItemEditMode] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -92,6 +100,7 @@ export default function UserCartComponent() {
       deleteOrderItem(itemEditId);
       setItemEditMode(false);
       setQuantity(1);
+      // This action dispatches a put to edit the order, the payload is the orderItems above.
     } else {
       dispatch({ type: "EDIT_ORDER_ITEMS", payload: orderItems });
       setItemEditMode(false);
@@ -131,11 +140,12 @@ export default function UserCartComponent() {
       user_id: user.id,
       id: orders[0].id,
     };
-
+    // This dispatches a put request to edit the order, and were sending the above object as the payload.
     dispatch({ type: "EDIT_ORDER", payload: orderObj });
     history.push("/customerInvoice");
   }
 
+  // this dispatches a delete request which takes the id of the order items as a payload.
   function deleteOrderItem(id) {
     dispatch({
       type: "DELETE_ORDER_ITEMS",
