@@ -27,20 +27,19 @@ import {
   TableBody,
   Grid,
 } from "@mui/material";
-import { NumericFormat } from "react-number-format";
 
 function Events() {
   const history = useHistory();
   const dispatch = useDispatch();
+  //connects to the redux store
   const event = useSelector((store) => store.eventReducer);
   const calendars = useSelector((store) => store.calendar);
   const products = useSelector((store) => store.product.productReducer);
-  console.log("in products", products);
   const user = useSelector((store) => store.user);
   const orders = useSelector((store) => store.order.newOrder);
   const orderItems = useSelector((store) => store.orderItemsReducer);
 
-  // event form
+  //UseState for event form
   const [eventFor, setEventFor] = useState("");
   const [numCalendars, setNumCalendars] = useState(0);
   const [selectCalendarId, setSelectedCalendarID] = useState(0);
@@ -240,8 +239,9 @@ function Events() {
     },
   });
 
+  //in the return 
   return (
-    <div className="invoice-container" >
+    <div className="invoice-container">
       <ThemeProvider theme={richlandTheme}>
         <h1 className="form-title">Richland Music Parents</h1>
         <Card
@@ -249,23 +249,25 @@ function Events() {
           sx={{
             marginBottom: "50px",
             borderRadius: "4px",
-          }}
-        >
+          }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-            <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign: "center"}}>Event Form</h1></u>
-
-              <h3 style={{ textAlign: "center"}}>3/3 Completed</h3>
-
+              <u>
+                <h1
+                  style={{
+                    fontSize: "40px",
+                    marginBottom: "1rem",
+                    textAlign: "center",
+                  }}>
+                  Event Form
+                </h1>
+              </u>
+              <h3 style={{ textAlign: "center" }}>2/3 Completed</h3>
               <hr />
               <br />
               <br />
             </Grid>
-
-       
-
             <Grid item xs={6}>
-              
               <CardContent>
                 <FormControl fullWidth sx={{ width: "100%" }}>
                   <InputLabel htmlFor="selectCalendarId">
@@ -280,8 +282,7 @@ function Events() {
                       setSelectedCalendarID(event.target.value)
                     }
                     id="calendar"
-                    value={selectCalendarId}
-                  >
+                    value={selectCalendarId}>
                     {calendars.map((calendar) => (
                       <MenuItem value={calendar.id} key={calendar.id}>
                         {calendar.calendar_name}
@@ -330,8 +331,7 @@ function Events() {
                     name="event_type"
                     id="eType"
                     value={eventOption}
-                    onChange={(e) => setEventOption(e.target.value)}
-                  >
+                    onChange={(e) => setEventOption(e.target.value)}>
                     <MenuItem value="0">Select Event Type</MenuItem>
                     <MenuItem value="birthday">Birthday</MenuItem>
                     <MenuItem value="anniversary">Anniversary</MenuItem>
@@ -341,8 +341,8 @@ function Events() {
                 <Grid item xs={12} sm={6} md={2}>
                   <Button
                     sx={{
-                      display:"flex",
-                      justifyContent:"center",
+                      display: "flex",
+                      justifyContent: "center",
                       backgroundColor: "#4caf50",
                       padding: "7px",
                       color: "white",
@@ -356,139 +356,183 @@ function Events() {
                         backgroundColor: "#4caf50",
                       },
                     }}
-                    onClick={eventHandleSubmit}
-                  >
+                    onClick={eventHandleSubmit}>
                     {" "}
                     Add Event{" "}
                   </Button>
                 </Grid>
-               
               </CardContent>
             </Grid>
 
             <Grid container spacing={3}>
-            <Grid item xs={8}>
-            <UserCartComponent  />
-    </Grid>
-    <Grid>
+              <Grid item xs={8}>
+                <UserCartComponent />
+              </Grid>
+              <Grid>
+                <article
+                  className="cart-icon-container"
+                  style={{
+                    padding: "1rem",
+                    borderRadius: "4px",
 
-<article 
-  className="cart-icon-container" 
-  style={{ 
-    padding: "1rem", 
-    borderRadius: "4px", 
-
-    marginLeft:"0px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start"
-  }}
->
-  {products.map((product) => (
-    <>
-      {!orderItems.some(
-        (item) => item.product_id === product.id
-      ) ? (
-        <>
-          <div key={product.id} className="product-item" style={{ marginBottom: "1rem" }}>
-            <h3 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-              {product.name}: ${product.price}
-            </h3>
-            <GoPlus
-              className="product-cart-icon cart-plus"
-              onClick={() => addItems(product.id, product.price)}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <div key={product.id} className="product-cart-item " style={{ marginBottom: "1rem" }}>
-            <h3 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-              {product.name}: ${product.price}
-            </h3>
-            <BsCartCheckFill className="product-cart-icon" />
-          </div>
-        </>
-      )}
-    </>
-  ))}
-</article>
-
-
-  </Grid>
-</Grid>
-<div className="event-details" style={{ width: "100%", marginLeft: "1rem", marginRight: "-1rem", marginTop:"-500px" }}>
-  <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign:"center"}}>Event Details</h1></u>
-  <Paper elevation={12} className="event-table" style={{ padding: '1rem' }}>
-    <TableContainer  component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell style={{fontWeight: "bold", fontSize: "1.2rem"}}>Date</TableCell>
-            <TableCell style={{fontWeight: "bold", fontSize: "1.2rem"}}>Event Type</TableCell>
-            <TableCell style={{fontWeight: "bold", fontSize: "1.2rem"}}>Name</TableCell>
-            <TableCell style={{fontWeight: "bold", fontSize: "1.2rem"}}>Delete</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {event.map((event) => (
-            <TableRow key={event.id}>
-              <TableCell style={{fontSize: "1.2rem"}}>{formatDate(event.event_date)}</TableCell>
-              <TableCell style={{fontSize: "1.2rem"}}>{event.event_type}</TableCell>
-              <TableCell style={{fontSize: "1.2rem"}}>{event.event_name}</TableCell>
-              <TableCell>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#b80000",
-                    color: "white",
-                    fontSize: "1.2rem",
-                    fontWeight: "600",
-                    padding: "1rem 2rem",
-                    boxShadow: "none",
-                    marginTop: "2rem",
-                    borderRadius: "50px",
-                    "&:hover": {
-                      backgroundColor: "#bf4040",
-                    },
-                  }}
-                  onClick={() => deleteUserEvent(event.id)}
-                >
-                  Delete
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  </Paper>
-  <Button
-    color="primary"
-    variant="contained"
-    sx={{
-      backgroundColor: "#4caf50",
-      color: "white",
-      height: "65px",
-      fontSize: "1.2rem",
-      marginLeft: "900px",
-      fontWeight: "600",
-      boxShadow: "none",
-      marginTop: "2rem",
-      marginBottom: "3rem",
-      borderRadius: "50px",
-      "&:hover": {
-        backgroundColor: "#4caf50",
-      },
-    }}
-    onClick={handleCheckout}
-  >
-    {" "}
-    Check Out{" "}
-  </Button>
-</div>
-
+                    marginLeft: "0px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                  }}>
+                  {products.map((product) => (
+                    <>
+                      {!orderItems.some(
+                        (item) => item.product_id === product.id
+                      ) ? (
+                        <>
+                          <div
+                            key={product.id}
+                            className="product-item"
+                            style={{ marginBottom: "1rem" }}>
+                            <h3
+                              style={{
+                                fontWeight: "bold",
+                                fontSize: "1.2rem",
+                              }}>
+                              {product.name}: ${product.price}
+                            </h3>
+                            <GoPlus
+                              className="product-cart-icon cart-plus"
+                              onClick={() =>
+                                addItems(product.id, product.price)
+                              }
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div
+                            key={product.id}
+                            className="product-cart-item "
+                            style={{ marginBottom: "1rem" }}>
+                            <h3
+                              style={{
+                                fontWeight: "bold",
+                                fontSize: "1.2rem",
+                              }}>
+                              {product.name}: ${product.price}
+                            </h3>
+                            <BsCartCheckFill className="product-cart-icon" />
+                          </div>
+                        </>
+                      )}
+                    </>
+                  ))}
+                </article>
+              </Grid>
+            </Grid>
+            <div
+              className="event-details"
+              style={{
+                width: "100%",
+                marginLeft: "1rem",
+                marginRight: "-1rem",
+                marginTop: "-500px",
+              }}>
+              <u>
+                <h1
+                  style={{
+                    fontSize: "40px",
+                    marginBottom: "1rem",
+                    textAlign: "center",
+                  }}>
+                  Event Details
+                </h1>
+              </u>
+              <Paper
+                elevation={12}
+                className="event-table"
+                style={{ padding: "1rem" }}>
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                          Date
+                        </TableCell>
+                        <TableCell
+                          style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                          Event Type
+                        </TableCell>
+                        <TableCell
+                          style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                          Name
+                        </TableCell>
+                        <TableCell
+                          style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                          Delete
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {event.map((event) => (
+                        <TableRow key={event.id}>
+                          <TableCell style={{ fontSize: "1.2rem" }}>
+                            {formatDate(event.event_date)}
+                          </TableCell>
+                          <TableCell style={{ fontSize: "1.2rem" }}>
+                            {event.event_type}
+                          </TableCell>
+                          <TableCell style={{ fontSize: "1.2rem" }}>
+                            {event.event_name}
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              color="primary"
+                              variant="contained"
+                              sx={{
+                                backgroundColor: "#b80000",
+                                color: "white",
+                                fontSize: "1.2rem",
+                                fontWeight: "600",
+                                padding: "1rem 2rem",
+                                boxShadow: "none",
+                                marginTop: "2rem",
+                                borderRadius: "50px",
+                                "&:hover": {
+                                  backgroundColor: "#bf4040",
+                                },
+                              }}
+                              onClick={() => deleteUserEvent(event.id)}>
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
+              <Button
+                color="primary"
+                variant="contained"
+                sx={{
+                  backgroundColor: "#4caf50",
+                  color: "white",
+                  height: "65px",
+                  fontSize: "1.2rem",
+                  marginLeft: "900px",
+                  fontWeight: "600",
+                  boxShadow: "none",
+                  marginTop: "2rem",
+                  marginBottom: "3rem",
+                  borderRadius: "50px",
+                  "&:hover": {
+                    backgroundColor: "#4caf50",
+                  },
+                }}
+                onClick={handleCheckout}>
+                {" "}
+                Check Out{" "}
+              </Button>
+            </div>
           </Grid>
         </Card>
       </ThemeProvider>

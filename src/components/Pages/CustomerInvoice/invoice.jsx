@@ -29,10 +29,7 @@ import {
   Grid,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import eventReducer from "../../../redux/reducers/event.reducer";
-import orderReducer from "../../../redux/reducers/order.reducer";
 import { useHistory } from "react-router-dom";
-import Notification from "../Notification/Notification";
 import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
 
 export default function Invoice() {
@@ -513,7 +510,7 @@ export default function Invoice() {
           </Paper>
         </div>
 
-        <Notification />
+       
         <ConfirmDialog />
 
         <Snackbar
