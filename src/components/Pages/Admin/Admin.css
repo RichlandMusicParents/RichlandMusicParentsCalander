@@ -17,12 +17,6 @@ body {
   box-sizing: border-box;
 }
 
-.admin-add-event-form {
-  width: 100rem;
-  display: flex;
-  align-items: center;
-}
-
 .events-body {
   width: 100%;
   height: 79%;
