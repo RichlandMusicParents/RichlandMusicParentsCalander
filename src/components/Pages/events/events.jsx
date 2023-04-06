@@ -102,7 +102,7 @@ function Events() {
       calendar_id: editCalId,
     };
 
-    dispatch({ type: "ADMIN_EDIT_EVENTS", payload: editEventObj });
+    dispatch({ type: "EDIT_USER_EVENT", payload: editEventObj });
 
     setEventEditId(false);
   }
@@ -124,19 +124,6 @@ function Events() {
     dispatch({ type: "FETCH_ORDER_ITEMS" });
   }, []);
 
-  //Function to delete a event row.
-
-  // Dispatch for the events
-
-  // DELETE CAL AND EXTRA EVENTS (orderItems)
-  // function deleteOrderItem(id) {
-  //   dispatch({
-  //     type: "DELETE_ORDER_ITEMS",
-  //     payload: id,
-  //   });
-  //   setQuantity(1);
-  // }
-  // add cal and extra events (orderItems)
   function addItems(product_id, price) {
     const orderItems = {
       quantity: 1,

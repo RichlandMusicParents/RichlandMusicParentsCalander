@@ -111,7 +111,7 @@ export default function AdminAddEvents() {
     console.log(id);
     dispatch({
       type: "ADMIN_DELETE_EVENT",
-      payload: { id: id, user_id: userId },
+      payload: { id: id, user_id: userId.id },
     });
   }
 

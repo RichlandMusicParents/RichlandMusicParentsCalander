@@ -53,7 +53,7 @@ export default function AdminEventsListComponent() {
 
   function deleteEvent(id) {
     console.log(id);
-    dispatch({ type: "ADMIN_DELETE_EVENT", payload: id });
+    dispatch({ type: "ADMIN_DELETE_EVENT", payload: { id: id } });
   }
 
   function saveEditEvent() {
@@ -100,6 +100,7 @@ export default function AdminEventsListComponent() {
   });
 
   function exportEvents() {
+    
     dispatch({ type: "EXPORT_EVENTS" });
   }
 
@@ -379,6 +380,14 @@ export default function AdminEventsListComponent() {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Button
+              sx={{ margin: 1 }}
+              variant="contained"
+              color="primary"
+              onClick={exportEvents}
+            >
+              Export Events
+            </Button>
             <TablePagination
               rowsPerPageOptions={[5]}
               component="div"
@@ -388,14 +397,6 @@ export default function AdminEventsListComponent() {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            <Button
-              sx={{ margin: 1 }}
-              variant="contained"
-              color="primary"
-              onClick={exportEvents}
-            >
-              Export
-            </Button>
           </Paper>
         </ThemeProvider>
       </section>

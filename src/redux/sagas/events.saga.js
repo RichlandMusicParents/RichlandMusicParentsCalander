@@ -52,7 +52,6 @@ function* addEvent(action) {
     const response = yield axios.post("/api/events/user-add-events", eventObj);
     yield put({
       type: "GET_USER_EVENT",
-      payload: Number(action.payload.user_id),
     });
   } catch (error) {
     console.log("Error in adding event", error);
@@ -65,7 +64,6 @@ function* deleteUserEvent(action) {
     yield axios.delete(`/api/events/delete-events/${Number(action.payload)}`);
     yield put({
       type: "GET_USER_EVENT",
-      payload: Number(action.payload.user_id),
     });
   } catch (error) {
     console.log("Error in deleting an event", error);
@@ -87,7 +85,6 @@ function* editUserEvent(action) {
     );
     yield put({
       type: "GET_USER_EVENT",
-      payload: Number(action.payload.user_id),
     });
   } catch (error) {
     console.log("error in updating event saga", error);
