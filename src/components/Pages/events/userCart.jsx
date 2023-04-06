@@ -124,7 +124,7 @@ export default function UserCartComponent() {
       zip: orders[0].zip,
       phone: orders[0].phone,
       email: orders[0].email,
-      total: total,
+      total: cartTotal,
       payment_type: orders[0].payment_type,
       is_payed: false,
       is_delivered: false,
