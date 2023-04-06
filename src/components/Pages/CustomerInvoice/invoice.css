@@ -1,12 +1,11 @@
 .invoice-container {
-    display: flex;
-    flex-direction: column;
-    padding: 3rem;
-    background-color: #f9f9f9;
-    margin: 50px;
-  }
-  
-  .MuiTextField-root {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  background-color: #f9f9f9;
+}
+
+.MuiTextField-root {
   margin-bottom: 1rem;
 }
 
@@ -64,95 +63,94 @@
   margin-bottom: 0.5rem;
 }
 
-  .event-title {
-    text-align: left;
-    padding: 1.2rem;
+.event-title {
+  text-align: left;
+  padding: 1.2rem;
+}
+
+.order-info {
+  padding-top: 1rem;
+  flex: 1;
+  margin-left: 2rem;
+  overflow-x: auto;
+}
+
+.contact-info {
+  padding: 1.2rem;
+  flex: 1;
+  overflow: hidden;
+  max-width: 400px;
+}
+h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+}
+.h2-container {
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .invoice-container {
+    margin: 20px;
+    padding: 1rem;
   }
-  
+
   .order-info {
-    padding-top: 1rem;
-    flex: 1;
-    margin-left: 2rem;
-    overflow-x: auto;
+    margin-left: 0;
   }
-  
-  .contact-info {
-    padding: 1.2rem;
-    flex: 1;
-    overflow: hidden;
-    max-width: 400px;
-  }
-  h2 {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .invoice-container {
+    margin: 10px;
     padding: 0.5rem;
   }
-  .h2-container {
-    text-align: left;
-  }
-  
-  @media (max-width: 768px) {
-    .invoice-container {
-      margin: 20px;
-      padding: 1rem;
-    }
-  
-    .order-info {
-      margin-left: 0;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .invoice-container {
-      margin: 10px;
-      padding: 0.5rem;
-    }
-    
-    .contact-info, .order-info {
-      max-width: 100%;
-    }
-  }
-  
 
-  .event-details {
-    margin-top: 50px;
-    margin-right: 1.5rem;
-    padding: 1.5rem;
-    background-color: #f9f9f9;
-    
+  .contact-info,
+  .order-info {
+    max-width: 100%;
   }
-  
-  .event-details h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-  }
-  
-  .event-details table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  .event-details th, .event-details td {
-    padding: 1.2rem;
-    text-align: center;
-    font-weight: 400;
-    font-size: 1.2rem;
-    border: 1px solid #ddd;
-    font-family: Libre Baskerville, serif;
-  }
-  
-  .event-details th {
-    background-color: #77afdb;
-    color: #f9f9f9;
-    font-weight: 600;
-  }
-  
-  .event-details td:first-child {
-    text-align: left;
-  }
-  
+}
+
+.event-details {
+  /* margin-top: 50px; */
+  margin-right: 1.5rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+}
+
+.event-details h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.event-details table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.event-details th,
+.event-details td {
+  padding: 1.2rem;
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.2rem;
+  border: 1px solid #ddd;
+  font-family: Libre Baskerville, serif;
+}
+
+.event-details th {
+  background-color: #77afdb;
+  color: #f9f9f9;
+  font-weight: 600;
+}
+
+.event-details td:first-child {
+  text-align: left;
+}
+
 .edit-button {
-    font-family: Libre Baskerville, serif;
-
+  font-family: Libre Baskerville, serif;
 }

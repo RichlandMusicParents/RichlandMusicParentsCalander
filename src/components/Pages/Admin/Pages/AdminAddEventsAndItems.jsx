@@ -150,31 +150,6 @@ export default function AdminAddEvents() {
     history.push(`/admin-order-review/${userId.id}`);
   }
 
-  /* ==== ORDER UPDATE ==== */
-
-  // STATES FOR OUR ORDER OBJECT
-
-  // VARIABLES THAT WON'T CHANGE ON THIS PAGE
-
-  // USE EFFECT TO SET ALL OF OUR ORDER INFO FROM OUR STORE WHENEVER WE LOAD OR ORDER CHANGES
-
-  // useEffect(() => {
-  //   // IF OUR ORDER[0] IS NOT UNDEFINED WE WILL SET EACH STATE TO THE CORRECT OBJECT KEY AND WE WILL DO THIS ANYTIME OUR ORDER STORE CHANGES
-  //   // IF OUR ORDER[0] IS UNDEFINED WE WILL NOT SET ANY STATE WHICH MEANS WE WONT GET AN ERROR
-  //   order[0] !== undefined && setFirstName(order[0].first_name);
-  //   order[0] !== undefined && setLastName(order[0].last_name);
-  //   order[0] !== undefined && setAddress(order[0].address);
-  //   order[0] !== undefined && setCity(order[0].city);
-  //   order[0] !== undefined && setZip(order[0].zip);
-  //   order[0] !== undefined && setState(order[0].state);
-  //   order[0] !== undefined && setEmail(order[0].email);
-  //   order[0] !== undefined && setPhone(order[0].phone);
-  // }, [order]);
-
-  // THIS IS OUR FUNCTION TO UPDATE OUR ORDER WITH THE CORRECT TOTAL
-
-  /* ==== END ORDER UPDATE ==== */
-
   return (
     <>
       <div className="admin-add-products-top">
@@ -219,7 +194,7 @@ export default function AdminAddEvents() {
           <div className="admin-add-event-form">
             <Select
               sx={{
-                width: 175,
+                width: 150,
                 margin: 1,
               }}
               renderInput={(params) => (
@@ -237,7 +212,7 @@ export default function AdminAddEvents() {
             </Select>
             <TextField
               sx={{
-                width: 175,
+                width: 150,
                 margin: 1,
               }}
               label="Event Name"
@@ -247,7 +222,7 @@ export default function AdminAddEvents() {
             />
             <TextField
               sx={{
-                width: 175,
+                width: 150,
                 margin: 1,
               }}
               type="date"
@@ -256,7 +231,7 @@ export default function AdminAddEvents() {
             />
             <Select
               sx={{
-                width: 175,
+                width: 150,
                 margin: 1,
               }}
               name="calendar"
@@ -270,18 +245,18 @@ export default function AdminAddEvents() {
               <MenuItem value="0">Select Calendar</MenuItem>
               <MenuItem value="1">2023</MenuItem>
             </Select>
-            <Button
-              sx={{
-                width: 200,
-                margin: 1,
-                height: 50,
-              }}
-              variant="contained"
-              onClick={addEvent}
-            >
-              Add Event
-            </Button>
           </div>
+          <Button
+            sx={{
+              width: 150,
+              margin: 1,
+              height: 50,
+            }}
+            variant="contained"
+            onClick={addEvent}
+          >
+            Add Event
+          </Button>
         </div>
         <CartComponent />
       </div>
