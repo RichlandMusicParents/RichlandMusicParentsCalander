@@ -1,7 +1,6 @@
 import { put, select, take, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
-
 // GET
 function* fetchOrderItems() {
   let user = yield select((store) => store.user);
@@ -35,7 +34,7 @@ function* addOrderItems(action) {
     order_id: Number(action.payload.order_id),
     user_id: Number(action.payload.user_id),
   };
-  
+
   try {
     const response = yield axios.post("/api/orderitems/", eventObj);
     yield put({
@@ -52,14 +51,11 @@ function* deleteOrderItems(action) {
     yield axios.delete(`/api/orderitems/delete-order-item/${action.payload}`);
     yield put({
       type: "FETCH_ORDER_ITEMS",
- 
     });
   } catch (err) {
     console.log("Error in DELETE order items SAGA", err);
   }
 }
-
-
 
 //PUT
 function* editOrderItems(action) {
@@ -78,20 +74,17 @@ function* editOrderItems(action) {
     );
     yield put({
       type: "FETCH_ORDER_ITEMS",
-
     });
   } catch (error) {
     console.log("deleting venue request failed", error);
   }
 }
 
-
-
 function* orderItemsSaga() {
   yield takeLatest("FETCH_ORDER_ITEMS", fetchOrderItems);
   yield takeLatest("ADD_ORDER_ITEMS", addOrderItems);
-  yield takeLatest("DELETE_ORDER_ITEMS", deleteOrderItems)
-  yield takeLatest("EDIT_ORDER_ITEMS", editOrderItems)
+  yield takeLatest("DELETE_ORDER_ITEMS", deleteOrderItems);
+  yield takeLatest("EDIT_ORDER_ITEMS", editOrderItems);
 }
 
 export default orderItemsSaga;
