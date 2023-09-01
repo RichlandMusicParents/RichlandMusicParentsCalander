@@ -7,25 +7,26 @@ We had the opportunity to collaborate with Richland Music Parents, who maintain 
 
 ## User View
 
-https://ibb.co/Bq1P1df
+<img width="1440" alt="userView#1" src="https://github.com/MusCodes/public-Movie-Saga/assets/108280009/4137efbf-129b-44e2-80c6-ff377a59f52a">
 
-https://ibb.co/QmKDD6N
-https://ibb.co/8xLmsRm
-https://ibb.co/q1ThgPF
+<img width="1440" alt="Userview#2" src="https://github.com/MusCodes/public-Movie-Saga/assets/108280009/b5043ff3-7ef5-42eb-8f08-d76cf409f709">
 
-https://ibb.co/nwXGB9G
+<img width="1440" alt="userView#3" src="https://github.com/MusCodes/public-Movie-Saga/assets/108280009/399c5f40-33b6-41d8-8ac0-78834d25b885">
 
-https://ibb.co/pznzpjL
+<img width="1440" alt="userView#4" src="https://github.com/MusCodes/public-Movie-Saga/assets/108280009/5e6a7a03-ef4b-40c7-8f77-8993a20de781">
+
+
+
 
 ## Admin View
+<img width="1440" alt="adminview#1" src="https://github.com/MusCodes/public-Movie-Saga/assets/108280009/65b8a503-e494-4311-b8ec-49ae83f053c3">
 
-https://ibb.co/2nmXr5W
+<img width="1440" alt="adminview#2" src="https://github.com/MusCodes/public-Movie-Saga/assets/108280009/3bb2d6a1-1ddd-4e5c-8b02-45a0dcf4473f">
 
-https://ibb.co/Rc1hTwR
+<img width="1440" alt="Adminview#3" src="https://github.com/MusCodes/public-Movie-Saga/assets/108280009/9231ece2-25f0-4946-b001-6a725dcd4351">
 
-https://ibb.co/7gYFk57
+<img width="1440" alt="Adminview#4" src="https://github.com/MusCodes/public-Movie-Saga/assets/108280009/1dc3c70d-8ac8-4998-a04f-f6e5f866bf7a">
 
-https://ibb.co/PMw9Zcv
 
 ## Prerequisites
 
