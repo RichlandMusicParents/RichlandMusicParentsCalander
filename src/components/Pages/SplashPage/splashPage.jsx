@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import "./SplashPage.css";
 import ImageSlider from "../ImageSlider/ImageSlider";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Button } from "@mui/material";
+import { Button, Card } from "@mui/material";
 
 // This is is the for the landing page, get started button will take you to the login page.
 function SplashPage() {
@@ -33,6 +33,7 @@ function SplashPage() {
     },
   });
   
+  
 
   const history = useHistory();
 
@@ -40,27 +41,12 @@ function SplashPage() {
     history.push("/login");
   }
   return (
-    <>
     <ThemeProvider theme={richlandTheme}>
-    
-        
         <div className="splash-container"> 
-        <div className="logo"> 
-          <h1>Richland Music Parents</h1> 
-        </div>
-        </div>
-        <section>
-        <p className="splash-text">
-          Join the Richland Music Parents' community fundraising revolution with
-          our Music Parents Community Calendar app! Easily add household
-          information, pay online, and track orders. Plus, contribute to the
-          community effort by adding important dates. Support students and the
-          community with ease!
-        </p>
-        </section>
-        <ImageSlider/>
-     
-        <Button  className="splash-button" 
+        <div className="title-container">
+          <h1 className="form-title">Richland Music Parents</h1>
+        <Button 
+        className="splash-button" 
         color="primary"
         variant="contained"
         sx={{
@@ -71,19 +57,36 @@ function SplashPage() {
           padding: "1rem 2rem",
           boxShadow: "none",
           marginTop: "2rem",
-          borderRadius: "15px",
+          borderRadius: "50px",
+       
           "&:hover": {
             backgroundColor: richlandTheme.palette.primary.dark
            },
-           display: "block"
-
         }}
         onClick={getStartedButton}>Get Started</Button>
-   
-    
+         <h2 className="subtitle">
+           <i><b>Support students and the community with ease and join our cause
+            today!</b> </i> 
+          </h2>
+         </div>
+        <div className="image-slider-container"> 
+        <ImageSlider/>
+        </div>
+        <Card className="card-container"
+
+        sx={{borderRadius:"35px", 
+        backgroundColor:"#aed1ec",
+        margin:"100px"}}>
+        <div className="description-container">
+        <p className="splash-description">
+        Join the Richland Music Parents' community fundraising revolution with our Music Parents Community Calendar app! Our app offers an easy and efficient way to contribute to the community effort by adding important dates such as birthdays, anniversaries, and in memory of.
+         With our app, customers can easily add their personal and order information, pay online, and track their orders. 
+        </p>
+        
+        </div>
+        </Card>
+        </div>
       </ThemeProvider>
-      
-    </>
   );
 }
 export default SplashPage;

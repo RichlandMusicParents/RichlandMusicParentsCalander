@@ -25,6 +25,17 @@ function* viewEvent(action) {
   }
 }
 
+// function* viewEvent(action) {
+//   try {
+//     const response = yield axios.get(
+//       `/api/events/user-events/${action.payload}`
+//     );
+//     yield put({ type: "SET_EVENTS", payload: response.data });
+//   } catch (err) {
+//     console.log("Error with getting specific user events", err);
+//   }
+// }
+
 //END HERE
 
 //User adds an event.
@@ -39,7 +50,9 @@ function* addEvent(action) {
 
   try {
     const response = yield axios.post("/api/events/user-add-events", eventObj);
-    yield put({ type: `GET_USER_EVENT` });
+    yield put({
+      type: "GET_USER_EVENT",
+    });
   } catch (error) {
     console.log("Error in adding event", error);
   }
@@ -49,7 +62,9 @@ function* addEvent(action) {
 function* deleteUserEvent(action) {
   try {
     yield axios.delete(`/api/events/delete-events/${Number(action.payload)}`);
-    yield put({ type: "GET_USER_EVENT" });
+    yield put({
+      type: "GET_USER_EVENT",
+    });
   } catch (error) {
     console.log("Error in deleting an event", error);
   }
@@ -68,7 +83,9 @@ function* editUserEvent(action) {
       `/api/events/user-edit-event/${Number(action.payload.id)}`,
       eventObj
     );
-    yield put({ type: "GET_USER_EVENT" });
+    yield put({
+      type: "GET_USER_EVENT",
+    });
   } catch (error) {
     console.log("error in updating event saga", error);
   }

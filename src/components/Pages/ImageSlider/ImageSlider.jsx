@@ -2,14 +2,15 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./ImageSlider.css"
-
+import "./ImageSlider.css";
 
 function ImageSlider() {
 
 
 
   const images = [
+    
+
     {
       id: 1,
       link: "https://i.ibb.co/YbZBpJH/Richland-1.jpg",
@@ -39,7 +40,7 @@ function ImageSlider() {
       },
       
   ];
-
+// settings for image slider
   const settings = {
     dots: true,
     arrows: true,
@@ -51,8 +52,6 @@ function ImageSlider() {
   };
 
   return (
-
-  
     <div className="slider-container">
       
       <Slider {...settings}>

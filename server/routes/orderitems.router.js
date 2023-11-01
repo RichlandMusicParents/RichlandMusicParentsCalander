@@ -5,7 +5,6 @@ const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
 
-
 router.get("/:id", rejectUnauthenticated, (req, res) => {
   const text = `SELECT
 	*, 
@@ -43,7 +42,6 @@ router.post("/", (req, res) => {
       res.sendStatus(500);
     });
 });
-
 
 //Delete order-item by it's id.
 router.delete("/delete-order-item/:id", rejectUnauthenticated, (req, res) => {

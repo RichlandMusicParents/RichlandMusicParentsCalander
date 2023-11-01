@@ -9,6 +9,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f9f9f9;
 }
 
 img {
@@ -30,7 +31,7 @@ Button
 
 .btn {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 50px;
   border-color: #014041;
   border-width: 1px 1px 3px;
   border-radius: 4px;
@@ -98,14 +99,55 @@ Form Treatment
 -------------------------------------------------------------------------------- */
 
 .formPanel {
+  border-radius: 10px;
+  width: 50rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-inline: auto;
+  box-shadow: 0px 6px 28px -1px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
-  width: 400px;
   max-width: 100%;
-  padding: 25px;
+  padding: 100px;
   margin: 0 auto 20px;
-  background-color: #efefef;
+  background-color: rgba(119, 175, 219, 0.4);
+}
+
+.formPanel input[type="text"],
+.formPanel input[type="password"] {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 2rem;
+
+  font-size: 1rem;
+  border: none;
   border-radius: 3px;
-  box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
+  background-color: #fff;
+
+}
+
+.formPanel input[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #77afdb;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.formPanel input[type="submit"]:hover {
+  background-color: #6095c2;
+}
+
+.formPanel label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
 input {

@@ -1,0 +1,156 @@
+.invoice-container {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  background-color: #f9f9f9;
+}
+
+.MuiTextField-root {
+  margin-bottom: 1rem;
+}
+
+.MuiButton-root {
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+.MuiFormControl-root {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.MuiTable-root {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.MuiTableHead-root th {
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+  padding: 1rem;
+}
+
+.MuiTableBody-root td {
+  padding: 1rem;
+  text-align: left;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.MuiTableBody-root td:last-child {
+  text-align: right;
+}
+
+.MuiTableBody-root tr:last-child td {
+  border-bottom: none;
+}
+
+.MuiSelect-root {
+  width: 100%;
+}
+
+.MuiFormControlLabel-root {
+  margin-left: 0;
+}
+
+.MuiFormLabel-root {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-title {
+  text-align: left;
+  padding: 1.2rem;
+}
+
+.order-info {
+  padding-top: 1rem;
+  flex: 1;
+  margin-left: 2rem;
+  overflow-x: auto;
+}
+
+.contact-info {
+  padding: 1.2rem;
+  flex: 1;
+  overflow: hidden;
+  max-width: 400px;
+}
+h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+}
+.h2-container {
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .invoice-container {
+    margin: 20px;
+    padding: 1rem;
+  }
+
+  .order-info {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .invoice-container {
+    margin: 10px;
+    padding: 0.5rem;
+  }
+
+  .contact-info,
+  .order-info {
+    max-width: 100%;
+  }
+}
+
+.event-details {
+  /* margin-top: 50px; */
+  margin-right: 1.5rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+}
+
+.event-details h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.event-details table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.event-details th,
+.event-details td {
+  padding: 1.2rem;
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.2rem;
+  border: 1px solid #ddd;
+  font-family: Libre Baskerville, serif;
+}
+
+.event-details th {
+  background-color: #77afdb;
+  color: #f9f9f9;
+  font-weight: 600;
+}
+
+.event-details td:first-child {
+  text-align: left;
+}
+
+.edit-button {
+  font-family: Libre Baskerville, serif;
+}

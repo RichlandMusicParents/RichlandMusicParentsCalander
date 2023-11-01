@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import "./orderComplete.css";
 import {
   Table,
   TableBody,
@@ -13,17 +14,25 @@ import {
   Toolbar,
   Button,
 } from "@mui/material";
+import { Card } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "./orderComplete.css"
+import "./invoice.css"
 // import "./OrderCompleted.css";
 
+// This component is the last page the user sees, its essentially an invoice page with the contact info, order info and the added events
+
 export default function OrderCompleted() {
+  // here we are pulling events and orders reducer from our redux store. orders includes all the order and contact info of the user.
   const user = useSelector((store) => store.user);
   const events = useSelector((store) => store.eventReducer);
   const orders = useSelector((store) => store.order.newOrder);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // these two actions are disptaching get requests. first one gets the events and the second one gets the current users order.
   useEffect(() => {
     dispatch({ type: "GET_USER_EVENT" });
     dispatch({ type: "GET_NEW_ORDER" });
@@ -44,121 +53,171 @@ export default function OrderCompleted() {
     history.push("/splashPage");
   }
 
+  const richlandTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#77afdb",
+        contrastText: "#ffcf5f",
+      },
+      secondary: {
+        main: "#ffcf5f",
+        contrastText: "#000",
+      },
+      danger: {
+        main: "#b71c1c",
+        contrastText: "#fff",
+      },
+    },
+
+    typography: {
+      fontFamily: "Libre Baskerville, serif",
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: 1.5,
+    },
+  });
+
+
   return (
-    <>
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        mt={2}
-      >
+    <div className="invoice-container">
+      <Card
+            className="form-card"
+            sx={{
+              marginBottom: "50px",
+              borderRadius: "4px",
+              
+            }}
+          >
+    <ThemeProvider theme={richlandTheme}>
+    <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign:"center"}}>Invoice</h1></u>
+      <hr/>
+    <Typography className="orderComplete" variant="h5"  style={{ color: "green", textAlign: "center", fontSize:"30px" }}>
+ Thank you for supporting RMP! Your order is confirmed!
+</Typography>  
 
-        <h2 style={{ color: "red"}}>Your order is confirmed!</h2>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Contact Information
-        </Typography>
-        <div className="contactInfo">
-          {orders.map((order) => (
-            <section key={order.id}>
-              <Typography variant="h6">
-                Name: {order.first_name} {order.last_name}
-              </Typography>
-              <Typography variant="h6">Address: {order.address}</Typography>
-              <Typography variant="h6">Phone: {order.phone}</Typography>
-              <Typography variant="h6">Email: {order.email}</Typography>
-            </section>
-          ))}
-        </div>
-      </Box>
 
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        mt={4}
-      >
-        <Box
-          className="eventTable"
-          sx={{
-            width: "100%",
+      <div style={{ display: "flex", flexWrap: "wrap", padding: "2rem" }}>
+
+        <Paper
+          elevation={12}
+          style={{
+            width: "calc(50% - 20px)",
+            margin: "10px",
+            padding: "20px",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
+          className="contact-info"
+        >
+        
+<h2 className=".h2-container">Contact information</h2>
+          <div className="contactInfo">
+            {orders.map((order) => (
+              <section key={order.id}>
+                <h2>Name: {order.first_name} {order.last_name}</h2>
+                <h2>Address: {order.address}</h2>
+                <h2>Phone: {order.phone}</h2>
+                <h2>Email: {order.email}</h2>
+              </section>
+            ))}
+          </div>
+        </Paper>
+        
+        <Paper
+          className="order-info"
+          elevation={12}
+          style={{
+            width: "calc(50% - 20px)",
+            margin: "10px",
+            padding: "20px",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
             overflowX: "auto",
-            borderRadius: "4px",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backgroundColor: "white",
           }}
         >
-          <Toolbar>
-            <Typography variant="h4" component="div">
-              Order Information
-            </Typography>
-          </Toolbar>
-          <TableContainer sx={{ maxHeight: 400 }}>
-            <Table stickyHeader>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Address</TableCell>
-                  <TableCell>City</TableCell>
-                  <TableCell>State</TableCell>
-                  <TableCell>ZipCode</TableCell>
-                  <TableCell>Payment Type</TableCell>
-                  <TableCell>Total</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {orders.map((orderInfo) => (
-                  <TableRow key={orderInfo.id}>
-                    <TableCell>{orderInfo.address}</TableCell>
-                    <TableCell>{orderInfo.city}</TableCell>
-                    <TableCell>{orderInfo.state}</TableCell>
-                    <TableCell>{orderInfo.zip}</TableCell>
-                    <TableCell>{orderInfo.payment_type}</TableCell>
-                    <TableCell>{orderInfo.total}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      </Box>
-
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        mt={4}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
-          All Your Added Events
-        </Typography>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Event Type</TableCell>
-                <TableCell>Name</TableCell>
-              </TableRow>
-            </TableHead>
+          <section className="contact_order">
+                <div className="orderDetails">
+            <h1>Order Information</h1>
             <TableBody>
-              {events.map((event) => {
-                const formattedDate = formatDate(event.event_date);
-
-                return (
-                  <TableRow key={event.id}>
-                    <TableCell>{formattedDate}</TableCell>
-                    <TableCell>{event.event_type}</TableCell>
-                    <TableCell>{event.event_name}</TableCell>
-                  </TableRow>
-                );
-              })}
+              <TableRow>
+                <TableCell>Address</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell>State</TableCell>
+                <TableCell>Zipcode</TableCell>
+                <TableCell>Payment type</TableCell>
+                <TableCell>Total</TableCell>
+              </TableRow>
+              {orders.map((orderInfo) => (
+                <TableRow key={orderInfo.id}>
+                  <TableCell style={{ fontSize: "18px" }}>{orderInfo.address}</TableCell>
+                  <TableCell style={{ fontSize: "18px" }}>{orderInfo.city}</TableCell>
+                  <TableCell style={{ fontSize: "18px" }}>{orderInfo.state}</TableCell>
+                  <TableCell style={{ fontSize: "18px" }}>{orderInfo.zip}</TableCell>
+                  <TableCell style={{ fontSize: "18px" }}>{orderInfo.payment_type}</TableCell>
+                  <TableCell style={{ fontSize: "18px" }}>${orderInfo.total}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
-      <Button onClick={() => homePageClick()}> Back to HomePage</Button>
-    </>
+            </div>
+          </section>
+        </Paper>
+      </div>
+      <div className="event-details">
+  <u><h1 style={{fontSize: "40px", marginBottom: "1rem", textAlign:"center"}}>All Your Added Events</h1></u>
+  <Paper elevation={12} className="event-table" style={{ padding: '1rem' }}>
+  
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell>Event Type</TableCell>
+            <TableCell>Name</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {events.map((event) => {
+            const formattedDate = formatDate(event.event_date);
+            return (
+              <TableRow key={event.id}>
+                <TableCell>{formattedDate}</TableCell>
+                <TableCell>{event.event_type}</TableCell>
+                <TableCell>{event.event_name}</TableCell>
+              </TableRow>
+            );
+          })}
+      
+        </TableBody>
+      </Table>
+    </TableContainer>    
+  </Paper>
+
+  </div>
+  <Button 
+   color="primary"
+   variant="contained"
+   sx={{
+    backgroundColor: "#",
+    width:"200px",
+     padding: "40px",
+     marginLeft: "900px",
+     marginBottom: "3rem",
+     color: "white",
+     height: "65px",
+     fontSize: "1.2rem",
+     fontWeight: "600",
+     boxShadow: "none",
+     marginTop: "2rem",
+     borderRadius: "50px",
+     "&:hover": {
+       backgroundColor: richlandTheme.palette.primary.dark,
+     },
+   }}
+  onClick={() => homePageClick()} className="back-button">Back to HomePage</Button>
+
+    
+  </ThemeProvider>
+</Card>
+</div>
+
+    
   );
 }
