@@ -1,6 +1,6 @@
 /* the only line you likely need to change is
 
- database: 'prime_app',
+ database: 'RichlandMusicParents',
 
  change `prime_app` to the name of your database, and you should be all set!
 */
@@ -27,6 +27,8 @@ if (process.env.DATABASE_URL) {
 else {
   pool = new pg.Pool({
     host: "localhost",
+    user: "postgres",
+    password: "CHANGE_ME",
     port: 5432,
     database: "RichlandMusicParents", // 	💥 Change this to the name of your database!
   });
