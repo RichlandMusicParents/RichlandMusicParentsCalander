@@ -34,10 +34,11 @@ Before running this application, ensure you have Node.js and PostgreSQL installe
 
 1. Create a database and name it "RichlandMusicParents"
 2. The queries in the tables.sql file are set up to create all the necessary tables and populate the needed data to allow the application to run correctly. The project is built on Postgres, so you will need to make sure to have that installed. We recommend using Postico to run those queries as that was used to create the queries,
-3. Open up your editor of choice and run an npm install
-4. Run npm run server in your terminal
-5. Run npm run client in your terminal
-6. The npm run client command will open up a new browser tab for you!
+3. *note*: Make sure you add a 'user' (usually 'postgres') and a 'password' to the localhost config in server/modues/pool.js.
+4. Open up your editor of choice and run an npm install
+5. Run npm run server in your terminal
+6. Run npm run client in your terminal
+7. The npm run client command will open up a new browser tab for you!
 
 ## Built With
 
